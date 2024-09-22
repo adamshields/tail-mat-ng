@@ -1,0 +1,65 @@
+<header>
+  <mat-toolbar class="mat-elevation-z3">
+    <span class="logo" routerLink="/">APPNAME</span>
+    <mat-icon class="app-icon">bolt</mat-icon>
+
+    <nav class="menu">
+      @for (item of menuItems; track item) {
+        @if (!item.subItems) {
+          <a mat-button [routerLink]="[item.route]">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            {{ item.label }}
+          </a>
+        } @else {
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            {{ item.label }}
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            @for (subItem of item.subItems; track subItem) {
+              <a mat-menu-item [routerLink]="[item.route, subItem.route]">
+                <mat-icon>{{ subItem.icon }}</mat-icon>
+                {{ subItem.label }}
+              </a>
+            }
+          </mat-menu>
+        }
+      }
+    </nav>
+
+    <span class="spacer"></span>
+
+    <!-- Profile Button -->
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>Edit Profile</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Account Settings</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+</header>
+
+<main>
+  @if (loading()) {
+    <div class="spinner-container">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  } @else {
+    <ng-container #content>
+      <router-outlet></router-outlet>
+    </ng-container>
+  }
+</main>
