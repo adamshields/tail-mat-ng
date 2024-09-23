@@ -1,1 +1,189 @@
-<p>home works!</p>
+
+    <div class="p-4">
+      <h1 class="text-2xl font-bold mb-4">Tailwind CSS Layout Demo</h1>
+
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Container</h2>
+        <div class="container mx-auto bg-blue-100 p-4 relative">
+          <span class="absolute top-0 left-0 bg-blue-500 text-white text-xs px-2 py-1">container mx-auto</span>
+          Content
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Grid Layout</h2>
+        <div class="grid grid-cols-3 gap-4 bg-green-100 p-4 relative">
+          <span class="absolute top-0 left-0 bg-green-500 text-white text-xs px-2 py-1">grid grid-cols-3 gap-4</span>
+          <div class="bg-green-200 p-2">Column 1</div>
+          <div class="bg-green-200 p-2">Column 2</div>
+          <div class="bg-green-200 p-2">Column 3</div>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Flexbox</h2>
+        <div class="flex justify-between items-center bg-yellow-100 p-4 relative">
+          <span class="absolute top-0 left-0 bg-yellow-500 text-white text-xs px-2 py-1">flex justify-between items-center</span>
+          <div class="bg-yellow-200 p-2">Item 1</div>
+          <div class="bg-yellow-200 p-2">Item 2</div>
+          <div class="bg-yellow-200 p-2">Item 3</div>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Responsive Design</h2>
+        <div class="bg-purple-100 p-4 relative">
+          <span class="absolute top-0 left-0 bg-purple-500 text-white text-xs px-2 py-1">Responsive classes</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div class="bg-purple-200 p-2">Item 1</div>
+            <div class="bg-purple-200 p-2">Item 2</div>
+            <div class="bg-purple-200 p-2">Item 3</div>
+            <div class="bg-purple-200 p-2">Item 4</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Spacing</h2>
+        <div class="bg-red-100 p-4 relative">
+          <span class="absolute top-0 left-0 bg-red-500 text-white text-xs px-2 py-1">Spacing classes</span>
+          <div class="space-y-4">
+            <div class="bg-red-200 p-2">m-4 (Margin)</div>
+            <div class="bg-red-200 p-2">p-4 (Padding)</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Sizing</h2>
+        <div class="bg-indigo-100 p-4 relative">
+          <span class="absolute top-0 left-0 bg-indigo-500 text-white text-xs px-2 py-1">Sizing classes</span>
+          <div class="w-1/2 bg-indigo-200 p-2 mb-2">w-1/2</div>
+          <div class="w-full bg-indigo-200 p-2">w-full</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="p-4 bg-gray-100">
+      <h1 class="text-3xl font-bold mb-6">Advanced Tailwind CSS Layout Demo</h1>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Complex Grid Layout</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-blue-100 p-4 relative">
+          <span class="absolute top-0 left-0 bg-blue-500 text-white text-xs px-2 py-1">grid grid-cols-1 md:grid-cols-3 gap-4</span>
+          <div class="bg-blue-200 p-4 md:col-span-2">
+            <span class="block mb-2 text-sm font-semibold">md:col-span-2</span>
+            Main Content
+          </div>
+          <div class="bg-blue-300 p-4">
+            <span class="block mb-2 text-sm font-semibold">Sidebar</span>
+            Sidebar Content
+          </div>
+          <div class="bg-blue-400 p-4 md:col-span-3">
+            <span class="block mb-2 text-sm font-semibold">md:col-span-3</span>
+            Full Width Section
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Responsive Flexbox Card Layout</h2>
+        <div class="flex flex-wrap -mx-2 bg-green-100 p-4 relative">
+          <span class="absolute top-0 left-0 bg-green-500 text-white text-xs px-2 py-1">flex flex-wrap -mx-2</span>
+          <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4" *ngFor="let i of [1,2,3,4]">
+            <div class="bg-green-200 p-4 h-full rounded shadow">
+              <span class="block mb-2 text-sm font-semibold">w-full sm:w-1/2 md:w-1/3 lg:w-1/4</span>
+              Card {{i}}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Advanced Positioning and Z-index</h2>
+        <div class="relative h-64 bg-yellow-100 p-4">
+          <span class="absolute top-0 left-0 bg-yellow-500 text-white text-xs px-2 py-1">Positioning Demo</span>
+          <div class="absolute top-0 left-0 w-32 h-32 bg-yellow-200 z-10 flex items-center justify-center">
+            Top Left (z-10)
+          </div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-300 z-20 flex items-center justify-center">
+            Top Right (z-20)
+          </div>
+          <div class="absolute bottom-0 left-0 w-32 h-32 bg-yellow-400 z-30 flex items-center justify-center">
+            Bottom Left (z-30)
+          </div>
+          <div class="absolute bottom-0 right-0 w-32 h-32 bg-yellow-500 z-40 flex items-center justify-center">
+            Bottom Right (z-40)
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Responsive Typography and Spacing</h2>
+        <div class="bg-purple-100 p-4 relative">
+          <span class="absolute top-0 left-0 bg-purple-500 text-white text-xs px-2 py-1">Responsive Text and Spacing</span>
+          <h3 class="text-base sm:text-lg md:text-xl lg:text-2xl mb-2 sm:mb-4 md:mb-6">
+            Responsive Heading
+          </h3>
+          <p class="text-sm sm:text-base md:text-lg max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+            This paragraph demonstrates responsive font sizes and max-widths for better readability across devices.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Advanced Flex Layout with Nested Elements</h2>
+        <div class="flex flex-col md:flex-row bg-red-100 p-4 relative">
+          <span class="absolute top-0 left-0 bg-red-500 text-white text-xs px-2 py-1">flex flex-col md:flex-row</span>
+          <div class="md:w-1/3 bg-red-200 p-4 mb-4 md:mb-0">
+            <h3 class="font-bold mb-2">Sidebar</h3>
+            <ul class="space-y-2">
+              <li class="bg-red-300 p-2">Menu Item 1</li>
+              <li class="bg-red-300 p-2">Menu Item 2</li>
+              <li class="bg-red-300 p-2">Menu Item 3</li>
+            </ul>
+          </div>
+          <div class="md:w-2/3 md:ml-4">
+            <div class="bg-red-200 p-4 mb-4">
+              <h3 class="font-bold mb-2">Main Content</h3>
+              <p>This is the main content area with a flexible width.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bg-red-300 p-4">Nested Grid Item 1</div>
+              <div class="bg-red-300 p-4">Nested Grid Item 2</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-4">Responsive Table Layout</h2>
+        <div class="bg-indigo-100 p-4 relative overflow-x-auto">
+          <span class="absolute top-0 left-0 bg-indigo-500 text-white text-xs px-2 py-1">Responsive Table</span>
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr>
+                <th class="p-2 bg-indigo-200">Column 1</th>
+                <th class="p-2 bg-indigo-200">Column 2</th>
+                <th class="p-2 bg-indigo-200 hidden sm:table-cell">Column 3</th>
+                <th class="p-2 bg-indigo-200 hidden md:table-cell">Column 4</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="p-2 bg-indigo-50">Data 1</td>
+                <td class="p-2 bg-indigo-50">Data 2</td>
+                <td class="p-2 bg-indigo-50 hidden sm:table-cell">Data 3</td>
+                <td class="p-2 bg-indigo-50 hidden md:table-cell">Data 4</td>
+              </tr>
+              <tr>
+                <td class="p-2 bg-indigo-100">Data 5</td>
+                <td class="p-2 bg-indigo-100">Data 6</td>
+                <td class="p-2 bg-indigo-100 hidden sm:table-cell">Data 7</td>
+                <td class="p-2 bg-indigo-100 hidden md:table-cell">Data 8</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
