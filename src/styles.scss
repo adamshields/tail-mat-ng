@@ -1,7 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use './_m3-palettes' as palettes; // Import your custom palette
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
+$theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: palettes.$adam-palette,
+    tertiary: palettes.$green-palette,
+    ),
+      density: (
+        scale: -1
+    )
+  ));
+
+:root{
+  @include mat.all-component-themes($theme);
+}
+.tertiary-button {
+  @include mat.button-color($theme, $color-variant: tertiary);
+}
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
