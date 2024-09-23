@@ -1,7 +1,9 @@
 
     <div class="p-4">
       <h1 class="text-2xl font-bold mb-4">Tailwind CSS Layout Demo</h1>
-
+      <h1 class="font-weird text-3xl">
+        This is some weird text!
+      </h1>
       <section class="mb-8">
         <h2 class="text-xl font-semibold mb-2">Container</h2>
         <div class="container mx-auto bg-blue-100 p-4 relative">
@@ -430,3 +432,146 @@
     <button mat-raised-button (click)="openBottomSheet()" class="bg-teal-500 hover:bg-teal-600 text-white">
       Open Bottom Sheet
     </button>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <mat-divider></mat-divider>
+    <section class="p-4 bg-neutral-95">
+      <h1 class="text-display-medium font-bold mb-6 text-primary-40">Angular Material Components with Tailwind CSS</h1>
+
+      <section class="mb-12">
+        <h2 class="text-headline-small font-semibold mb-4 text-secondary-40">Buttons and Icons</h2>
+        <div class="bg-neutral-99 p-4 rounded shadow-md space-y-4">
+          <div class="flex space-x-4">
+            <button mat-raised-button color="primary" class="bg-primary-40 hover:bg-primary-30 text-primary-100">Primary</button>
+            <button mat-stroked-button color="secondary" class="border-secondary-40 text-secondary-40">Secondary</button>
+            <button mat-flat-button color="warn" class="bg-error-40 hover:bg-error-30 text-error-100">Warn</button>
+            <button mat-icon-button aria-label="Example icon button with a home icon" class="text-primary-40">
+              <mat-icon>home</mat-icon>
+            </button>
+          </div>
+          <div class="flex space-x-4">
+            <button mat-fab color="primary" class="bg-primary-40 hover:bg-primary-30">
+              <mat-icon>add</mat-icon>
+            </button>
+            <button mat-mini-fab color="secondary" class="bg-secondary-40 hover:bg-secondary-30">
+              <mat-icon>favorite</mat-icon>
+            </button>
+            <button mat-raised-button class="bg-tertiary-40 text-tertiary-100 hover:bg-tertiary-30">Tertiary Button</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-headline-small font-semibold mb-4 text-secondary-40">Form Controls</h2>
+        <div class="bg-neutral-99 p-4 rounded shadow-md space-y-4">
+          <mat-form-field class="w-full">
+            <mat-label class="text-primary-40">Enter your name</mat-label>
+            <input matInput placeholder="John Doe" class="text-neutral-10">
+          </mat-form-field>
+          <mat-form-field class="w-full">
+            <mat-label class="text-primary-40">Select an option</mat-label>
+            <mat-select class="text-neutral-10">
+              <mat-option value="option1">Option 1</mat-option>
+              <mat-option value="option2">Option 2</mat-option>
+              <mat-option value="option3">Option 3</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-slide-toggle class="mb-4 text-primary-40">Slide me!</mat-slide-toggle>
+          <mat-checkbox class="mb-4 text-primary-40">Check me!</mat-checkbox>
+          <mat-radio-group class="flex space-x-4 text-primary-40">
+            <mat-radio-button value="1">Option 1</mat-radio-button>
+            <mat-radio-button value="2">Option 2</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-headline-small font-semibold mb-4 text-secondary-40">Data Table</h2>
+        <div class="bg-neutral-99 rounded shadow-md overflow-hidden">
+          <!-- <table mat-table [dataSource]="dataSource" class="w-full">
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="bg-neutral-90 p-2 text-neutral-10"> No. </th>
+              <td mat-cell *matCellDef="let element" class="p-2 text-neutral-20"> {{element.position}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-neutral-90 text-neutral-10"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="text-neutral-20"></tr>
+          </table> -->
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-headline-small font-semibold mb-4 text-secondary-40">Cards and Tabs</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <mat-card class="bg-neutral-99 rounded shadow-md">
+            <mat-card-header>
+              <mat-card-title class="text-title-large font-bold text-primary-40">Card Title</mat-card-title>
+              <mat-card-subtitle class="text-body-medium text-neutral-60">Card Subtitle</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="p-4 text-body-medium text-neutral-30">
+              <p>This is the content of the card. You can put any content here.</p>
+            </mat-card-content>
+            <mat-card-actions class="p-4">
+              <button mat-button class="text-primary-40">LIKE</button>
+              <button mat-button class="text-primary-40">SHARE</button>
+            </mat-card-actions>
+          </mat-card>
+          <mat-tab-group class="bg-neutral-99 rounded shadow-md">
+            <mat-tab label="First">
+              <div class="p-4 text-body-medium text-neutral-30">Content for the first tab</div>
+            </mat-tab>
+            <mat-tab label="Second">
+              <div class="p-4 text-body-medium text-neutral-30">Content for the second tab</div>
+            </mat-tab>
+            <mat-tab label="Third">
+              <div class="p-4 text-body-medium text-neutral-30">Content for the third tab</div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </section>
+
+      <!-- ... other sections ... -->
+
+      <section class="mb-12">
+        <h2 class="text-headline-small font-semibold mb-4 text-secondary-40">Additional Material Components</h2>
+        <div class="bg-neutral-99 p-4 rounded shadow-md space-y-4">
+          <!-- Autocomplete -->
+          <mat-form-field class="w-full">
+            <input type="text" matInput [matAutocomplete]="auto" placeholder="Autocomplete" class="text-neutral-20">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option value="Option 1" class="text-neutral-20">Option 1</mat-option>
+              <mat-option value="Option 2" class="text-neutral-20">Option 2</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <!-- Badge -->
+          <div>
+            <span matBadge="4" matBadgeOverlap="false" class="text-body-medium text-neutral-30">Messages</span>
+          </div>
+
+          <!-- Button Toggle -->
+          <mat-button-toggle-group class="text-primary-40">
+            <mat-button-toggle value="left">Left</mat-button-toggle>
+            <mat-button-toggle value="center">Center</mat-button-toggle>
+            <mat-button-toggle value="right">Right</mat-button-toggle>
+          </mat-button-toggle-group>
+
+          <!-- Chips -->
+          <mat-chip-listbox>
+            <mat-chip class="bg-primary-90 text-primary-10">Chip 1</mat-chip>
+            <mat-chip class="bg-secondary-90 text-secondary-10">Chip 2</mat-chip>
+          </mat-chip-listbox>
+
+          <!-- ... other components ... -->
+
+        </div>
+      </section>
+
+      <!-- Bottom Sheet -->
+      <button mat-raised-button (click)="openBottomSheet()" class="bg-tertiary-40 hover:bg-tertiary-30 text-tertiary-100">
+        Open Bottom Sheet
+      </button>
+    </section>
