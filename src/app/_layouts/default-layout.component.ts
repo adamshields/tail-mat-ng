@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
       <span>MyApp</span>
       <a mat-button routerLink="/" routerLinkActive="active">Home</a>
       <a mat-button routerLink="/applications" routerLinkActive="active">Applications</a>
+      <a mat-button routerLink="/color" routerLinkActive="active">Color</a>
       <span class="spacer"></span>
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="User menu">
         <mat-icon>account_circle</mat-icon>

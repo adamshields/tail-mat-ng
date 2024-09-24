@@ -4,11 +4,17 @@ import { HomeComponent } from './_pages/home/home.component';
 import { ApplicationsComponent } from './_pages/applications/applications.component';
 import { DesignsComponent } from './_pages/applications/designs/designs.component';
 import { LayoutType } from '../layout.service';
+import { ColorPaletteComponent } from './_pages/color-palette/color-palette.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    data: { layout: 'default' as LayoutType }
+  },
+  {
+    path: 'color',
+    component: ColorPaletteComponent,
     data: { layout: 'default' as LayoutType }
   },
   {

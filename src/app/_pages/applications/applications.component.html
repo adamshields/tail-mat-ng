@@ -1,1 +1,36 @@
-<h1>applications works!</h1>
+<body class="bg-neutral-100 text-neutral-900">
+  <div class="container mx-auto px-4">
+    <header class="py-6">
+      <nav class="flex justify-between items-center">
+        <h1 class="text-display-small text-primary-600">My Site</h1>
+        <ul class="flex space-x-4">
+          <li><a href="#" class="text-body-large hover:text-primary-500">Home</a></li>
+          <li><a href="#" class="text-body-large hover:text-primary-500">About</a></li>
+          <li><a href="#" class="text-body-large hover:text-primary-500">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="my-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section class="md:col-span-2">
+          <article class="bg-neutral-50 p-6 rounded-lg shadow-md">
+            <h2 class="text-headline-medium text-primary-700 mb-4">Main Content</h2>
+            <p class="text-body-large mb-4">This is the main content area. It uses a larger column on bigger screens.</p>
+            <button class="bg-primary-500 text-white px-4 py-2 rounded hover:bg-primary-600">Learn More</button>
+          </article>
+        </section>
+        <aside class="md:col-span-1">
+          <div class="bg-secondary-100 p-6 rounded-lg shadow-md">
+            <h3 class="text-title-medium text-secondary-700 mb-4">Sidebar</h3>
+            <p class="text-body-medium">Additional information or navigation can go here.</p>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="py-6 mt-8 border-t border-neutral-200">
+      <p class="text-body-small text-center text-neutral-600">&copy; 2023 My Site. All rights reserved.</p>
+    </footer>
+  </div>
+</body>

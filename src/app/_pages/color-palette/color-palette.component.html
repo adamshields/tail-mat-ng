@@ -1,0 +1,50 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Material 3 Color Palette</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div *ngFor="let category of colorCategories">
+      <h2 class="text-xl font-semibold mb-2">{{ category | titlecase }}</h2>
+      <div *ngFor="let shade of colorShades"
+           class="h-12 flex items-center px-2 mb-1"
+           [style.background-color]="getColor(category, shade)"
+           [style.color]="getTextColor(shade)">
+        {{ category | titlecase }} {{ shade }}
+      </div>
+      <div class="h-12 flex items-center px-2 mb-1"
+           [style.background-color]="getColor(category, 40)"
+           style="color: #ffffff;">
+        On {{ category | titlecase }}
+      </div>
+      <div class="h-12 flex items-center px-2 mb-1"
+           [style.background-color]="getColor(category, 90)"
+           style="color: #000000;">
+        {{ category | titlecase }} Container
+      </div>
+      <div class="h-12 flex items-center px-2 mb-1"
+           [style.background-color]="getColor(category, 90)"
+           [style.color]="getColor(category, 10)">
+        On {{ category | titlecase }} Container
+      </div>
+    </div>
+  </div>
+
+  <h2 class="text-xl font-semibold mb-2">Surface Colors</h2>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <div *ngFor="let surface of surfaceColors"
+         class="h-12 flex items-center px-2 mb-1"
+         [style.background-color]="'var(' + surface.variable + ')'"
+         style="color: #000000;">
+      {{ surface.name }}
+    </div>
+  </div>
+
+  <h2 class="text-xl font-semibold mb-2">Additional Colors</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div *ngFor="let color of additionalColors"
+         class="h-12 flex items-center px-2 mb-1"
+         [style.background-color]="'var(' + color.variable + ')'"
+         [style.color]="color.name.includes('On') || color.name.includes('Inverse') ? '#ffffff' : '#000000'">
+      {{ color.name }}
+    </div>
+  </div>
+</div>
