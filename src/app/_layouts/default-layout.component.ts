@@ -21,8 +21,9 @@ import { CommonModule } from '@angular/common';
   template: `
     <mat-toolbar color="primary">
       <span>MyApp</span>
-      <a mat-button routerLink="/" routerLinkActive="active">Home</a>
-      <a mat-button routerLink="/applications" routerLinkActive="active">Applications</a>
+      <a mat-button routerLink="/" >Home</a>
+      <a mat-button routerLink="/applications" >Applications</a>
+      <a mat-button routerLink="/applications/designs" >Designs</a>
       <a mat-button routerLink="/color" routerLinkActive="active">Color</a>
       <span class="spacer"></span>
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="User menu">
