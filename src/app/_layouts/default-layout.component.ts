@@ -31,18 +31,19 @@ import { AlertComponent } from "../shared/components/alert/alert.component";
 ],
   template: `
 <div>
+<div>
   <h1>Angular Material 3 Theming System: Complete Guide</h1>
-  <!-- <app-color-picker class="color-picker"></app-color-picker> -->
   <button
     mat-icon-button
     class="theme-toggle"
     aria-label="Change theme"
     [matMenuTriggerFor]="themeMenu"
   >
-    <mat-icon>
-        {{(isDark$ | async) === true ? "dark_mode" : "light_mode" }}
-    </mat-icon>
+    <mat-icon>{{
+      (isDark$ | async) === true ? "dark_mode" : "light_mode"
+    }}</mat-icon>
   </button>
+  <app-color-picker class="color-picker"></app-color-picker>
   <mat-menu #themeMenu="matMenu">
     <button mat-menu-item (click)="changeTheme('auto')">System</button>
     <button mat-menu-item (click)="changeTheme('light')">Light</button>
@@ -54,57 +55,68 @@ import { AlertComponent } from "../shared/components/alert/alert.component";
     <button mat-stroked-button>Stroked</button>
     <button mat-flat-button>Flat</button>
   </div>
-  <h1>Custom Theme: Rose Red</h1>
+  <div class="demo-buttons density-xs">
+    <h3>Density scale: -2, applied through class <code>.density-xs</code></h3>
+    <button mat-button>Basic</button>
+    <button mat-raised-button>Raised</button>
+    <button mat-stroked-button>Stroked</button>
+    <button mat-flat-button>Flat</button>
+  </div>
+  <div>
+    <h3>Changing typesclae values</h3>
+    <mat-form-field>
+      <mat-label>Flat Button Font Size</mat-label>
+      <input
+        type="number"
+        matInput
+        [defaultValue]="14"
+        (change)="changeFlatButtonFontSize($event)"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Heading Font Size</mat-label>
+      <input
+        type="number"
+        matInput
+        [defaultValue]="'56.992'"
+        (change)="changeHeadingFontSize($event)"
+      />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <h3>Applying Angular Material theme to custom components</h3>
+    <app-alert></app-alert>
+  </div>
+
   <div class="demo-buttons custom-theme">
+    <h3>Custom theme: Rose Red</h3>
     <button mat-button>Basic</button>
     <button mat-raised-button>Raised</button>
     <button mat-stroked-button>Stroked</button>
     <button mat-flat-button>Flat</button>
   </div>
-  <h1>Custom Shape</h1>
-  <div class="demo-buttons button-rounded">
-    <button mat-button>Basic</button>
-    <button mat-raised-button>Raised</button>
-    <button mat-stroked-button>Stroked</button>
-    <button mat-flat-button>Flat</button>
+
+  <div class="demo-buttons">
+    <h3>Custom shape</h3>
+    <button mat-button class="button-rounded">Basic</button>
+    <button mat-raised-button class="button-rounded">Raised</button>
+    <button mat-stroked-button class="button-rounded">Stroked</button>
+    <button mat-flat-button class="button-rounded">Flat</button>
   </div>
+
   <div class="demo-buttons overrides-example">
     <h3>Overrides Example</h3>
     <button mat-button class="button-rounded">Basic</button>
     <button mat-raised-button class="button-rounded">Raised</button>
     <button mat-stroked-button class="button-rounded">Stroked</button>
     <button mat-flat-button class="button-rounded">Flat</button>
+  </div>
 </div>
-  <div class="demo-buttons density-xs">
-  <h3>Density scale: -2, applied through class <code>.density-xs</code></h3>
-  <button mat-button>Basic</button>
-  <button mat-raised-button>Raised</button>
-  <button mat-stroked-button>Stroked</button>
-  <button mat-flat-button>Flat</button>
-</div>
-</div>
-<app-alert/>
-  <mat-form-field>
-    <mat-label>Flat Button Font Size</mat-label>
-    <input
-      type="number"
-      matInput
-      [defaultValue]="14"
-      (change)="changeFlatButtonFontSize($event)"
-    />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Heading Font Size</mat-label>
-    <input
-      type="number"
-      matInput
-      [defaultValue]="'56.992'"
-      (change)="changeHeadingFontSize($event)"
-    />
-  </mat-form-field>
-    <!-- <main>
+
+    <main>
       <ng-content></ng-content>
-    </main> -->
+    </main>
   `,
   styles: [`
     :host {
