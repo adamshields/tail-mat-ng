@@ -6,15 +6,17 @@
 
 .dark-theme {
   @include mat.core-color(themes.$my-app-dark-theme);
-  @include mat.button-color(themes.$my-app-dark-theme);
-  @include mat.icon-color(themes.$my-app-dark-theme);
-  @include mat.menu-color(themes.$my-app-dark-theme);
-  @include mat.form-field-color(themes.$my-app-theme);
-  @include mat.input-color(themes.$my-app-theme);
+  @include mat.all-component-themes(themes.$my-app-dark-theme);
+  // @include mat.button-color(themes.$my-app-dark-theme);
+  // @include mat.icon-color(themes.$my-app-dark-theme);
+  // @include mat.menu-color(themes.$my-app-dark-theme);
+  // @include mat.form-field-color(themes.$my-app-theme);
+  // @include mat.input-color(themes.$my-app-theme);
   @include mat.system-level-colors(themes.$my-app-dark-theme);
   @include mat.system-level-typography(themes.$my-app-dark-theme);
   @include components.color(themes.$my-app-theme);
   // @include mat.button-density(themes.$my-app-dark-theme);
   // @include mat.button-typography(themes.$my-app-dark-theme);
+  // @include mat.slider-color(themes.$my-app-dark-theme);
 
 }

@@ -14,8 +14,16 @@ export class ThemeManager {
   isDark$ = this._isDarkSub.asObservable();
   private _window = this.document.defaultView;
 
+  private _colorSub = new BehaviorSubject('#6750a4');
+  color$ = this._colorSub.asObservable();
+
+  private _densitySub = new BehaviorSubject('0');
+  density$ = this._densitySub.asObservable();
+
   constructor() {
     this.setTheme(this.getPreferredTheme());
+    this.setColor(this.getStoredColor());
+    this.setDensity(this.getStoredDensity());
     if (this._window !== null && this._window.matchMedia) {
       this._window
         .matchMedia('(prefers-color-scheme: dark)')
@@ -28,12 +36,33 @@ export class ThemeManager {
     }
   }
 
-  getStoredTheme = () =>
-    JSON.parse(this.browserStorage.get(LOCAL_STORAGE_KEY) ?? '{}').theme;
+  getStoredSettings = () =>
+    JSON.parse(this.browserStorage.get(LOCAL_STORAGE_KEY) ?? '{}');
+
+  setStoredSettings = (settings: any) => {
+    this.browserStorage.set(LOCAL_STORAGE_KEY, JSON.stringify(settings));
+  };
+
+  getStoredTheme = () => this.getStoredSettings().theme;
+  getStoredColor = () => this.getStoredSettings().color ?? '#6750a4';
+  getStoredDensity = () => this.getStoredSettings().density ?? '0';
+
   setStoredTheme = (theme: string) => {
-    const meta = JSON.parse(this.browserStorage.get(LOCAL_STORAGE_KEY) ?? '{}');
-    meta.theme = theme;
-    this.browserStorage.set(LOCAL_STORAGE_KEY, JSON.stringify(meta));
+    const settings = this.getStoredSettings();
+    settings.theme = theme;
+    this.setStoredSettings(settings);
+  };
+
+  setStoredColor = (color: string) => {
+    const settings = this.getStoredSettings();
+    settings.color = color;
+    this.setStoredSettings(settings);
+  };
+
+  setStoredDensity = (density: string) => {
+    const settings = this.getStoredSettings();
+    settings.density = density;
+    this.setStoredSettings(settings);
   };
 
   getPreferredTheme = (): 'dark' | 'light' => {
@@ -66,6 +95,16 @@ export class ThemeManager {
     }
   };
 
+  setColor = (color: string) => {
+    this._colorSub.next(color);
+    // this.applyColorTheme(color);
+  };
+
+  setDensity = (density: string) => {
+    this._densitySub.next(density);
+    this.applyDensity(density);
+  };
+
   setMaterialTheme() {
     this.isDark$.pipe(take(1)).subscribe((isDark) => {
       if (isDark) {
@@ -90,7 +129,29 @@ export class ThemeManager {
     this.setStoredTheme(theme);
     this.setTheme(theme);
   }
+
+  changeColor(color: string) {
+    this.setStoredColor(color);
+    this.setColor(color);
+  }
+
+  changeDensity(density: string) {
+    this.setStoredDensity(density);
+    this.setDensity(density);
+  }
+
+  // private applyColorTheme(color: string) {
+  //   // Implement the color theme application logic here
+  //   // This might involve using the Material Color Utilities or a similar approach
+  // }
+
+  private applyDensity(density: string) {
+    const root = this.document.documentElement;
+    root.style.setProperty('--density-scale', density);
+    // You might need to update other density-related styles here
+  }
 }
+
 
 function getLinkElementForKey(key: string) {
   return getExistingLinkElementByKey(key) || createLinkElementWithKey(key);

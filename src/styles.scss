@@ -81,15 +81,16 @@
 
 :root {
   @include mat.core-theme(themes.$my-app-theme);
-  @include mat.button-theme(themes.$my-app-theme);
-  @include mat.icon-theme(themes.$my-app-theme);
-  @include mat.menu-theme(themes.$my-app-theme);
-  @include mat.form-field-theme(themes.$my-app-theme);
-  @include mat.input-theme(themes.$my-app-theme);
+  @include mat.all-component-themes(themes.$my-app-theme);
+  // @include mat.button-theme(themes.$my-app-theme);
+  // @include mat.icon-theme(themes.$my-app-theme);
+  // @include mat.menu-theme(themes.$my-app-theme);
+  // @include mat.form-field-theme(themes.$my-app-theme);
+  // @include mat.input-theme(themes.$my-app-theme);
   @include mat.typography-hierarchy(themes.$my-app-theme);
   @include mat.system-level-colors(themes.$my-app-theme);
   @include mat.system-level-typography(themes.$my-app-theme);
-
+  // @include mat.slider-theme(themes.$my-app-theme);
   @include components.theme(themes.$my-app-theme);
 
   // @include mat.button-density(themes.$my-app-theme);
@@ -106,7 +107,9 @@
 @media (prefers-color-scheme: dark) {
   :root {
     @include mat.core-color(themes.$my-app-dark-theme);
-    @include mat.button-color(themes.$my-app-dark-theme);
+
+    // @include mat.button-color(themes.$my-app-dark-theme);
+    // @include mat.slider-color(themes.$my-app-dark-theme);
   }
 }
 

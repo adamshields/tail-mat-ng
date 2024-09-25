@@ -1,5 +1,3 @@
-// src/app/shared/components/color-picker/color-picker.component.ts
-
 import { AsyncPipe } from '@angular/common';
 import { Component, effect, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,8 +11,6 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ThemeManager } from '../../../theme-manager.service';
 
-const FALLBACK_COLOR = '#6750a4';
-
 @Component({
   selector: 'app-color-picker',
   standalone: true,
@@ -23,30 +19,30 @@ const FALLBACK_COLOR = '#6750a4';
   styleUrl: './color-picker.component.scss',
 })
 export class ColorPickerComponent {
-  color = FALLBACK_COLOR;
-  isDark = toSignal(inject(ThemeManager).isDark$);
+  private themeManager = inject(ThemeManager);
+  isDark = toSignal(this.themeManager.isDark$);
+  color = toSignal(this.themeManager.color$);
 
   constructor() {
-    effect(()=>{
-      this.generateDynamicTheme(this.isDark())
-    })
+    effect(() => {
+      this.generateDynamicTheme(this.isDark(), this.color());
+    });
   }
 
   changeTheme(ev: Event) {
     const inputElement = ev.target as HTMLInputElement;
-
-    this.color = inputElement.value;
-
-    this.generateDynamicTheme(this.isDark());
+    this.themeManager.changeColor(inputElement.value);
   }
 
-  generateDynamicTheme(isDark?: boolean) {
+  generateDynamicTheme(isDark?: boolean, color?: string) {
+    if (!color) return;
+
     let argb;
     try {
-      argb = argbFromHex(this.color);
+      argb = argbFromHex(color);
     } catch (error) {
       // falling to default color if it's invalid color
-      argb = argbFromHex(FALLBACK_COLOR);
+      argb = argbFromHex('#6750a4');
     }
 
     const targetElement = document.documentElement;
