@@ -1,0 +1,16 @@
+<button
+mat-icon-button
+(click)="colorPickerInput.click()"
+[style.color]="color"
+>
+<mat-icon>radio_button_checked</mat-icon>
+</button>
+<input
+type="color"
+name="color-picker"
+id="color-picker"
+class="color-picker-input"
+#colorPickerInput
+[value]="color"
+(input)="changeTheme($event)"
+/>

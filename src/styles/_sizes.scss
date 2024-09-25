@@ -1,0 +1,52 @@
+// src/styles/_sizes.scss
+
+@use "@angular/material" as mat;
+
+$densities: (
+  "sm":
+    mat.define-theme(
+      (
+        density: (
+          scale: -1,
+        ),
+      )
+    ),
+  "xs":
+    mat.define-theme(
+      (
+        density: (
+          scale: -2,
+        ),
+      )
+    ),
+  "xxs":
+    mat.define-theme(
+      (
+        density: (
+          scale: -3,
+        ),
+      )
+    ),
+  "3xs":
+    mat.define-theme(
+      (
+        density: (
+          scale: -4,
+        ),
+      )
+    ),
+  "4xs":
+    mat.define-theme(
+      (
+        density: (
+          scale: -5,
+        ),
+      )
+    ),
+);
+
+@each $name, $density in $densities {
+  .density-#{$name} {
+    @include mat.all-component-densities($density);
+  }
+}

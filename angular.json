@@ -32,7 +32,14 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles/light.css",
+              "src/styles/dark.css",
+              {
+                  "bundleName": "dark-theme",
+                  "inject": false,
+                  "input": "src/styles/themes/dark.scss"
+              }
             ],
             "scripts": []
           },
@@ -91,7 +98,14 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles/light.css",
+              "src/styles/dark.css",
+              {
+                  "bundleName": "dark-theme",
+                  "inject": false,
+                  "input": "src/styles/themes/dark.scss"
+              }
             ],
             "scripts": []
           }

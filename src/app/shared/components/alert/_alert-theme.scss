@@ -1,0 +1,61 @@
+// _alert-theme.scss
+
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {}
+
+@mixin typography($theme) {}
+
+@mixin density($theme) {}
+
+@mixin theme($theme) {
+  @include color($theme);
+  @include density($theme);
+  @include typography($theme);
+}
+
+@mixin color($theme) {
+  .alert {
+    color: mat.get-theme-color($theme, on-primary-container);
+    background: mat.get-theme-color($theme, primary-container);
+    border-color: mat.get-theme-color($theme, primary);
+  }
+}
+
+@mixin typography($theme) {
+  .alert {
+    font: mat.get-theme-typography($theme, 'body-medium');
+    letter-spacing: mat.get-theme-typography($theme, 'body-medium', 'letter-spacing');
+
+    .alert-heading {
+      font: mat.get-theme-typography($theme, 'headline-small');
+      letter-spacing: mat.get-theme-typography($theme, 'headline-small', 'letter-spacing');
+    }
+    .alert-footer {
+      font: mat.get-theme-typography($theme, 'label-small');
+      letter-spacing: mat.get-theme-typography($theme, 'label-small', 'letter-spacing');
+    }
+  }
+}
+
+@mixin density($theme) {
+  $spacing: (
+    0: 16px,
+    -1: 12px,
+    -2: 10px,
+    -3: 8px,
+    -4: 6px,
+    -5: 4px,
+  );
+  $scale: mat.get-theme-density($theme);
+  $scale-spacing: map.get($spacing, $scale);
+  .alert {
+    padding: $scale-spacing;
+    margin-bottom: $scale-spacing;
+
+    hr {
+      margin: $scale-spacing 0;
+    }
+  }
+}

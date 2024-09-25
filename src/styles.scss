@@ -1,55 +1,136 @@
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
-// Plus imports for other components in your app.
-@use './_m3-palettes' as palettes; // Import your custom palette
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities;
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
+// // Custom Theming for Angular Material
+// // For more information: https://material.angular.io/guide/theming
+// @use '@angular/material' as mat;
+// // Plus imports for other components in your app.
+// // @use '../m3-theme.scss' as theme; // Import your custom palette
+// @use './m3-palettes' as palettes; // Import your custom palette
+// // @tailwind base;
+// // @tailwind components;
+// // @tailwind utilities;
+// // Include the common styles for Angular Material. We include this here so that you only
+// // have to load a single css file for Angular Material in your app.
+// // Be sure that you only ever include this mixin once!
 // @include mat.core();
 
-// Define the theme object.
-$theme: mat.define-theme((
-  color: (
-    theme-type: dark,
-    primary: palettes.$adam-palette,
-    tertiary: palettes.$green-palette,
-  ),
-  density: (
-    scale: 0,
-  )
-));
+// // Define the theme object.
+// $theme: mat.define-theme((
+//   color: (
+//     theme-type: light,
+//     primary: palettes.$adam-palette,
+//     tertiary: palettes.$green-palette,
+//     use-system-variables: true,
+//     ),
+//     typography: (
+//       use-system-variables: true,
+//     ),
+//     density: (
+//       scale: 0,
+//     ),
+//   )
+// );
+// // Include theme styles for core and each component used in your app.
+// // Alternatively, you can import and @include the theme mixins for each component
+// // that you are using.
+// :root {
+//   @include mat.all-component-themes($theme);
+//   @include mat.system-level-colors($theme);
+//   @include mat.system-level-typography($theme);
+//   // @include mat.typography-hierarchy($theme);
+//   // --mat-app-surface: green;  // Override the surface color
+//   // --mat-app-primary: purple;  // Use the primary color from the theme
+//   // --mat-app-background: blue;  // Use the background color on the primary color
+//   // --mat-app-background-color: orange;  // Use the background color on the primary color
+//   // --mat-app-on-primary: var(--mat-primary-0);  // Use the text color on the primary color
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
+//   // // Generate CSS variables for each color and tone from palette.
+//   // @each $color in (primary, secondary, tertiary, neutral, neutral-variant, error) {
+//   //   @each $tone in (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99, 100) {
+//   //     --mat-#{$color}-#{$tone}: #{mat.get-theme-color($theme, $color, $tone)};
+//   //   }
+//   // }
+
+
+// }
+
+// // Comment out the line below if you want to use the pre-defined typography utility classes.
+// // For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// // @include mat.typography-hierarchy($tail-mat-ng-theme);
+
+// // Comment out the line below if you want to use the deprecated `color` inputs.
+// // @include mat.color-variants-backwards-compatibility($tail-mat-ng-theme);
+
+// html, body { height: 100%; }
+// body { margin: 0;  }
+
+// .tertiary-button {
+//   // @include mat.button-color($_palettes, $color-variant: tertiary);
+// }
+
+
+
+// styles.scss
+
+@use "@angular/material" as mat;
+@use "./styles/themes/all" as themes;
+@use "./styles/sizes";
+@use "./styles/components";
+
+
+@include mat.core();
+
 :root {
-  @include mat.all-component-themes($theme);
-  @include mat.typography-hierarchy($theme);
-  --mat-app-surface: green;  // Override the surface color
+  @include mat.core-theme(themes.$my-app-theme);
+  @include mat.button-theme(themes.$my-app-theme);
+  @include mat.icon-theme(themes.$my-app-theme);
+  @include mat.menu-theme(themes.$my-app-theme);
+  @include mat.form-field-theme(themes.$my-app-theme);
+  @include mat.input-theme(themes.$my-app-theme);
+  @include mat.typography-hierarchy(themes.$my-app-theme);
+  @include mat.system-level-colors(themes.$my-app-theme);
+  @include mat.system-level-typography(themes.$my-app-theme);
 
-  // // Generate CSS variables for each color and tone from palette.
-  // @each $color in (primary, secondary, tertiary, neutral, neutral-variant, error) {
-  //   @each $tone in (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99, 100) {
-  //     --mat-#{$color}-#{$tone}: #{mat.get-theme-color($theme, $color, $tone)};
-  //   }
-  // }
+  @include components.theme(themes.$my-app-theme);
+
+  // @include mat.button-density(themes.$my-app-theme);
+  // @include mat.button-typography(themes.$my-app-theme);
+
+
+  // --sys-display-large-size: 128px;
+  // --sys-display-large-line-height: 1.25;
+
+  // /* <h1> (and display-large) uses --sys-display-large, hence we also need to update that variable to see the changes */
+  // --sys-display-large: 400 var(--sys-display-large-size) / var(--sys-display-large-line-height) Roboto, sans-serif
 }
 
-// Comment out the line below if you want to use the pre-defined typography utility classes.
-// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
-// @include mat.typography-hierarchy($tail-mat-ng-theme);
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include mat.core-color(themes.$my-app-dark-theme);
+    @include mat.button-color(themes.$my-app-dark-theme);
+  }
+}
 
-// Comment out the line below if you want to use the deprecated `color` inputs.
-// @include mat.color-variants-backwards-compatibility($tail-mat-ng-theme);
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-html, body { height: 100%; }
-body { margin: 0;  }
 
-.tertiary-button {
-  @include mat.button-color($theme, $color-variant: tertiary);
+.overrides-example {
+  button {
+    @include mat.button-overrides(
+      (
+        container-color: #00ff00,
+        container-height: 64px,
+        container-shape: 32px,
+        label-text-color: orange,
+        ripple-color: #ff0000,
+        outline-color: #0000ff
+      )
+    );
+  }
 }

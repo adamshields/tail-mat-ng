@@ -1,0 +1,52 @@
+// alert.component.scss
+
+.alert {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+
+  hr {
+    color: inherit;
+    background-color: currentColor;
+    border: 0;
+    opacity: 0.25;
+    height: 1px;
+  }
+
+  .alert-heading {
+    color: inherit;
+  }
+
+  .alert-link {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  mat-icon {
+    color: currentColor;
+    vertical-align: middle;
+    font-size: inherit;
+    line-height: inherit;
+    height: inherit;
+    width: inherit;
+  }
+
+  .alert-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+
+    mat-icon {
+      font-size: 24px;
+      line-height: 1;
+      height: 24px;
+      width: 24px;
+    }
+  }
+
+  .alert-footer {
+    margin-bottom: 0;
+  }
+}

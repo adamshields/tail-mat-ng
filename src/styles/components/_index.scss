@@ -1,0 +1,11 @@
+// src/styles/components/_index.scss
+
+@use "../../app/shared/components/alert/alert-theme" as alert;
+
+@mixin theme($theme) {
+  @include alert.theme($theme);
+}
+
+@mixin color($theme) {
+  @include alert.color($theme);
+}

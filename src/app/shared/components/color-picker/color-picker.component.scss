@@ -1,0 +1,11 @@
+:host {
+  position: relative;
+}
+
+.color-picker-input {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  opacity: 0;
+  pointer-events: none;
+}
