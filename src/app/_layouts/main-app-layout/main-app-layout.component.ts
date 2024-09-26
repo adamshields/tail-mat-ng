@@ -75,7 +75,12 @@ export class MainAppLayoutComponent {
    * Signal to track whether the sidenav is collapsed.
    */
   collapsed = signal(false);
-
+  /**
+   * Toggles the collapsed state.
+   */
+  toggleCollapse() {
+    this.collapsed.set(!this.collapsed());
+  }
   /**
    * Computed property that returns the sidenav width based on whether it's collapsed or not.
    * Returns '65px' when collapsed and '250px' when expanded.
