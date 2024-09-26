@@ -4,5 +4,4 @@ export interface MenuItem {
   route?: string;
   subItems?: MenuItem[];
 
-
 }

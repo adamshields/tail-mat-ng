@@ -24,6 +24,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ]
 })
 export class SidenavMenuItemComponent {
+
   item = input.required<MenuItem>();
 
 
