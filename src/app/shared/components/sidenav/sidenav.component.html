@@ -1,7 +1,7 @@
-<div>
-  <mat-nav-list>
-    @for (item of menuItems; track item.label) {
-      <app-sidenav-menu-item [item]="item" [collapsed]="collapsed()" ></app-sidenav-menu-item>
-    }
-  </mat-nav-list>
-</div>
+
+<mat-nav-list>
+  @for (item of menuItems(); track item.label) {
+    <app-sidenav-menu-item [item]="item" [collapsed]="collapsed()" ></app-sidenav-menu-item>
+  }
+</mat-nav-list>
+

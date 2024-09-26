@@ -1,3 +1,32 @@
+/**
+ * MainAppLayoutComponent
+ *
+ * This component serves as the main layout for the application, containing a toolbar, sidenav, and
+ * dynamic content via the router outlet. It integrates theme management, a sidebar navigation system,
+ * and a toolbar with menu items and profile actions.
+ *
+ * Inputs:
+ * - None directly, but several internal signals and theme manager are used.
+ *
+ * Properties:
+ * - `themeManager` (ThemeManager): Injected service for managing theme switching (dark, light, or auto).
+ * - `isDark$` (Observable<boolean>): Observable to track the current theme mode (dark or light).
+ * - `loading` (signal<boolean>): Tracks the loading state of the app (e.g., for loading spinners).
+ * - `collapsed` (signal<boolean>): Determines whether the sidenav is collapsed or expanded.
+ * - `sidenavWidth` (computed<string>): Computes the sidenav width based on the collapsed state (either '65px' or '250px').
+ * - `menuItems` (MenuItem[]): Array of toolbar menu items imported from `TOOLBAR_MENU_ITEMS`.
+ *
+ * Methods:
+ * - `changeTheme(theme: string)`: Changes the application theme (options: 'light', 'dark', or 'auto').
+ *
+ * Usage Example:
+ *
+ * <app-main-app-layout></app-main-app-layout>
+ *
+ * The component integrates the `SidenavComponent` for the sidebar menu, `ColorPickerComponent` for theme color selection,
+ * and manages dynamic routing content via `router-outlet`.
+ */
+
 import { Component, computed, inject, signal } from '@angular/core';
 import { MaterialModules } from '../../..';
 import { RouterModule } from '@angular/router';
@@ -7,8 +36,7 @@ import { ColorPickerComponent } from "../../shared/components/color-picker/color
 import { SidenavComponent } from '../../shared/components/sidenav/sidenav.component';
 import { MenuItem } from '../../shared/data/menu-item.interface';
 import { TOOLBAR_MENU_ITEMS } from '../../shared/data/toolbar-menu-data';
-
-
+import { SIDENAV_MENU_ITEMS } from '../../shared/data/sidenav-menu-data';
 
 @Component({
   selector: 'app-main-app-layout',
@@ -19,87 +47,49 @@ import { TOOLBAR_MENU_ITEMS } from '../../shared/data/toolbar-menu-data';
 })
 export class MainAppLayoutComponent {
 
+  /**
+   * Theme manager service to handle theme changes (auto, light, dark).
+   */
   themeManager = inject(ThemeManager);
+
+  /**
+   * Observable that tracks whether the current theme is dark mode.
+   */
   isDark$ = this.themeManager.isDark$;
 
+  /**
+   * Changes the theme based on the input parameter ('light', 'dark', or 'auto').
+   *
+   * @param theme The theme to switch to.
+   */
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
   }
 
+  /**
+   * Signal to indicate whether the application is currently loading.
+   */
   loading = signal(false);
+
+  /**
+   * Signal to track whether the sidenav is collapsed.
+   */
   collapsed = signal(false);
+
+  /**
+   * Computed property that returns the sidenav width based on whether it's collapsed or not.
+   * Returns '65px' when collapsed and '250px' when expanded.
+   */
   sidenavWidth = computed(() => (this.collapsed() ? '65px' : '250px'));
 
+  /**
+   * Array of toolbar menu items (routes, labels, and icons) imported from `TOOLBAR_MENU_ITEMS`.
+   */
   menuItems: MenuItem[] = TOOLBAR_MENU_ITEMS;
-//   menuItems: MenuItem[] = [
-//     {
-//       icon: 'folder_open',
-//       label: 'Portfolios',
-//       route: 'portfolios',
-//     },
-//     {
-//       icon: 'apps',
-//       label: 'Applications',
-//       route: 'applications',
-//     },
-//     {
-//       icon: 'assignment',
-//       label: 'Projects',
-//       route: 'projects',
-//     },
-//     {
-//       icon: 'receipt_long',
-//       label: 'Estimates',
-//       route: 'estimates',
-//     },
-//     {
-//       icon: 'description',
-//       label: 'Documents',
-//       route: 'documents',
-//       subItems: [
-//         {
-//           icon: 'cloud_upload',
-//           label: 'Document Storage',
-//           route: 'storage',
-//         },
-//         {
-//           icon: 'history',
-//           label: 'Legacy Documents',
-//           route: 'legacy',
-//         },
-//       ],
-//     },
-//     {
-//       icon: 'admin_panel_settings',
-//       label: 'Admin',
-//       route: 'admin',
-//       subItems: [
-//         {
-//           icon: 'people',
-//           label: 'User Management',
-//           route: 'user-management',
-//         },
-//         {
-//           icon: 'assignment_ind',
-//           label: 'Roles',
-//           route: 'roles',
-//         },
-//         {
-//           icon: 'cloud',
-//           label: 'Hosting Resources',
-//           route: 'admin/hosting-resources',
-//         },
-//         {
-//           icon: 'table_chart',
-//           label: 'System Lookup Tables',
-//           route: 'admin/system-lookup-tables',
-//         },
-//         {
-//           icon: 'folder_special',
-//           label: 'Portfolio Management',
-//           route: 'admin/portfolio-management',
-//         },
-//       ],
-//     },
-//   ];
+
+  /**
+   * Array of sidenav menu items (routes, labels, and icons) imported from `TOOLBAR_MENU_ITEMS`.
+   */
+  sideNavItems: MenuItem[] = SIDENAV_MENU_ITEMS
+
 }
