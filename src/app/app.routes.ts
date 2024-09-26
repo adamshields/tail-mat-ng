@@ -5,23 +5,28 @@ import { ApplicationsComponent } from './_pages/applications/applications.compon
 import { DesignsComponent } from './_pages/applications/designs/designs.component';
 import { LayoutType } from '../layout.service';
 import { ColorPaletteComponent } from './_pages/color-palette/color-palette.component';
+import { PortfoliosComponent } from './_pages/portfolios/portfolios.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: MainAppLayoutComponent,
-    // data: { layout: 'default' as LayoutType }
+    children: [
+      {path: 'home', component: HomeComponent},
+      {path: 'portfolios', component: PortfoliosComponent},
+      {path: 'applications', component: ApplicationsComponent},
+    ]
   },
   // {
   //   path: 'home',
   //   component: HomeComponent,
   //   // data: { layout: 'default' as LayoutType }
   // },
-  // {
-  //   path: 'color',
-  //   component: ColorPaletteComponent,
-  //   // data: { layout: 'default' as LayoutType }
-  // },
+  {
+    path: 'color',
+    component: ColorPaletteComponent,
+    // data: { layout: 'default' as LayoutType }
+  },
   // {
   //   path: 'applications',
   //   component: ApplicationsComponent,
