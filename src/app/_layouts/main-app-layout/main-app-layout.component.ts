@@ -1,7 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MaterialModules } from '../../..';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ThemeManager } from '../../theme-manager.service';
+import { ColorPickerComponent } from "../../shared/components/color-picker/color-picker.component";
 
 export interface MenuItem {
   icon?: string;
@@ -15,11 +17,18 @@ export interface MenuItem {
 @Component({
   selector: 'app-main-app-layout',
   standalone: true,
-  imports: [MaterialModules, RouterModule, CommonModule],
+  imports: [MaterialModules, RouterModule, CommonModule, ColorPickerComponent],
   templateUrl: './main-app-layout.component.html',
   styleUrl: './main-app-layout.component.scss'
 })
 export class MainAppLayoutComponent {
+
+  themeManager = inject(ThemeManager);
+  isDark$ = this.themeManager.isDark$;
+
+  changeTheme(theme: string) {
+    this.themeManager.changeTheme(theme);
+  }
 
   loading = signal(false);
 

@@ -30,9 +30,10 @@ import { AlertComponent } from "../shared/components/alert/alert.component";
     AlertComponent
 ],
   template: `
-<div>
-<div>
+
+<!-- <div>
   <h1>Angular Material 3 Theming System: Complete Guide</h1>
+
   <button
     mat-icon-button
     class="theme-toggle"
@@ -112,11 +113,11 @@ import { AlertComponent } from "../shared/components/alert/alert.component";
     <button mat-stroked-button class="button-rounded">Stroked</button>
     <button mat-flat-button class="button-rounded">Flat</button>
   </div>
-</div>
+</div> -->
 
-    <main>
+    <!-- <main class="density-4xs">
       <ng-content></ng-content>
-    </main>
+    </main> -->
   `,
   styles: [`
     :host {

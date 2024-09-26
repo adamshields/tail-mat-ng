@@ -9,24 +9,29 @@ import { ColorPaletteComponent } from './_pages/color-palette/color-palette.comp
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-    data: { layout: 'default' as LayoutType }
+    component: MainAppLayoutComponent,
+    // data: { layout: 'default' as LayoutType }
   },
-  {
-    path: 'color',
-    component: ColorPaletteComponent,
-    data: { layout: 'default' as LayoutType }
-  },
-  {
-    path: 'applications',
-    component: ApplicationsComponent,
-    data: { layout: 'default' as LayoutType }
-  },
-  {
-    path: 'applications/designs',
-    component: DesignsComponent,
-    data: { layout: 'sidenav' as LayoutType }
-  }
+  // {
+  //   path: 'home',
+  //   component: HomeComponent,
+  //   // data: { layout: 'default' as LayoutType }
+  // },
+  // {
+  //   path: 'color',
+  //   component: ColorPaletteComponent,
+  //   // data: { layout: 'default' as LayoutType }
+  // },
+  // {
+  //   path: 'applications',
+  //   component: ApplicationsComponent,
+  //   // data: { layout: 'default' as LayoutType }
+  // },
+  // {
+  //   path: 'applications/designs',
+  //   component: DesignsComponent,
+  //   data: { layout: 'sidenav' as LayoutType }
+  // }
 ];
 // export const routes: Routes = [
 //   {

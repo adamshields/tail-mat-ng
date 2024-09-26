@@ -11,16 +11,18 @@ import { LayoutService } from '../layout.service';
   standalone: true,
   imports: [RouterOutlet, AsyncPipe, NgSwitch, NgSwitchCase, DefaultLayoutComponent, SidenavLayoutComponent],
   template: `
-    <ng-container [ngSwitch]="layoutService.currentLayout$ | async">
+  <router-outlet/>
+
+    <!-- <ng-container [ngSwitch]="layoutService.currentLayout$ | async">
       <app-default-layout *ngSwitchCase="'default'">
         <router-outlet></router-outlet>
       </app-default-layout>
       <app-sidenav-layout *ngSwitchCase="'sidenav'">
         <router-outlet></router-outlet>
       </app-sidenav-layout>
-    </ng-container>
+    </ng-container> -->
   `
 })
 export class AppComponent {
-  constructor(public layoutService: LayoutService) {}
+  // constructor(public layoutService: LayoutService) {}
 }

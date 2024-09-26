@@ -13,9 +13,12 @@ export const appConfig: ApplicationConfig = {
 
     provideAnimationsAsync(),
     provideRouter(routes),
-    {
-      provide: TitleStrategy,
-      useClass: LayoutRoutingStrategy
-    }, provideAnimationsAsync()
+    // {
+    //   provide: TitleStrategy,
+    //   useClass: LayoutRoutingStrategy
+    // },    // {
+    //   provide: TitleStrategy,
+    //   useClass: LayoutRoutingStrategy
+    // },
   ]
 };
