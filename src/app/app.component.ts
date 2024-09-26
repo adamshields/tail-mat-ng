@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AsyncPipe, NgSwitch, NgSwitchCase } from '@angular/common';
 import { DefaultLayoutComponent } from './_layouts/default-layout.component';
-import { SidenavLayoutComponent } from './_layouts/side-nav-layout.component';
+
 import { LayoutService } from '../layout.service';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AsyncPipe, NgSwitch, NgSwitchCase, DefaultLayoutComponent, SidenavLayoutComponent],
+  imports: [RouterOutlet, AsyncPipe, NgSwitch, NgSwitchCase, DefaultLayoutComponent, ],
   template: `
   <router-outlet/>
 

@@ -1,4 +1,4 @@
-<header>
+
   <mat-toolbar class="mat-elevation-z3">
     <span class="logo" routerLink="/">APPNAME</span>
     <mat-icon class="app-icon">bolt</mat-icon>
@@ -65,16 +65,28 @@
       </button>
     </mat-menu>
   </mat-toolbar>
-</header>
 
-<main>
-  @if (loading()) {
-  <div class="spinner-container">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-  </div>
-  } @else {
-  <ng-container #content>
-    <router-outlet></router-outlet>
-  </ng-container>
-  }
-</main>
+
+  <mat-sidenav-container>
+    <mat-sidenav
+      opened
+      mode="side"
+      [style.width]="sidenavWidth()"
+    >
+      <app-sidenav
+        [collapsed]="collapsed()"
+        [menuItems]="menuItems"
+      ></app-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth()">
+      @if (loading()) {
+      <div class="spinner-container">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+      } @else {
+      <ng-container #content>
+        <router-outlet></router-outlet>
+      </ng-container>
+      }
+    </mat-sidenav-content>
+  </mat-sidenav-container>
