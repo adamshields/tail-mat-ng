@@ -68,28 +68,21 @@
 
 
   <mat-sidenav-container>
-
-    <mat-sidenav
-      opened
-      mode="side"
-      [style.width]="sidenavWidth()"
-    >
-
-    <div class="sidenav-content">
-      <!-- Button Container for Proper Positioning -->
-      <div class="sidenav-toggle-button" >
-        <button mat-icon-button (click)="collapsed.set(!collapsed())">
-          <mat-icon>{{ collapsed() ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}</mat-icon>
-        </button>
+    @if (showSidenav()) {
+    <mat-sidenav [opened]="true" mode="side" [style.width]="sidenavWidth()">
+      <div class="sidenav-content">
+        <!-- Button Container for Proper Positioning -->
+        <div class="sidenav-toggle-button">
+          <button mat-icon-button (click)="collapsed.set(!collapsed())">
+            <mat-icon>{{ collapsed() ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}</mat-icon>
+          </button>
+        </div>
+        <!-- Sidenav menu items -->
+        <app-sidenav [collapsed]="collapsed()" [menuItems]="sideNavItems"></app-sidenav>
       </div>
-      <!-- Sidenav menu items -->
-      <app-sidenav
-        [collapsed]="collapsed()"
-        [menuItems]="sideNavItems"
-      ></app-sidenav>
-    </div>
     </mat-sidenav>
-    <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth()">
+    }
+    <mat-sidenav-content class="content" [style.marginLeft]="showSidenav() ? sidenavWidth() : '0'">
       @if (loading()) {
       <div class="spinner-container">
         <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>

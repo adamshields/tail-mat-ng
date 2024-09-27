@@ -18,15 +18,52 @@ export const routes: Routes = [
     path: '',
     component: MainAppLayoutComponent,
     children: [
-      {path: 'home', component: HomeComponent},
-      {path: 'portfolios', component: PortfoliosComponent},
-      {path: 'applications', component: ApplicationsComponent},
-      {path: 'projects', component: ProjectsComponent},
-      {path: 'estimates', component: EstimatesComponent},
-      {path: 'documents/storage', component: StorageComponent},
-      {path: 'documents/legacy', component: LegacyComponent},
-      {path: 'admin/user-management', component: UserManagementComponent},
-      {path: 'admin/roles', component: RolesComponent},
+      {
+        path: '',
+        component: HomeComponent,
+        data: { showSidenav: true }
+      },
+      {
+        path: 'portfolios',
+        component: PortfoliosComponent,
+        data: { showSidenav: false }
+      },
+      {
+        path: 'applications',
+        component: ApplicationsComponent,
+        data: { showSidenav: true }
+      },
+      {
+        path: 'projects',
+        component: ProjectsComponent,
+        data: { showSidenav: false }
+      },
+      {
+        path: 'estimates',
+        component: EstimatesComponent,
+        data: { showSidenav: false }
+      },
+      {
+        path: 'documents/storage',
+        component: StorageComponent,
+        data: { showSidenav: false }
+      },
+      {
+        path: 'documents/legacy',
+        component: LegacyComponent,
+        data: { showSidenav: false }
+      },
+      {
+        path: 'admin/user-management',
+        component: UserManagementComponent,
+        data: { showSidenav: true }
+      },
+      {
+        path: 'admin/roles',
+        component: RolesComponent,
+        data: { showSidenav: true }
+      }
+
     ]
   },
   // {

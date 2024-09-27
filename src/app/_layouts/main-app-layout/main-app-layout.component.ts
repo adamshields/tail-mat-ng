@@ -27,9 +27,9 @@
  * and manages dynamic routing content via `router-outlet`.
  */
 
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { MaterialModules } from '../../..';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ThemeManager } from '../../theme-manager.service';
 import { ColorPickerComponent } from "../../shared/components/color-picker/color-picker.component";
@@ -37,6 +37,9 @@ import { SidenavComponent } from '../../shared/components/sidenav/sidenav.compon
 import { MenuItem } from '../../shared/data/menu-item.interface';
 import { TOOLBAR_MENU_ITEMS } from '../../shared/data/toolbar-menu-data';
 import { SIDENAV_MENU_ITEMS } from '../../shared/data/sidenav-menu-data';
+import { SidenavService } from '../../shared/services/sidenav.service';
+import { filter, map, switchMap } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-main-app-layout',
@@ -47,49 +50,53 @@ import { SIDENAV_MENU_ITEMS } from '../../shared/data/sidenav-menu-data';
 })
 export class MainAppLayoutComponent {
 
-  /**
-   * Theme manager service to handle theme changes (auto, light, dark).
-   */
-  themeManager = inject(ThemeManager);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private sidenavService = inject(SidenavService);
 
-  /**
-   * Observable that tracks whether the current theme is dark mode.
-   */
+  collapsed = signal(false);
+  loading = signal(false);
+
+  sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');
+
+  private serviceOverride = toSignal(this.sidenavService.showSidenav$);
+  private currentRouteData = signal<{ showSidenav: boolean }>({ showSidenav: false });
+
+  showSidenav = computed(() => {
+    const override = this.serviceOverride();
+    return override !== null ? override : this.currentRouteData().showSidenav;
+  });
+
+  constructor() {
+    effect(() => {
+      console.log('Sidenav visibility changed:', this.showSidenav());
+    });
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => this.getRouteData()),
+      filter((data): data is { showSidenav: boolean } => data !== null)
+    ).subscribe(data => {
+      this.currentRouteData.set(data);
+      this.sidenavService.resetSidenavVisibility();
+    });
+  }
+
+  private getRouteData(): { showSidenav: boolean } | null {
+    let route = this.activatedRoute.snapshot.firstChild;
+    while (route?.firstChild) {
+      route = route.firstChild;
+    }
+    return route?.data as { showSidenav: boolean } | null;
+  }
+  themeManager = inject(ThemeManager);
   isDark$ = this.themeManager.isDark$;
 
-  /**
-   * Changes the theme based on the input parameter ('light', 'dark', or 'auto').
-   *
-   * @param theme The theme to switch to.
-   */
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
   }
 
-  /**
-   * Signal to indicate whether the application is currently loading.
-   */
-  loading = signal(false);
 
-  /**
-   * Signal to track whether the sidenav is collapsed.
-   */
-  collapsed = signal(false);
-  // /**
-  //  * Toggles the collapsed state.
-  //  */
-  // toggleCollapse() {
-  //   this.collapsed.set(!this.collapsed());
-  // }
-  /**
-   * Computed property that returns the sidenav width based on whether it's collapsed or not.
-   * Returns '65px' when collapsed and '250px' when expanded.
-   */
-  sidenavWidth = computed(() => (this.collapsed() ? '65px' : '250px'));
-
-  /**
-   * Array of toolbar menu items (routes, labels, and icons) imported from `TOOLBAR_MENU_ITEMS`.
-   */
   menuItems: MenuItem[] = TOOLBAR_MENU_ITEMS;
 
   /**
