@@ -6,6 +6,12 @@ import { DesignsComponent } from './_pages/applications/designs/designs.componen
 import { LayoutType } from '../layout.service';
 import { ColorPaletteComponent } from './_pages/color-palette/color-palette.component';
 import { PortfoliosComponent } from './_pages/portfolios/portfolios.component';
+import { ProjectsComponent } from './_pages/projects/projects.component';
+import { EstimatesComponent } from './_pages/estimates/estimates.component';
+import { StorageComponent } from './_pages/documents/storage/storage.component';
+import { LegacyComponent } from './_pages/documents/legacy/legacy.component';
+import { UserManagementComponent } from './_pages/admin/user-management/user-management.component';
+import { RolesComponent } from './_pages/admin/roles/roles.component';
 
 export const routes: Routes = [
   {
@@ -15,6 +21,12 @@ export const routes: Routes = [
       {path: 'home', component: HomeComponent},
       {path: 'portfolios', component: PortfoliosComponent},
       {path: 'applications', component: ApplicationsComponent},
+      {path: 'projects', component: ProjectsComponent},
+      {path: 'estimates', component: EstimatesComponent},
+      {path: 'documents/storage', component: StorageComponent},
+      {path: 'documents/legacy', component: LegacyComponent},
+      {path: 'admin/user-management', component: UserManagementComponent},
+      {path: 'admin/roles', component: RolesComponent},
     ]
   },
   // {
