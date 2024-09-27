@@ -20,7 +20,7 @@
  * passes the collapsed state to each item.
  */
 
-import { Component, input } from '@angular/core';
+import { Component, effect, input } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MenuItem } from '../../data/menu-item.interface';
 import { SidenavMenuItemComponent } from '../sidenav-menu-item/sidenav-menu-item.component';
@@ -65,6 +65,12 @@ export class SidenavComponent {
    */
   collapsed = input<boolean>(false);
 
+  constructor() {
+    // Use the effect to log whenever 'collapsed' changes
+    effect(() => {
+      console.log('collapsed state changed sidenav component:', this.collapsed());
+    });
+  }
   /**
    * Array of menu items that are displayed in the sidenav. This is passed in as an input, allowing
    * the parent component to dynamically provide the sidenav items.

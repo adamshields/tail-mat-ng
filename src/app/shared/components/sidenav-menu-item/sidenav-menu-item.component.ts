@@ -34,7 +34,7 @@
  * }
  */
 
-import { Component, input, signal } from '@angular/core';
+import { Component, effect, input, signal } from '@angular/core';
 import { MenuItem } from '../../data/menu-item.interface';
 import { MatIcon } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -60,7 +60,12 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ]
 })
 export class SidenavMenuItemComponent {
-
+  constructor() {
+    // Use the effect to log whenever 'collapsed' changes
+    effect(() => {
+      console.log('collapsed state changed sidenav menu item:', this.collapsed());
+    });
+  }
   /**
    * The menu item object containing the icon, label, route, and optionally sub-items.
    */
