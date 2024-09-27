@@ -30,8 +30,8 @@ export const routes: Routes = [
       },
       {
         path: 'applications',
-        loadComponent: () => import('./_pages/applications/applications.component').then(m => m.ApplicationsComponent),
-        data: { showSidenav: false }
+        loadChildren: () => import('./_pages/applications/applications.routes').then(m => m.APPLICATIONS_ROUTES),
+        // data: { showSidenav: false }
       },
       {
         path: 'projects',
