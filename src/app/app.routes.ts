@@ -20,62 +20,63 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: HomeComponent,
-        data: { showSidenav: true }
+        loadComponent: () => import('./_pages/home/home.component').then(m => m.HomeComponent),
+        data: { showSidenav: false }
       },
       {
         path: 'portfolios',
-        component: PortfoliosComponent,
+        loadComponent: () => import('./_pages/portfolios/portfolios.component').then(m => m.PortfoliosComponent),
         data: { showSidenav: false }
       },
       {
         path: 'applications',
-        component: ApplicationsComponent,
-        data: { showSidenav: true }
+        loadComponent: () => import('./_pages/applications/applications.component').then(m => m.ApplicationsComponent),
+        data: { showSidenav: false }
       },
       {
         path: 'projects',
-        component: ProjectsComponent,
+        loadComponent: () => import('./_pages/projects/projects.component').then(m => m.ProjectsComponent),
         data: { showSidenav: false }
       },
       {
         path: 'estimates',
-        component: EstimatesComponent,
+        loadComponent: () => import('./_pages/estimates/estimates.component').then(m => m.EstimatesComponent),
         data: { showSidenav: false }
       },
       {
         path: 'documents/storage',
-        component: StorageComponent,
+        loadComponent: () => import('./_pages/documents/storage/storage.component').then(m => m.StorageComponent),
         data: { showSidenav: false }
       },
       {
         path: 'documents/legacy',
-        component: LegacyComponent,
+        loadComponent: () => import('./_pages/documents/legacy/legacy.component').then(m => m.LegacyComponent),
         data: { showSidenav: false }
       },
       {
         path: 'admin/user-management',
-        component: UserManagementComponent,
+        loadComponent: () => import('./_pages/admin/user-management/user-management.component').then(m => m.UserManagementComponent),
         data: { showSidenav: true }
       },
       {
         path: 'admin/roles',
-        component: RolesComponent,
+        loadComponent: () => import('./_pages/admin/roles/roles.component').then(m => m.RolesComponent),
         data: { showSidenav: true }
       }
-
     ]
-  },
+  }
+];
+
   // {
   //   path: 'home',
   //   component: HomeComponent,
   //   // data: { layout: 'default' as LayoutType }
   // },
-  {
-    path: 'color',
-    component: ColorPaletteComponent,
-    // data: { layout: 'default' as LayoutType }
-  },
+  // {
+  //   path: 'color',
+  //   component: ColorPaletteComponent,
+  //   // data: { layout: 'default' as LayoutType }
+  // },
   // {
   //   path: 'applications',
   //   component: ApplicationsComponent,
@@ -86,7 +87,7 @@ export const routes: Routes = [
   //   component: DesignsComponent,
   //   data: { layout: 'sidenav' as LayoutType }
   // }
-];
+// ];
 // export const routes: Routes = [
 //   {
 //     path: '',
