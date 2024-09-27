@@ -1,10 +1,11 @@
-<!--
-<div class="sidenav-header">
+
+<!-- <div class="sidenav-header">
   <div class="header-text" [class.hide-header-text]="collapsed()">
-    <h2>Your channel</h2>
-    <p>Zoaib Khan</p>
+    <h2>Design Details</h2>
+    <p>Other Dynamic Info</p>
   </div>
 </div> -->
+
 <mat-nav-list>
   @for (item of menuItems(); track item.label) {
     <app-sidenav-menu-item [item]="item" [collapsed]="collapsed()" ></app-sidenav-menu-item>
