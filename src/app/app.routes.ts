@@ -3,7 +3,6 @@ import { MainAppLayoutComponent } from './_layouts/main-app-layout/main-app-layo
 import { HomeComponent } from './_pages/home/home.component';
 import { ApplicationsComponent } from './_pages/applications/applications.component';
 import { DesignsComponent } from './_pages/applications/designs/designs.component';
-import { LayoutType } from '../layout.service';
 import { ColorPaletteComponent } from './_pages/color-palette/color-palette.component';
 import { PortfoliosComponent } from './_pages/portfolios/portfolios.component';
 import { ProjectsComponent } from './_pages/projects/projects.component';

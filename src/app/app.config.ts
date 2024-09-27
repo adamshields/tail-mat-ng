@@ -5,7 +5,7 @@ import { provideRouter, TitleStrategy } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { LayoutRoutingStrategy } from './layout-routing-strategy';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,12 +13,6 @@ export const appConfig: ApplicationConfig = {
 
     provideAnimationsAsync(),
     provideRouter(routes),
-    // {
-    //   provide: TitleStrategy,
-    //   useClass: LayoutRoutingStrategy
-    // },    // {
-    //   provide: TitleStrategy,
-    //   useClass: LayoutRoutingStrategy
-    // },
+
   ]
 };
