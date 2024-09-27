@@ -68,9 +68,9 @@ export class MainAppLayoutComponent {
   });
 
   constructor() {
-    effect(() => {
-      console.log('Sidenav visibility changed:', this.showSidenav());
-    });
+    // effect(() => {
+    //   console.log('Sidenav visibility changed:', this.showSidenav());
+    // });
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
@@ -89,6 +89,7 @@ export class MainAppLayoutComponent {
     }
     return route?.data as { showSidenav: boolean } | null;
   }
+
   themeManager = inject(ThemeManager);
   isDark$ = this.themeManager.isDark$;
 
@@ -98,10 +99,6 @@ export class MainAppLayoutComponent {
 
 
   menuItems: MenuItem[] = TOOLBAR_MENU_ITEMS;
-
-  /**
-   * Array of sidenav menu items (routes, labels, and icons) imported from `TOOLBAR_MENU_ITEMS`.
-   */
   sideNavItems: MenuItem[] = SIDENAV_MENU_ITEMS
 
 }
