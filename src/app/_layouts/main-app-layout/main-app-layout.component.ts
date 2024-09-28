@@ -1,32 +1,3 @@
-/**
- * MainAppLayoutComponent
- *
- * This component serves as the main layout for the application, containing a toolbar, sidenav, and
- * dynamic content via the router outlet. It integrates theme management, a sidebar navigation system,
- * and a toolbar with menu items and profile actions.
- *
- * Inputs:
- * - None directly, but several internal signals and theme manager are used.
- *
- * Properties:
- * - `themeManager` (ThemeManager): Injected service for managing theme switching (dark, light, or auto).
- * - `isDark$` (Observable<boolean>): Observable to track the current theme mode (dark or light).
- * - `loading` (signal<boolean>): Tracks the loading state of the app (e.g., for loading spinners).
- * - `collapsed` (signal<boolean>): Determines whether the sidenav is collapsed or expanded.
- * - `sidenavWidth` (computed<string>): Computes the sidenav width based on the collapsed state (either '65px' or '250px').
- * - `menuItems` (MenuItem[]): Array of toolbar menu items imported from `TOOLBAR_MENU_ITEMS`.
- *
- * Methods:
- * - `changeTheme(theme: string)`: Changes the application theme (options: 'light', 'dark', or 'auto').
- *
- * Usage Example:
- *
- * <app-main-app-layout></app-main-app-layout>
- *
- * The component integrates the `SidenavComponent` for the sidebar menu, `ColorPickerComponent` for theme color selection,
- * and manages dynamic routing content via `router-outlet`.
- */
-
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { MaterialModules } from '../../..';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
