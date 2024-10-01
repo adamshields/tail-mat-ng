@@ -19,57 +19,80 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './main-app-layout.component.html',
   styleUrl: './main-app-layout.component.scss'
 })
+/**
+ * MainAppLayoutComponent is the root layout component responsible for managing the main layout
+ * of the application. It includes a toolbar, sidenav, and content area. The component also
+ * handles theme changes and sidenav visibility.
+ */
 export class MainAppLayoutComponent {
 
-  private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
+  /**
+   * Injected SidenavService used to control the visibility of the sidenav.
+   */
   private sidenavService = inject(SidenavService);
 
+  /**
+   * Signal representing whether the sidenav is collapsed or expanded.
+   * Defaults to `false` (expanded).
+   */
   collapsed = signal(false);
+
+  /**
+   * Signal representing the loading state of the layout.
+   * Can be used to show or hide a loading indicator.
+   */
   loading = signal(false);
 
+  /**
+   * Computed signal that dynamically calculates the width of the sidenav based
+   * on its collapsed state.
+   * @returns {string} - '65px' if collapsed, '250px' if expanded.
+   */
   sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');
 
-  private serviceOverride = toSignal(this.sidenavService.showSidenav$);
-  private currentRouteData = signal<{ showSidenav: boolean }>({ showSidenav: false });
+  /**
+   * Signal that tracks whether the sidenav should be shown or hidden,
+   * derived from the SidenavService's `showSidenav$` observable.
+   */
+  showSidenav = toSignal(this.sidenavService.showSidenav$);
 
-  showSidenav = computed(() => {
-    const override = this.serviceOverride();
-    return override !== null ? override : this.currentRouteData().showSidenav;
-  });
-
-  constructor() {
-    // effect(() => {
-    //   console.log('Sidenav visibility changed:', this.showSidenav());
-    // });
-
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map(() => this.getRouteData()),
-      filter((data): data is { showSidenav: boolean } => data !== null)
-    ).subscribe(data => {
-      this.currentRouteData.set(data);
-      this.sidenavService.resetSidenavVisibility();
-    });
-  }
-
-  private getRouteData(): { showSidenav: boolean } | null {
-    let route = this.activatedRoute.snapshot.firstChild;
-    while (route?.firstChild) {
-      route = route.firstChild;
-    }
-    return route?.data as { showSidenav: boolean } | null;
-  }
-
+  /**
+   * Injected ThemeManager service used to manage the application's theme.
+   */
   themeManager = inject(ThemeManager);
+
+  /**
+   * Observable that tracks whether the current theme is dark mode.
+   * This can be used to dynamically switch styles or components based on the theme.
+   */
   isDark$ = this.themeManager.isDark$;
 
+  /**
+   * Method to change the application's theme. The theme string should correspond
+   * to the available themes defined in the ThemeManager.
+   * @param {string} theme - The name of the theme to apply.
+   */
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
   }
 
-
+  /**
+   * Array of menu items to be displayed in the toolbar.
+   */
   menuItems: MenuItem[] = TOOLBAR_MENU_ITEMS;
-  sideNavItems: MenuItem[] = SIDENAV_MENU_ITEMS
 
+  /**
+   * Array of menu items to be displayed in the sidenav.
+   */
+  sideNavItems: MenuItem[] = SIDENAV_MENU_ITEMS;
+
+  /**
+   * Constructor that sets up reactive effects in the component.
+   * Logs the current sidenav visibility state whenever it changes.
+   */
+  constructor() {
+    effect(() => {
+      console.log('Sidenav visibility changed:', this.showSidenav());
+    });
+  }
 }

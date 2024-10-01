@@ -6,14 +6,17 @@ import { DesignDetailsComponent } from './design-details/design-details.componen
 export const APPLICATIONS_ROUTES: Routes = [
   {
     path: '',
-    component: ApplicationsComponent
+    component: ApplicationsComponent,
+    data: { showSidenav: false }  // Explicitly set sidenav visibility
   },
   {
     path: ':id',
-    component: ApplicationDetailsComponent
+    component: ApplicationDetailsComponent,
+    data: { showSidenav: false }  // Explicitly set sidenav visibility
   },
   {
     path: ':id/designs/:designId',
-    component: DesignDetailsComponent
+    component: DesignDetailsComponent,
+    data: { showSidenav: true }
   }
 ];

@@ -20,12 +20,12 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./_pages/home/home.component').then(m => m.HomeComponent),
-        data: { showSidenav: false }
+        // data: { showSidenav: false }
       },
       {
         path: 'portfolios',
         loadComponent: () => import('./_pages/portfolios/portfolios.component').then(m => m.PortfoliosComponent),
-        data: { showSidenav: false }
+        // data: { showSidenav: false }
       },
       {
         path: 'applications',
@@ -35,32 +35,32 @@ export const routes: Routes = [
       {
         path: 'projects',
         loadComponent: () => import('./_pages/projects/projects.component').then(m => m.ProjectsComponent),
-        data: { showSidenav: false }
+        // data: { showSidenav: false }
       },
       {
         path: 'estimates',
         loadComponent: () => import('./_pages/estimates/estimates.component').then(m => m.EstimatesComponent),
-        data: { showSidenav: false }
+        // data: { showSidenav: false }
       },
       {
         path: 'documents/storage',
         loadComponent: () => import('./_pages/documents/storage/storage.component').then(m => m.StorageComponent),
-        data: { showSidenav: false }
+        // data: { showSidenav: false }
       },
       {
         path: 'documents/legacy',
         loadComponent: () => import('./_pages/documents/legacy/legacy.component').then(m => m.LegacyComponent),
-        data: { showSidenav: false }
+        // data: { showSidenav: false }
       },
       {
         path: 'admin/user-management',
         loadComponent: () => import('./_pages/admin/user-management/user-management.component').then(m => m.UserManagementComponent),
-        data: { showSidenav: true }
+        // data: { showSidenav: true }
       },
       {
         path: 'admin/roles',
         loadComponent: () => import('./_pages/admin/roles/roles.component').then(m => m.RolesComponent),
-        data: { showSidenav: true }
+        // data: { showSidenav: true }
       }
     ]
   }
