@@ -36,9 +36,9 @@
               "src/styles/light.css",
               "src/styles/dark.css",
               {
-                  "bundleName": "dark-theme",
-                  "inject": false,
-                  "input": "src/styles/themes/dark.scss"
+                "bundleName": "dark-theme",
+                "inject": false,
+                "input": "src/styles/themes/dark.scss"
               }
             ],
             "scripts": []
@@ -102,15 +102,29 @@
               "src/styles/light.css",
               "src/styles/dark.css",
               {
-                  "bundleName": "dark-theme",
-                  "inject": false,
-                  "input": "src/styles/themes/dark.scss"
+                "bundleName": "dark-theme",
+                "inject": false,
+                "input": "src/styles/themes/dark.scss"
               }
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
