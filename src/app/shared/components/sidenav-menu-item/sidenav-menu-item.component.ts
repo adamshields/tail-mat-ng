@@ -31,26 +31,16 @@ export class SidenavMenuItemComponent {
       console.log('collapsed state changed sidenav menu item:', this.collapsed());
     });
   }
-  /**
-   * The menu item object containing the icon, label, route, and optionally sub-items.
-   */
+
   item = input.required<MenuItem>();
 
-  /**
-   * Boolean value indicating whether the sidenav is collapsed.
-   * If true, only icons are displayed and labels are hidden.
-   */
+
   collapsed = input<boolean>(false);
 
-  /**
-   * A signal that tracks whether the nested sub-menu is open.
-   */
+
   nestedMenuOpen = signal(false);
 
-  /**
-   * Toggles the visibility of the nested sub-menu.
-   * Only executes if the current menu item has sub-items.
-   */
+
   toggleNested() {
     if (!this.item().subItems) {
       return;
