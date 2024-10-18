@@ -71,11 +71,15 @@
 
 // styles.scss
 
+
 @use "@angular/material" as mat;
 @use "./styles/themes/all" as themes;
 @use "./styles/sizes";
 @use "./styles/components";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @include mat.core();
 
@@ -135,5 +139,36 @@ body {
         outline-color: #0000ff
       )
     );
+  }
+}
+
+
+@layer base {
+  h1 {
+    @apply text-display-large;
+  }
+
+  h2 {
+    @apply text-display-medium;
+  }
+
+  h3 {
+    @apply text-display-small;
+  }
+
+  h4 {
+    @apply text-headline-large;
+  }
+
+  h5 {
+    @apply text-headline-medium;
+  }
+
+  h6 {
+    @apply text-headline-small;
+  }
+
+  p {
+    @apply text-body-large;
   }
 }

@@ -1,11 +1,15 @@
 // src/styles/components/_index.scss
 
 @use "../../app/shared/components/alert/alert-theme" as alert;
+@use "@breaker/components/app-toolbar/toolbar-theme" as toolbar;
+
 
 @mixin theme($theme) {
   @include alert.theme($theme);
+  @include toolbar.theme($theme);
 }
 
 @mixin color($theme) {
   @include alert.color($theme);
+  @include toolbar.color($theme);
 }

@@ -1,0 +1,66 @@
+<mat-toolbar class="toolbar">
+  <span class="logo" routerLink="/">APPNAME</span>
+  <mat-icon class="app-icon">bolt</mat-icon>
+
+  <nav class="menu">
+    @for (item of menuItems; track item) { @if (!item.subItems) {
+    <a mat-button [routerLink]="[item.route]">
+      <mat-icon>{{ item.icon }}</mat-icon>
+      {{ item.label }}
+    </a>
+    } @else {
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>{{ item.icon }}</mat-icon>
+      {{ item.label }}
+      <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      @for (subItem of item.subItems; track subItem) {
+      <a mat-menu-item [routerLink]="[item.route, subItem.route]">
+        <mat-icon>{{ subItem.icon }}</mat-icon>
+        {{ subItem.label }}
+      </a>
+      }
+    </mat-menu>
+    } }
+  </nav>
+
+  <span class="spacer"></span>
+  <!-- Theme Toggler -->
+  <button
+    mat-icon-button
+    class="theme-toggle"
+    aria-label="Change theme"
+    [matMenuTriggerFor]="themeMenu"
+  >
+    <mat-icon>{{
+      (isDark$ | async) === true ? "dark_mode" : "light_mode"
+    }}</mat-icon>
+  </button>
+  <!-- Color Picker -->
+  <!-- <app-color-picker class="color-picker"></app-color-picker> -->
+  <mat-menu #themeMenu="matMenu">
+    <button mat-menu-item (click)="changeTheme('auto')">System</button>
+    <button mat-menu-item (click)="changeTheme('light')">Light</button>
+    <button mat-menu-item (click)="changeTheme('dark')">Dark</button>
+  </mat-menu>
+  <!-- Profile Button -->
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>edit</mat-icon>
+      <span>Edit Profile</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Account Settings</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item>
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
