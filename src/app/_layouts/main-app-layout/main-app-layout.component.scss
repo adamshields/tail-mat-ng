@@ -2,10 +2,10 @@ mat-toolbar {
   position: relative;
   z-index: 5;
 }
-.content {
-  padding: 20px;
-  transition: margin-left 0.5s;
-}
+// .content {
+//   padding: 20px;
+//   transition: margin-left 0.5s;
+// }
 mat-sidenav-container {
   height: calc(100vh - 64px);
 }
@@ -13,12 +13,12 @@ mat-sidenav,
 mat-sidenav-content {
   transition: all 500ms ease-in-out;
 }
-.spacer {
-  flex: 1 1 auto;
-}
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
+// .spacer {
+//   flex: 1 1 auto;
+// }
+// .spinner-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100%;
+// }

@@ -25,17 +25,17 @@
 
 @mixin typography($theme) {
   .toolbar {
-    font: mat.get-theme-typography($theme, 'body-medium');
-    letter-spacing: mat.get-theme-typography($theme, 'body-medium', 'letter-spacing');
+    // font: mat.get-theme-typography($theme, 'body-medium');
+    // letter-spacing: mat.get-theme-typography($theme, 'body-medium', 'letter-spacing');
 
-    .toolbar-heading {
-      font: mat.get-theme-typography($theme, 'headline-small');
-      letter-spacing: mat.get-theme-typography($theme, 'headline-small', 'letter-spacing');
-    }
-    .toolbar-footer {
-      font: mat.get-theme-typography($theme, 'label-small');
-      letter-spacing: mat.get-theme-typography($theme, 'label-small', 'letter-spacing');
-    }
+    // .toolbar-heading {
+    //   font: mat.get-theme-typography($theme, 'headline-small');
+    //   letter-spacing: mat.get-theme-typography($theme, 'headline-small', 'letter-spacing');
+    // }
+    // .toolbar-footer {
+    //   font: mat.get-theme-typography($theme, 'label-small');
+    //   letter-spacing: mat.get-theme-typography($theme, 'label-small', 'letter-spacing');
+    // }
   }
 }
 

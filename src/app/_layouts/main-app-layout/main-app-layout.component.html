@@ -16,9 +16,9 @@
       </div>
     </mat-sidenav>
     }
-    <mat-sidenav-content class="content" [style.marginLeft]="showSidenav() ? sidenavWidth() : '0'">
+    <mat-sidenav-content class="p-5 transition-[margin-left] duration-500" [style.marginLeft]="showSidenav() ? sidenavWidth() : '0'">
       @if (loading()) {
-      <div class="spinner-container">
+      <div class="flex justify-center items-center h-full">
         <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
       </div>
       } @else {
