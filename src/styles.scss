@@ -142,6 +142,10 @@ body {
   }
 }
 
+// Custom class for page headers using Tailwind utilities
+.page-header {
+  @apply text-display-large font-bold text-primary;
+}
 
 @layer base {
   h1 {
