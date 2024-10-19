@@ -20,11 +20,26 @@
     color: mat.get-theme-color($theme, on-primary-container);
     background: mat.get-theme-color($theme, primary-container);
     border-color: mat.get-theme-color($theme, primary);
+
+    // .mat-icon {
+    //   color: mat.get-theme-color($theme, on-primary-container);
+    //   font-size: 24px;  // Adjust the icon size as needed
+    // }
+
+
   }
 }
 
 @mixin typography($theme) {
+
+
   .toolbar {
+
+    // Customize the typography for the toolbar elements
+    .logo {
+      // font: mat.get-theme-typography($theme, 'display-large');
+      // letter-spacing: mat.get-theme-typography($theme, 'display-large', 'letter-spacing');
+    }
     // font: mat.get-theme-typography($theme, 'body-medium');
     // letter-spacing: mat.get-theme-typography($theme, 'body-medium', 'letter-spacing');
 
@@ -59,3 +74,5 @@
     }
   }
 }
+
+
