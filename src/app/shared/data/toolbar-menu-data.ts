@@ -9,6 +9,11 @@ export const TOOLBAR_MENU_ITEMS: MenuItem[] = [
     route: 'portfolios',
   },
   {
+    icon: 'trending_up',
+    label: 'Test',
+    route: 'test',
+  },
+  {
     icon: 'apps',
     label: 'Applications',
     route: 'applications',

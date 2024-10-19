@@ -23,6 +23,11 @@ export const routes: Routes = [
         // data: { showSidenav: false }
       },
       {
+        path: 'test',
+        loadComponent: () => import('./_pages/test/test.component').then(m => m.TestComponent),
+        // data: { showSidenav: false }
+      },
+      {
         path: 'portfolios',
         loadComponent: () => import('./_pages/portfolios/portfolios.component').then(m => m.PortfoliosComponent),
         // data: { showSidenav: false }
