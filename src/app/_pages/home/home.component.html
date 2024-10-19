@@ -1,4 +1,72 @@
 <div class="container">
+  <div>
+  <h1>Angular Material 3 Theming System: Complete Guide</h1>
+
+
+  <div class="demo-buttons">
+    <button mat-button>Basic</button>
+    <button mat-raised-button>Raised</button>
+    <button mat-stroked-button>Stroked</button>
+    <button mat-flat-button>Flat</button>
+  </div>
+  <div class="demo-buttons density-xs">
+    <h3>Density scale: -2, applied through class <code>.density-xs</code></h3>
+    <button mat-button>Basic</button>
+    <button mat-raised-button>Raised</button>
+    <button mat-stroked-button>Stroked</button>
+    <button mat-flat-button>Flat</button>
+  </div>
+  <div>
+    <h3>Changing typesclae values</h3>
+    <mat-form-field>
+      <mat-label>Flat Button Font Size</mat-label>
+      <input
+        type="number"
+        matInput
+        [defaultValue]="14"
+
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Heading Font Size</mat-label>
+      <input
+        type="number"
+        matInput
+        [defaultValue]="'56.992'"
+
+      />
+    </mat-form-field>
+  </div>
+
+  <div>
+    <h3>Applying Angular Material theme to custom components</h3>
+    <app-alert></app-alert>
+  </div>
+
+  <div class="demo-buttons custom-theme">
+    <h3>Custom theme: Rose Red</h3>
+    <button mat-button>Basic</button>
+    <button mat-raised-button>Raised</button>
+    <button mat-stroked-button>Stroked</button>
+    <button mat-flat-button>Flat</button>
+  </div>
+
+  <div class="demo-buttons">
+    <h3>Custom shape</h3>
+    <button mat-button class="button-rounded">Basic</button>
+    <button mat-raised-button class="button-rounded">Raised</button>
+    <button mat-stroked-button class="button-rounded">Stroked</button>
+    <button mat-flat-button class="button-rounded">Flat</button>
+  </div>
+
+  <div class="demo-buttons overrides-example">
+    <h3>Overrides Example</h3>
+    <button mat-button class="button-rounded">Basic</button>
+    <button mat-raised-button class="button-rounded">Raised</button>
+    <button mat-stroked-button class="button-rounded">Stroked</button>
+    <button mat-flat-button class="button-rounded">Flat</button>
+  </div>
+</div>
   <div class="bg-surface text-on-surface p-4">
     <h1 class="text-primary">Hello, Material Design with Tailwind!</h1>
   </div>

@@ -19,7 +19,7 @@
   .toolbar {
     color: mat.get-theme-color($theme, on-primary-container);
     background: mat.get-theme-color($theme, primary-container);
-    // border-color: mat.get-theme-color($theme, primary);
+    border-color: mat.get-theme-color($theme, primary);
   }
 }
 

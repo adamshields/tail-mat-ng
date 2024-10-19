@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { AlertComponent } from "../../shared/components/alert/alert.component";
 
 interface PeriodicElement {
   name: string;
@@ -56,7 +57,7 @@ const TREE_DATA: FoodNode[] = [
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ...MaterialModules],
+  imports: [CommonModule, ...MaterialModules, AlertComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

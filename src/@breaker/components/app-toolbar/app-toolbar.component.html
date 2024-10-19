@@ -2,7 +2,7 @@
   <span class="logo" routerLink="/">APPNAME</span>
   <mat-icon class="app-icon">bolt</mat-icon>
 
-  <nav class="menu">
+  <nav class="menu ">
     @for (item of menuItems; track item) { @if (!item.subItems) {
     <a mat-button [routerLink]="[item.route]">
       <mat-icon>{{ item.icon }}</mat-icon>
