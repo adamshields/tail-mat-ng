@@ -45,13 +45,13 @@ import { Design, DataService } from '../../../shared/data/data.serivce';
     </mat-card>
   `,
   styles: [`
-    mat-card {
-      max-width: 800px;
-      margin: 20px auto;
-    }
-    h3 {
-      margin-top: 20px;
-    }
+    // mat-card {
+    //   max-width: 800px;
+    //   margin: 20px auto;
+    // }
+    // h3 {
+    //   margin-top: 20px;
+    // }
   `]
 })
 export class DesignDetailsComponent implements OnInit, OnDestroy {
