@@ -6,11 +6,11 @@
   </div>
 </div> -->
 
-<mat-nav-list>
+<!-- <mat-nav-list>
   @for (item of menuItems(); track item.label) {
     <app-sidenav-menu-item [item]="item" [collapsed]="collapsed()" ></app-sidenav-menu-item>
   }
-</mat-nav-list>
+</mat-nav-list> -->
 
 <!-- @for (item of activeMenuItems(); track item.label) {
   <app-sidenav-menu-item
@@ -18,3 +18,21 @@
     [collapsed]="collapsed()"
   ></app-sidenav-menu-item>
 } -->
+
+<!-- sidenav.component.html -->
+<div class="sidenav-content bg-purple-200">
+  <div class="sidenav-toggle-button">
+    <button mat-icon-button (click)="toggleCollapsed()">
+      <mat-icon>
+        {{ collapsed() ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left' }}
+      </mat-icon>
+    </button>
+  </div>
+
+  @for (item of menuItems(); track item.label) {
+    <app-sidenav-menu-item
+      [item]="item"
+      [collapsed]="collapsed()">
+    </app-sidenav-menu-item>
+  }
+</div>

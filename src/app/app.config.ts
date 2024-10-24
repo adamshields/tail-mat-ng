@@ -5,13 +5,16 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { provideAngularSvgIcon } from 'angular-svg-icon';
+import { provideHttpClient } from '@angular/common/http';
 
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-
+    provideAngularSvgIcon(),
+    provideHttpClient(),
     provideAnimationsAsync(),
     provideRouter(routes),
     {

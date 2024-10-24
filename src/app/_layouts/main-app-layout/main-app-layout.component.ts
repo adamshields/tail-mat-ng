@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal, ViewChild } from '@angular/core';
 import { MaterialModules } from '../../..';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -23,6 +23,7 @@ import { AppToolbarComponent } from "../../../@breaker/components/app-toolbar/ap
 
 export class MainAppLayoutComponent {
 
+  @ViewChild('sidenav') sidenav!: SidenavComponent;
 
   private sidenavService = inject(SidenavService);
 
@@ -36,7 +37,7 @@ export class MainAppLayoutComponent {
   sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');
 
 
-  showSidenav = toSignal(this.sidenavService.showSidenav$);
+  showSidenav = toSignal(this.sidenavService.showSidenav$, { initialValue: true });
 
 
   themeManager = inject(ThemeManager);
