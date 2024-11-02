@@ -2,14 +2,21 @@
 
 @use "../../app/shared/components/alert/alert-theme" as alert;
 @use "@breaker/components/app-toolbar/toolbar-theme" as toolbar;
+@use "@breaker/components/custom-card/custom-card-theme" as custom-card;
+
 
 
 @mixin theme($theme) {
   @include alert.theme($theme);
   @include toolbar.theme($theme);
+  @include custom-card.theme($theme);
+
+
 }
 
 @mixin color($theme) {
   @include alert.color($theme);
   @include toolbar.color($theme);
+  @include custom-card.color($theme);
+
 }

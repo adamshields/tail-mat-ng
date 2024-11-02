@@ -1,0 +1,50 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  .custom-card {
+    &__header {
+      color: mat.get-theme-color($theme, on-surface);
+      background: mat.get-theme-color($theme, surface-container-high);
+    }
+
+    &__content {
+      color: mat.get-theme-color($theme, on-surface-variant);
+      background: mat.get-theme-color($theme, surface-container);
+    }
+
+    &__footer {
+      background: mat.get-theme-color($theme, surface-container-low);
+    }
+  }
+}
+
+@mixin typography($theme) {
+  .custom-card {
+    &__title {
+      font: mat.get-theme-typography($theme, 'headline-small');
+      letter-spacing: mat.get-theme-typography($theme, 'headline-small', 'letter-spacing');
+    }
+
+    &__subtitle {
+      font: mat.get-theme-typography($theme, 'body-medium');
+      letter-spacing: mat.get-theme-typography($theme, 'body-medium', 'letter-spacing');
+    }
+  }
+}
+
+@mixin density($theme) {
+  $density-scale: mat.get-theme-density($theme);
+
+  .custom-card {
+    &__content {
+      padding: if($density-scale >= 0, 16px, 12px);
+    }
+  }
+}
+
+@mixin theme($theme) {
+  @include color($theme);
+  @include typography($theme);
+  @include density($theme);
+}

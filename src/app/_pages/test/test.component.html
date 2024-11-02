@@ -1,1 +1,17 @@
 <p>test works!</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+  <app-custom-card
+    title="Material 3 Card"
+    subtitle="With Tailwind Integration">
+    <p class="text-body-medium">
+      This card demonstrates the proper usage of Material 3 theming with
+      Tailwind utility classes for layout and spacing.
+    </p>
+    <div class="flex items-center space-x-2">
+      <mat-icon class="text-primary">info</mat-icon>
+      <span class="text-body-small text-on-surface-variant">
+        Additional information
+      </span>
+    </div>
+  </app-custom-card>
+</div>

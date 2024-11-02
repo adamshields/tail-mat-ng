@@ -82,7 +82,16 @@
 @tailwind utilities;
 
 @include mat.core();
+// Adding color variants to the button using button-color API
+// Primary is the default color variant for button,
+// so we don't need to specify it
+$color-variants: (secondary, tertiary);
 
+@each $variant in $color-variants {
+  .mat-#{$variant} {
+    @include mat.button-color(themes.$my-app-theme, $color-variant: $variant);
+  }
+}
 :root {
   @include mat.core-theme(themes.$my-app-theme);
   @include mat.all-component-themes(themes.$my-app-theme);
