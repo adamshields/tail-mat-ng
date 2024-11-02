@@ -47,7 +47,22 @@ module.exports = tseslint.config(
           args: "after-used",
           argsIgnorePattern: "^_"
         }
-      ]
+      ],
+      "prettier/prettier": [
+        "error",
+        {
+          "endOfLine": "auto",  // Add endOfLine setting here
+          "tabWidth": 2,
+          "useTabs": false,
+          "singleQuote": true,
+          "semi": true,
+          "bracketSpacing": true,
+          "arrowParens": "avoid",
+          "trailingComma": "es5",
+          "bracketSameLine": true,
+          "printWidth": 80
+        }
+      ],
     },
   },
   {
