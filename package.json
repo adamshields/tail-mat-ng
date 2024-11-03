@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
+    "lint:file": "npx eslint",
     "cypress:open": "cypress open"
   },
   "private": true,
