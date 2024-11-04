@@ -1,0 +1,1902 @@
+// autocomplete
+// 3 overrides
+
+selector {
+  @include mat.autocomplete-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+background-color
+
+container-elevation-shadow
+
+container-shape
+
+// badge
+// 26 overrides
+
+selector {
+  @include mat.badge-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+background-color
+
+container-color
+
+container-offset
+
+container-overlap-offset
+
+container-padding
+
+container-shape
+
+container-size
+
+disabled-state-background-color
+
+disabled-state-text-color
+
+large-size-container-offset
+
+large-size-container-overlap-offset
+
+large-size-container-padding
+
+large-size-container-size
+
+large-size-text-size
+
+legacy-container-size
+
+legacy-large-size-container-size
+
+legacy-small-size-container-size
+
+small-size-container-offset
+
+small-size-container-overlap-offset
+
+small-size-container-padding
+
+small-size-container-size
+
+small-size-text-size
+
+text-color
+
+text-font
+
+text-size
+
+text-weight
+
+
+// button-toggle
+// 19 overrides
+
+
+
+
+selector {
+  @include mat.button-toggle-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+
+background-color
+
+disabled-selected-state-background-color
+
+disabled-selected-state-text-color
+
+disabled-state-background-color
+
+disabled-state-text-color
+
+divider-color
+
+focus-state-layer-opacity
+
+height
+
+hover-state-layer-opacity
+
+label-text-font
+
+label-text-line-height
+
+label-text-size
+
+label-text-tracking
+
+label-text-weight
+
+selected-state-background-color
+
+selected-state-text-color
+
+shape
+
+state-layer-color
+
+text-color
+
+
+// button
+// 31 overrides
+
+selector {
+  @include mat.button-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+container-color
+
+container-elevation-shadow
+
+container-height
+
+container-shape
+
+disabled-container-color
+
+disabled-container-elevation-shadow
+
+disabled-label-text-color
+
+disabled-outline-color
+
+disabled-state-layer-color
+
+focus-container-elevation-shadow
+
+focus-state-layer-opacity
+
+horizontal-padding
+
+hover-container-elevation-shadow
+
+hover-state-layer-opacity
+
+icon-offset
+
+icon-spacing
+
+keep-touch-target
+
+label-text-color
+
+label-text-font
+
+label-text-size
+
+label-text-tracking
+
+label-text-transform
+
+label-text-weight
+
+outline-color
+
+outline-width
+
+pressed-container-elevation-shadow
+
+pressed-state-layer-opacity
+
+ripple-color
+
+state-layer-color
+
+touch-target-display
+
+with-icon-horizontal-padding
+
+// card
+// 16 overrides
+
+selector {
+  @include mat.card-overrides(
+    (
+      property: value,
+    )
+  );
+}
+container-color
+
+container-elevation
+
+container-shape
+
+outline-color
+
+outline-width
+
+subtitle-text-color
+
+subtitle-text-font
+
+subtitle-text-line-height
+
+subtitle-text-size
+
+subtitle-text-tracking
+
+subtitle-text-weight
+
+title-text-font
+
+title-text-line-height
+
+title-text-size
+
+title-text-tracking
+
+title-text-weight
+
+// checkbox
+// 31 overrides
+
+selector {
+  @include mat.checkbox-overrides(
+    (
+      property: value,
+    )
+  );
+}
+disabled-label-color
+
+disabled-selected-checkmark-color
+
+disabled-selected-icon-color
+
+disabled-unselected-icon-color
+
+label-text-color
+
+label-text-font
+
+label-text-line-height
+
+label-text-size
+
+label-text-tracking
+
+label-text-weight
+
+selected-checkmark-color
+
+selected-focus-icon-color
+
+selected-focus-state-layer-color
+
+selected-focus-state-layer-opacity
+
+selected-hover-icon-color
+
+selected-hover-state-layer-color
+
+selected-hover-state-layer-opacity
+
+selected-icon-color
+
+selected-pressed-state-layer-color
+
+selected-pressed-state-layer-opacity
+
+state-layer-size
+
+touch-target-display
+
+unselected-focus-icon-color
+
+unselected-focus-state-layer-color
+
+unselected-focus-state-layer-opacity
+
+unselected-hover-icon-color
+
+unselected-hover-state-layer-color
+
+unselected-hover-state-layer-opacity
+
+unselected-icon-color
+
+unselected-pressed-state-layer-color
+
+unselected-pressed-state-layer-opacity
+
+// chips
+// 46 overrides
+
+selector {
+  @include mat.chips-overrides(
+    (
+      property: value,
+    )
+  );
+}
+container-height
+
+container-shape-radius
+
+disabled-container-opacity
+
+disabled-label-text-color
+
+disabled-outline-color
+
+elevated-container-color
+
+elevated-disabled-container-color
+
+elevated-selected-container-color
+
+flat-disabled-selected-container-color
+
+flat-selected-outline-width
+
+focus-outline-color
+
+focus-state-layer-color
+
+focus-state-layer-opacity
+
+hover-state-layer-color
+
+hover-state-layer-opacity
+
+label-text-color
+
+label-text-font
+
+label-text-line-height
+
+label-text-size
+
+label-text-tracking
+
+label-text-weight
+
+outline-color
+
+outline-width
+
+selected-focus-state-layer-color
+
+selected-focus-state-layer-opacity
+
+selected-hover-state-layer-color
+
+selected-hover-state-layer-opacity
+
+selected-label-text-color
+
+selected-trailing-action-state-layer-color
+
+selected-trailing-icon-color
+
+trailing-action-focus-opacity
+
+trailing-action-focus-state-layer-opacity
+
+trailing-action-hover-state-layer-opacity
+
+trailing-action-opacity
+
+trailing-action-state-layer-color
+
+with-avatar-avatar-shape-radius
+
+with-avatar-avatar-size
+
+with-avatar-disabled-avatar-opacity
+
+with-icon-disabled-icon-color
+
+with-icon-disabled-icon-opacity
+
+with-icon-icon-color
+
+with-icon-icon-size
+
+with-icon-selected-icon-color
+
+with-trailing-icon-disabled-trailing-icon-color
+
+with-trailing-icon-disabled-trailing-icon-opacity
+
+with-trailing-icon-trailing-icon-color
+
+
+// datepicker
+// 41 overrides
+selector {
+  @include mat.datepicker-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+calendar-body-label-text-color
+
+calendar-body-label-text-size
+
+calendar-body-label-text-weight
+
+calendar-container-background-color
+
+calendar-container-elevation-shadow
+
+calendar-container-shape
+
+calendar-container-text-color
+
+calendar-container-touch-elevation-shadow
+
+calendar-container-touch-shape
+
+calendar-date-disabled-state-text-color
+
+calendar-date-focus-state-background-color
+
+calendar-date-hover-state-background-color
+
+calendar-date-in-comparison-range-state-background-color
+
+calendar-date-in-overlap-range-selected-state-background-color
+
+calendar-date-in-overlap-range-state-background-color
+
+calendar-date-in-range-state-background-color
+
+calendar-date-outline-color
+
+calendar-date-preview-state-outline-color
+
+calendar-date-selected-disabled-state-background-color
+
+calendar-date-selected-state-background-color
+
+calendar-date-selected-state-text-color
+
+calendar-date-text-color
+
+calendar-date-today-disabled-state-outline-color
+
+calendar-date-today-outline-color
+
+calendar-date-today-selected-state-outline-color
+
+calendar-header-divider-color
+
+calendar-header-text-color
+
+calendar-header-text-size
+
+calendar-header-text-weight
+
+calendar-navigation-button-icon-color
+
+calendar-period-button-icon-color
+
+calendar-period-button-text-color
+
+calendar-period-button-text-size
+
+calendar-period-button-text-weight
+
+calendar-text-font
+
+calendar-text-size
+
+range-input-disabled-state-separator-color
+
+range-input-disabled-state-text-color
+
+range-input-separator-color
+
+toggle-active-state-icon-color
+
+toggle-icon-color
+
+// dialog
+// 23 overrides
+
+selector {
+  @include mat.dialog-overrides(
+    (
+      property: value,
+    )
+  );
+}
+actions-alignment
+
+actions-padding
+
+container-color
+
+container-elevation-shadow
+
+container-max-width
+
+container-min-width
+
+container-shape
+
+container-small-max-width
+
+content-padding
+
+headline-padding
+
+subhead-color
+
+subhead-font
+
+subhead-line-height
+
+subhead-size
+
+subhead-tracking
+
+subhead-weight
+
+supporting-text-color
+
+supporting-text-font
+
+supporting-text-line-height
+
+supporting-text-size
+
+supporting-text-tracking
+
+supporting-text-weight
+
+with-actions-content-padding
+
+
+// divider
+// 2 overrides
+// Usage
+
+
+selector {
+  @include mat.divider-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+color
+
+width
+
+// expansion
+// 24 overrides
+
+selector {
+  @include mat.expansion-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+
+actions-divider-color
+
+container-background-color
+
+container-shape
+
+container-text-color
+
+container-text-font
+
+container-text-line-height
+
+container-text-size
+
+container-text-tracking
+
+container-text-weight
+
+header-collapsed-state-height
+
+header-description-color
+
+header-disabled-state-text-color
+
+header-expanded-state-height
+
+header-focus-state-layer-color
+
+header-hover-state-layer-color
+
+header-indicator-color
+
+header-indicator-display
+
+header-text-color
+
+header-text-font
+
+header-text-line-height
+
+header-text-size
+
+header-text-tracking
+
+header-text-weight
+
+legacy-header-indicator-display
+
+
+
+// fab
+// 21 overrides
+
+selector {
+  @include mat.fab-overrides(
+    (
+      property: value,
+    )
+  );
+}
+container-color
+
+container-elevation-shadow
+
+container-height
+
+container-shape
+
+disabled-state-container-color
+
+disabled-state-foreground-color
+
+disabled-state-layer-color
+
+focus-container-elevation-shadow
+
+focus-state-layer-opacity
+
+foreground-color
+
+hover-container-elevation-shadow
+
+hover-state-layer-opacity
+
+label-text-font
+
+label-text-size
+
+label-text-tracking
+
+label-text-weight
+
+pressed-container-elevation-shadow
+
+pressed-state-layer-opacity
+
+ripple-color
+
+state-layer-color
+
+touch-target-display
+
+
+
+// form-field
+// 69 overrides
+
+selector {
+  @include mat.form-field-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+active-indicator-color
+
+active-indicator-height
+
+caret-color
+
+container-color
+
+container-height
+
+container-shape
+
+container-text-font
+
+container-text-line-height
+
+container-text-size
+
+container-text-tracking
+
+container-text-weight
+
+container-vertical-padding
+
+disabled-active-indicator-color
+
+disabled-container-color
+
+disabled-input-text-color
+
+disabled-input-text-placeholder-color
+
+disabled-label-text-color
+
+disabled-leading-icon-color
+
+disabled-outline-color
+
+disabled-select-arrow-color
+
+disabled-trailing-icon-color
+
+enabled-select-arrow-color
+
+error-active-indicator-color
+
+error-caret-color
+
+error-focus-active-indicator-color
+
+error-focus-label-text-color
+
+error-focus-outline-color
+
+error-focus-trailing-icon-color
+
+error-hover-active-indicator-color
+
+error-hover-label-text-color
+
+error-hover-outline-color
+
+error-hover-trailing-icon-color
+
+error-label-text-color
+
+error-outline-color
+
+error-text-color
+
+error-trailing-icon-color
+
+filled-label-display
+
+filled-with-label-container-padding-bottom
+
+filled-with-label-container-padding-top
+
+focus-active-indicator-color
+
+focus-active-indicator-height
+
+focus-label-text-color
+
+focus-outline-color
+
+focus-outline-width
+
+focus-select-arrow-color
+
+focus-state-layer-opacity
+
+hover-active-indicator-color
+
+hover-label-text-color
+
+hover-outline-color
+
+hover-state-layer-opacity
+
+input-text-color
+
+input-text-placeholder-color
+
+label-text-color
+
+label-text-font
+
+label-text-size
+
+label-text-tracking
+
+label-text-weight
+
+outline-color
+
+outline-width
+
+outlined-label-text-populated-size
+
+select-disabled-option-text-color
+
+select-option-text-color
+
+state-layer-color
+
+subscript-text-font
+
+subscript-text-line-height
+
+subscript-text-size
+
+subscript-text-tracking
+
+subscript-text-weight
+
+trailing-icon-color
+
+
+// grid-list
+// 4 overrides
+
+selector {
+  @include mat.grid-list-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+tile-footer-primary-text-size
+
+tile-footer-secondary-text-size
+
+tile-header-primary-text-size
+
+tile-header-secondary-text-size
+
+
+// icon-button
+// 11 overrides
+selector {
+  @include mat.icon-button-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+disabled-icon-color
+
+disabled-state-layer-color
+
+focus-state-layer-opacity
+
+hover-state-layer-opacity
+
+icon-color
+
+icon-size
+
+pressed-state-layer-opacity
+
+ripple-color
+
+state-layer-color
+
+state-layer-size
+
+touch-target-display
+
+
+
+// icon
+// 1 overrides
+selector {
+  @include mat.icon-overrides(
+    (
+      property: value,
+    )
+  );
+}
+color
+
+// list
+// 52 overrides
+
+
+selector {
+  @include mat.list-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+active-indicator-color
+
+active-indicator-shape
+
+list-item-container-color
+
+list-item-container-shape
+
+list-item-disabled-label-text-color
+
+list-item-disabled-label-text-opacity
+
+list-item-disabled-leading-icon-color
+
+list-item-disabled-leading-icon-opacity
+
+list-item-disabled-state-layer-color
+
+list-item-disabled-state-layer-opacity
+
+list-item-disabled-trailing-icon-color
+
+list-item-disabled-trailing-icon-opacity
+
+list-item-label-text-color
+
+list-item-leading-avatar-color
+
+list-item-leading-avatar-shape
+
+list-item-leading-avatar-size
+
+list-item-leading-icon-color
+
+list-item-leading-icon-end-space
+
+list-item-leading-icon-size
+
+list-item-leading-icon-start-space
+
+list-item-selected-container-color
+
+list-item-selected-trailing-icon-color
+
+list-item-supporting-text-color
+
+list-item-trailing-icon-color
+
+list-item-trailing-icon-size
+
+list-item-trailing-supporting-text-color
+
+list-item-focus-label-text-color
+
+list-item-focus-state-layer-color
+
+list-item-focus-state-layer-opacity
+
+list-item-hover-label-text-color
+
+list-item-hover-leading-icon-color
+
+list-item-hover-state-layer-color
+
+list-item-hover-state-layer-opacity
+
+list-item-hover-trailing-icon-color
+
+list-item-label-text-font
+
+list-item-label-text-line-height
+
+list-item-label-text-size
+
+list-item-label-text-tracking
+
+list-item-label-text-weight
+
+list-item-one-line-container-height
+
+list-item-supporting-text-font
+
+list-item-supporting-text-line-height
+
+list-item-supporting-text-size
+
+list-item-supporting-text-tracking
+
+list-item-supporting-text-weight
+
+list-item-three-line-container-height
+
+list-item-trailing-supporting-text-font
+
+list-item-trailing-supporting-text-line-height
+
+list-item-trailing-supporting-text-size
+
+list-item-trailing-supporting-text-tracking
+
+list-item-trailing-supporting-text-weight
+
+list-item-two-line-container-height
+
+
+
+// menu
+// 21 overrides
+
+
+
+
+selector {
+  @include mat.menu-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+base-elevation-level
+
+container-color
+
+container-shape
+
+divider-bottom-spacing
+
+divider-color
+
+divider-top-spacing
+
+item-focus-state-layer-color
+
+item-hover-state-layer-color
+
+item-icon-color
+
+item-icon-size
+
+item-label-text-color
+
+item-label-text-font
+
+item-label-text-line-height
+
+item-label-text-size
+
+item-label-text-tracking
+
+item-label-text-weight
+
+item-leading-spacing
+
+item-spacing
+
+item-trailing-spacing
+
+item-with-icon-leading-spacing
+
+item-with-icon-trailing-spacing
+
+
+
+// paginator
+// 14 overrides
+
+
+selector {
+  @include mat.paginator-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+container-background-color
+
+container-size
+
+container-text-color
+
+container-text-font
+
+container-text-line-height
+
+container-text-size
+
+container-text-tracking
+
+container-text-weight
+
+disabled-icon-color
+
+enabled-icon-color
+
+form-field-container-height
+
+form-field-container-vertical-padding
+
+select-trigger-text-size
+
+touch-target-display
+
+
+
+// progress-bar
+// 5 overrides
+
+
+selector {
+  @include mat.progress-bar-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+active-indicator-color
+
+active-indicator-height
+
+track-color
+
+track-height
+
+track-shape
+
+
+// progress-spinner
+// 3 overrides
+selector {
+  @include mat.progress-spinner-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+active-indicator-width
+
+size
+
+active-indicator-color
+
+
+
+// radio
+// 22 overrides
+
+selector {
+  @include mat.radio-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+
+checked-ripple-color
+
+disabled-label-color
+
+disabled-selected-icon-color
+
+disabled-selected-icon-opacity
+
+disabled-unselected-icon-color
+
+disabled-unselected-icon-opacity
+
+label-text-color
+
+label-text-font
+
+label-text-line-height
+
+label-text-size
+
+label-text-tracking
+
+label-text-weight
+
+ripple-color
+
+selected-focus-icon-color
+
+selected-hover-icon-color
+
+selected-icon-color
+
+selected-pressed-icon-color
+
+state-layer-size
+
+touch-target-display
+
+unselected-hover-icon-color
+
+unselected-icon-color
+
+unselected-pressed-icon-color
+
+
+
+
+// select
+// 15 overrides
+
+
+selector {
+  @include mat.select-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+arrow-transform
+
+container-elevation-shadow
+
+disabled-arrow-color
+
+disabled-trigger-text-color
+
+enabled-arrow-color
+
+enabled-trigger-text-color
+
+focused-arrow-color
+
+invalid-arrow-color
+
+panel-background-color
+
+placeholder-text-color
+
+trigger-text-font
+
+trigger-text-line-height
+
+trigger-text-size
+
+trigger-text-tracking
+
+trigger-text-weight
+
+
+
+
+
+// sidenav
+// 9 overrides
+
+
+selector {
+  @include mat.sidenav-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+container-background-color
+
+container-divider-color
+
+container-elevation-shadow
+
+container-shape
+
+container-text-color
+
+container-width
+
+content-background-color
+
+content-text-color
+
+scrim-color
+
+
+
+
+
+
+
+// slide-toggle
+// 72 overrides
+
+
+
+selector {
+  @include mat.slide-toggle-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+
+
+disabled-selected-handle-opacity
+
+disabled-unselected-handle-opacity
+
+pressed-handle-size
+
+selected-handle-horizontal-margin
+
+selected-handle-size
+
+selected-pressed-handle-horizontal-margin
+
+selected-with-icon-handle-horizontal-margin
+
+unselected-handle-horizontal-margin
+
+unselected-handle-size
+
+with-icon-handle-size
+
+hidden-track-opacity
+
+hidden-track-transition
+
+selected-track-outline-color
+
+selected-track-outline-width
+
+track-outline-color
+
+track-outline-width
+
+unselected-pressed-handle-horizontal-margin
+
+visible-track-opacity
+
+visible-track-transition
+
+disabled-selected-icon-opacity
+
+disabled-track-opacity
+
+disabled-unselected-track-outline-color
+
+handle-height
+
+handle-shape
+
+handle-width
+
+label-text-color
+
+label-text-font
+
+label-text-line-height
+
+label-text-size
+
+label-text-tracking
+
+label-text-weight
+
+selected-focus-state-layer-opacity
+
+selected-icon-size
+
+track-height
+
+track-shape
+
+track-width
+
+unselected-icon-size
+
+selected-focus-handle-color
+
+selected-focus-state-layer-color
+
+selected-handle-color
+
+selected-hover-state-layer-color
+
+selected-pressed-state-layer-color
+
+selected-pressed-state-layer-opacity
+
+unselected-focus-state-layer-opacity
+
+unselected-hover-state-layer-opacity
+
+unselected-pressed-state-layer-opacity
+
+disabled-selected-handle-color
+
+disabled-selected-icon-color
+
+disabled-selected-track-color
+
+disabled-unselected-handle-color
+
+selected-focus-track-color
+
+selected-hover-track-color
+
+selected-pressed-handle-color
+
+selected-pressed-track-color
+
+selected-track-color
+
+disabled-unselected-track-color
+
+handle-surface-color
+
+selected-icon-color
+
+unselected-focus-handle-color
+
+unselected-focus-state-layer-color
+
+unselected-focus-track-color
+
+unselected-handle-color
+
+unselected-hover-handle-color
+
+unselected-hover-state-layer-color
+
+disabled-handle-elevation-shadow
+
+handle-elevation-shadow
+
+state-layer-size
+
+unselected-icon-color
+
+unselected-pressed-handle-color
+
+unselected-pressed-state-layer-color
+
+unselected-pressed-track-color
+
+unselected-track-color
+
+
+
+// slider
+// 39 overrides
+
+
+selector {
+  @include mat.slider-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+
+
+focus-state-layer-color
+
+hover-state-layer-color
+
+ripple-color
+
+value-indicator-border-radius
+
+value-indicator-caret-display
+
+value-indicator-container-transform
+
+value-indicator-height
+
+value-indicator-padding
+
+value-indicator-text-transform
+
+value-indicator-width
+
+active-track-height
+
+active-track-shape
+
+handle-height
+
+handle-shape
+
+handle-width
+
+inactive-track-height
+
+inactive-track-shape
+
+with-overlap-handle-outline-width
+
+with-tick-marks-active-container-opacity
+
+active-track-color
+
+focus-handle-color
+
+handle-color
+
+handle-elevation
+
+hover-handle-color
+
+inactive-track-color
+
+with-tick-marks-container-size
+
+with-tick-marks-inactive-container-color
+
+with-tick-marks-inactive-container-opacity
+
+disabled-active-track-color
+
+disabled-handle-color
+
+disabled-inactive-track-color
+
+label-container-color
+
+label-label-text-color
+
+label-label-text-font
+
+label-label-text-size
+
+with-overlap-handle-outline-color
+
+with-tick-marks-disabled-container-color
+
+label-label-text-tracking
+
+label-label-text-weight
+
+
+
+
+// snack-bar
+// 8 overrides
+
+selector {
+  @include mat.snack-bar-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+button-color
+
+container-color
+
+container-shape
+
+supporting-text-color
+
+supporting-text-font
+
+supporting-text-line-height
+
+supporting-text-size
+
+supporting-text-weight
+
+
+// sort
+// 1 overrides
+selector {
+  @include mat.sort-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+arrow-color
+// stepper
+// 28 overrides
+
+
+selector {
+  @include mat.stepper-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+container-color
+
+header-done-state-icon-background-color
+
+header-done-state-icon-foreground-color
+
+header-edit-state-icon-background-color
+
+header-edit-state-icon-foreground-color
+
+header-focus-state-layer-shape
+
+header-hover-state-layer-shape
+
+header-icon-foreground-color
+
+header-selected-state-icon-background-color
+
+header-selected-state-icon-foreground-color
+
+header-error-state-icon-background-color
+
+header-error-state-icon-foreground-color
+
+header-error-state-label-text-color
+
+header-focus-state-layer-color
+
+header-hover-state-layer-color
+
+header-icon-background-color
+
+header-label-text-color
+
+header-optional-label-text-color
+
+header-selected-state-label-text-color
+
+line-color
+
+container-text-font
+
+header-error-state-label-text-size
+
+header-height
+
+header-label-text-font
+
+header-label-text-size
+
+header-label-text-weight
+
+header-selected-state-label-text-size
+
+header-selected-state-label-text-weight
+
+// table
+// 23 overrides
+
+selector {
+  @include mat.table-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+background-color
+
+footer-container-height
+
+footer-supporting-text-font
+
+footer-supporting-text-line-height
+
+footer-supporting-text-size
+
+footer-supporting-text-tracking
+
+footer-supporting-text-weight
+
+header-container-height
+
+header-headline-color
+
+header-headline-font
+
+header-headline-line-height
+
+header-headline-size
+
+header-headline-tracking
+
+header-headline-weight
+
+row-item-container-height
+
+row-item-label-text-color
+
+row-item-label-text-font
+
+row-item-label-text-line-height
+
+row-item-label-text-size
+
+row-item-label-text-tracking
+
+row-item-label-text-weight
+
+row-item-outline-color
+
+row-item-outline-width
+
+
+// tabs
+// 25 overrides
+
+
+selector {
+  @include mat.tabs-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+active-focus-indicator-color
+
+active-focus-label-text-color
+
+active-hover-indicator-color
+
+active-hover-label-text-color
+
+active-indicator-color
+
+active-indicator-height
+
+active-indicator-shape
+
+active-label-text-color
+
+active-ripple-color
+
+background-color
+
+container-height
+
+disabled-ripple-color
+
+divider-color
+
+divider-height
+
+foreground-color
+
+inactive-focus-label-text-color
+
+inactive-hover-label-text-color
+
+inactive-label-text-color
+
+inactive-ripple-color
+
+label-text-font
+
+label-text-line-height
+
+label-text-size
+
+label-text-tracking
+
+label-text-weight
+
+pagination-icon-color
+
+
+
+// toolbar
+// 9 overrides
+
+selector {
+  @include mat.toolbar-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+
+container-background-color
+
+container-text-color
+
+mobile-height
+
+standard-height
+
+title-text-font
+
+title-text-line-height
+
+title-text-size
+
+title-text-tracking
+
+title-text-weight
+
+
+
+
+
+// tooltip
+// 8 overrides
+
+selector {
+  @include mat.tooltip-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+
+container-color
+
+container-shape
+
+supporting-text-color
+
+supporting-text-font
+
+supporting-text-line-height
+
+supporting-text-size
+
+supporting-text-tracking
+
+supporting-text-weight
+
+
+// tree
+// 6 overrides
+
+selector {
+  @include mat.tree-overrides(
+    (
+      property: value,
+    )
+  );
+}
+
+container-background-color
+
+node-min-height
+
+node-text-color
+
+node-text-font
+
+node-text-size
+
+node-text-weight

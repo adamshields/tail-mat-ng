@@ -151,6 +151,42 @@ body {
   }
 }
 
+// Table overrides using Material 3 properties
+.mat-mdc-table {
+  @include mat.table-overrides((
+    // Background color for the table
+    // background-color: white,
+
+    // Footer properties
+    footer-container-height: 56px,
+    footer-supporting-text-font: Roboto,
+    footer-supporting-text-line-height: 24px,
+    footer-supporting-text-size: 14px,
+    footer-supporting-text-tracking: 0.1px,
+    footer-supporting-text-weight: 500,
+
+    // Header properties
+    header-container-height: 56px,
+    header-headline-color: var(--sys-primary),
+    header-headline-font: Roboto,
+    header-headline-line-height: 24px,
+    header-headline-size: 14px,
+    header-headline-tracking: 0.1px,
+    header-headline-weight: 900,
+
+    // Row properties
+    row-item-container-height: 52px,
+    row-item-label-text-color: var(--sys-primary),
+    row-item-label-text-font: Roboto,
+    row-item-label-text-line-height: 20px,
+    row-item-label-text-size: 14px,
+    row-item-label-text-tracking: 0.1px,
+    row-item-label-text-weight: 400,
+    row-item-outline-color: rgba(0, 0, 0, 0.12),
+    row-item-outline-width: 1px
+  ));
+}
+
 // Custom class for page headers using Tailwind utilities
 .page-header {
   @apply text-display-large font-bold text-primary;
