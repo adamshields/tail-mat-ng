@@ -105,7 +105,10 @@ $color-variants: (secondary, tertiary);
   @include mat.system-level-typography(themes.$my-app-theme);
   // @include mat.slider-theme(themes.$my-app-theme);
   @include components.theme(themes.$my-app-theme);
-
+  // @include mat.core-overrides((
+  //   background-color: orange,
+  //   text-color: red,
+  // ));
   // @include mat.button-density(themes.$my-app-theme);
   // @include mat.button-typography(themes.$my-app-theme);
 

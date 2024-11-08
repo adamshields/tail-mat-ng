@@ -1,9 +1,15 @@
-<mat-toolbar class="toolbar flex justify-between items-center p-4">
+<mat-toolbar class="toolbar flex justify-end items-center p-4 relative mat-elevation-z8 z-10">
   <!-- Logo -->
   <div class="flex items-center justify-start ">
     <span class="text-xl font-bold" routerLink="/">APPNAME</span>
     <mat-icon class="text-2xl ml-2">bolt</mat-icon>
   </div>
+
+  <!-- <mat-toolbar-row>
+    <span>Second Line</span>
+    <span class="flex-auto"></span>
+    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
+  </mat-toolbar-row> -->
     <!-- Logo -->
     <!-- <div class="flex items-center justify-start sm:order-2 md:mr-10 lg:hidden">
       <a class="flex items-center justify-center rounded bg-primary p-2 focus:outline-none focus:ring-1">
@@ -56,7 +62,7 @@
     <button mat-menu-item (click)="changeTheme('dark')">Dark</button>
   </mat-menu>
   <!-- Profile Button -->
-  <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="text-on-primary">
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu" >
     <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #profileMenu="matMenu">

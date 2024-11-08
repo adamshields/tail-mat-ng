@@ -4,7 +4,7 @@ module.exports = {
   mode: 'jit',
   important: false,
   content: ["./src/**/*.{html,ts}",],
-  darkMode: 'class',
+  darkMode: ['selector', '[data-bs-theme="dark"]'],
   theme: {
     extend: {
       keyframes: {
