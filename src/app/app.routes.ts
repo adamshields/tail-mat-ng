@@ -10,12 +10,12 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () => import('./_pages/home/home.component').then(m => m.HomeComponent),
-        // data: { showSidenav: false }
+        // data: { showSidenav: true }
       },
       {
         path: 'test',
         loadComponent: () => import('./_pages/test/test.component').then(m => m.TestComponent),
-        // data: { showSidenav: false }
+        data: { showSidenav: false }
       },
       {
         path: 'portfolios',
