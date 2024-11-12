@@ -9,7 +9,7 @@ export const SITE_NAVIGATION: NavItem[] = [
     icon: 'folder_open',
     location: ['top'],
   },
-  // Test section with side navigation items and children
+  // Test section with extensive side navigation items and multiple levels of children
   {
     id: 'test',
     label: 'Test',
@@ -23,22 +23,20 @@ export const SITE_NAVIGATION: NavItem[] = [
         path: '/test/overview',
         icon: 'dashboard',
         location: ['side'],
-        children: [
-          {
-            id: 'test-overview-summary',
-            label: 'Summary',
-            path: '/test/overview/summary',
-            icon: 'summarize',
-            location: ['side']
-          },
-          {
-            id: 'test-overview-details',
-            label: 'Details',
-            path: '/test/overview/details',
+        children: Array.from({ length: 10 }, (_, i) => ({
+          id: `test-overview-summary-${i + 1}`,
+          label: `Summary ${i + 1}`,
+          path: `/test/overview/summary-${i + 1}`,
+          icon: 'summarize',
+          location: ['side'],
+          children: Array.from({ length: 5 }, (_, j) => ({
+            id: `test-overview-summary-detail-${i + 1}-${j + 1}`,
+            label: `Detail ${j + 1}`,
+            path: `/test/overview/summary-${i + 1}/detail-${j + 1}`,
             icon: 'details',
             location: ['side']
-          }
-        ]
+          }))
+        }))
       },
       {
         id: 'test-results',
@@ -46,29 +44,41 @@ export const SITE_NAVIGATION: NavItem[] = [
         path: '/test/results',
         icon: 'bar_chart',
         location: ['side'],
-        children: [
-          {
-            id: 'test-results-current',
-            label: 'Current Results',
-            path: '/test/results/current',
-            icon: 'insights',
+        children: Array.from({ length: 8 }, (_, i) => ({
+          id: `test-results-category-${i + 1}`,
+          label: `Results Category ${i + 1}`,
+          path: `/test/results/category-${i + 1}`,
+          icon: 'category',
+          location: ['side'],
+          children: Array.from({ length: 6 }, (_, j) => ({
+            id: `test-results-category-item-${i + 1}-${j + 1}`,
+            label: `Item ${j + 1}`,
+            path: `/test/results/category-${i + 1}/item-${j + 1}`,
+            icon: 'bar_chart',
             location: ['side']
-          },
-          {
-            id: 'test-results-history',
-            label: 'Results History',
-            path: '/test/results/history',
-            icon: 'history',
-            location: ['side']
-          }
-        ]
+          }))
+        }))
       },
       {
         id: 'test-settings',
         label: 'Test Settings',
         path: '/test/settings',
         icon: 'settings',
-        location: ['side']
+        location: ['side'],
+        children: Array.from({ length: 10 }, (_, i) => ({
+          id: `test-settings-option-${i + 1}`,
+          label: `Settings Option ${i + 1}`,
+          path: `/test/settings/option-${i + 1}`,
+          icon: 'tune',
+          location: ['side'],
+          children: Array.from({ length: 4 }, (_, j) => ({
+            id: `test-settings-option-detail-${i + 1}-${j + 1}`,
+            label: `Detail ${j + 1}`,
+            path: `/test/settings/option-${i + 1}/detail-${j + 1}`,
+            icon: 'details',
+            location: ['side']
+          }))
+        }))
       },
       {
         id: 'test-reports',
@@ -76,22 +86,20 @@ export const SITE_NAVIGATION: NavItem[] = [
         path: '/test/reports',
         icon: 'assessment',
         location: ['side'],
-        children: [
-          {
-            id: 'test-reports-monthly',
-            label: 'Monthly Reports',
-            path: '/test/reports/monthly',
-            icon: 'date_range',
+        children: Array.from({ length: 15 }, (_, i) => ({
+          id: `test-reports-section-${i + 1}`,
+          label: `Reports Section ${i + 1}`,
+          path: `/test/reports/section-${i + 1}`,
+          icon: 'insert_drive_file',
+          location: ['side'],
+          children: Array.from({ length: 3 }, (_, j) => ({
+            id: `test-reports-section-item-${i + 1}-${j + 1}`,
+            label: `Report Item ${j + 1}`,
+            path: `/test/reports/section-${i + 1}/item-${j + 1}`,
+            icon: 'insert_chart',
             location: ['side']
-          },
-          {
-            id: 'test-reports-annual',
-            label: 'Annual Reports',
-            path: '/test/reports/annual',
-            icon: 'event',
-            location: ['side']
-          }
-        ]
+          }))
+        }))
       },
       {
         id: 'test-history',
@@ -99,22 +107,20 @@ export const SITE_NAVIGATION: NavItem[] = [
         path: '/test/history',
         icon: 'history',
         location: ['side'],
-        children: [
-          {
-            id: 'test-history-recent',
-            label: 'Recent History',
-            path: '/test/history/recent',
-            icon: 'update',
+        children: Array.from({ length: 12 }, (_, i) => ({
+          id: `test-history-period-${i + 1}`,
+          label: `History Period ${i + 1}`,
+          path: `/test/history/period-${i + 1}`,
+          icon: 'timeline',
+          location: ['side'],
+          children: Array.from({ length: 5 }, (_, j) => ({
+            id: `test-history-period-entry-${i + 1}-${j + 1}`,
+            label: `Entry ${j + 1}`,
+            path: `/test/history/period-${i + 1}/entry-${j + 1}`,
+            icon: 'view_list',
             location: ['side']
-          },
-          {
-            id: 'test-history-archived',
-            label: 'Archived History',
-            path: '/test/history/archived',
-            icon: 'archive',
-            location: ['side']
-          }
-        ]
+          }))
+        }))
       }
     ]
   },
@@ -214,7 +220,7 @@ export const SITE_NAVIGATION: NavItem[] = [
         label: 'User Management',
         path: '/admin/user-management',
         icon: 'people',
-        location: ['top']
+        location: ['side', 'top']
       },
       {
         id: 'admin-roles',
@@ -242,7 +248,8 @@ export const SITE_NAVIGATION: NavItem[] = [
         label: 'Portfolio Management',
         path: '/admin/portfolio-management',
         icon: 'folder_special',
-        location: ['top']
+        location: ['top'],
+
       }
     ]
   }

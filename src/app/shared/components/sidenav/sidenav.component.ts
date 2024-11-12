@@ -12,6 +12,7 @@ import { filter, map } from 'rxjs';
 import { NavigationService } from '../../../core/services/navigation.service';
 import { MaterialModules } from '../../../../mat-index';
 import { CommonModule } from '@angular/common';
+import { NavItem } from '../../../core/models/navigation.types';
 
 @Component({
   selector: 'app-sidenav',
@@ -27,8 +28,6 @@ import { CommonModule } from '@angular/common';
   ],
   template: `
     <div class="sidenav-container">
-
-
       <div class="sidenav-header">
         @if (!collapsed()) {
           <span class="header-text">Navigation</span>
@@ -36,7 +35,7 @@ import { CommonModule } from '@angular/common';
         <button
           mat-icon-button
           class="collapse-btn"
-          (click)="onCollapse()"
+          (click)="collapsedChange.emit(!collapsed())"
           [class.rotated]="collapsed()"
         >
           <mat-icon>keyboard_double_arrow_left</mat-icon>
@@ -44,45 +43,43 @@ import { CommonModule } from '@angular/common';
       </div>
 
       <mat-nav-list>
-        @if (sideNavItems$ | async; as items) {
-          @for (item of items; track item.id) {
-            <app-sidenav-menu-item
-              [item]="item"
-              [collapsed]="collapsed()"
-            />
-          }
+        @for (item of navigationItems(); track item.id) {
+          <app-sidenav-menu-item
+            [item]="item"
+            [collapsed]="collapsed()"
+          />
         }
       </mat-nav-list>
     </div>
   `,
-  styles: [`
-    .sidenav-container {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
+ styles: [`
+  .sidenav-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
 
-    .sidenav-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-      min-height: 64px;
-    }
+  .sidenav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    min-height: 64px;
+  }
 
-    .collapse-btn {
-      transition: transform 0.3s ease;
+  .collapse-btn {
+    transition: transform 0.3s ease;
 
-      &.rotated {
-        transform: rotate(180deg);
-      }
+    &.rotated {
+      transform: rotate(180deg);
     }
+  }
 
-    mat-nav-list {
-      padding-top: 0;
-    }
-  `]
+  mat-nav-list {
+    padding-top: 0;
+  }
+`]
 })
 export class SidenavComponent {
   private navigationService = inject(NavigationService);
@@ -90,16 +87,7 @@ export class SidenavComponent {
   collapsed = input<boolean>(false);
   collapsedChange = output<boolean>();
 
-  sideNavItems$ = this.navigationService.getSideNavigation();
-
-  constructor() {
-    // Debug subscription
-    this.sideNavItems$.subscribe(items => {
-      console.log('Sidenav items received:', items);
-    });
-  }
-
-  onCollapse() {
-    this.collapsedChange.emit(!this.collapsed());
-  }
+  navigationItems = toSignal(this.navigationService.getSideNavigation(), {
+    initialValue: [] as NavItem[]
+  });
 }
