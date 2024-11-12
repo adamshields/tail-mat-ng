@@ -39,7 +39,7 @@ import { CommonModule } from '@angular/common';
           (click)="onCollapse()"
           [class.rotated]="collapsed()"
         >
-          <mat-icon>chevron_left</mat-icon>
+          <mat-icon>keyboard_double_arrow_left</mat-icon>
         </button>
       </div>
 

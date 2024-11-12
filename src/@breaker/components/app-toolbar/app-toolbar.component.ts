@@ -21,7 +21,7 @@ export class AppToolbarComponent {
 
   isDark$ = this.themeManager.isDark$;
   // topNavItems$ = this.navigationService.getNavigation('top');
-  adminItems$ = this.navigationService.getNavigation('admin');
+  // adminItems$ = this.navigationService.getNavigation('admin');
 
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
