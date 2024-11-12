@@ -27,15 +27,20 @@
 // }
 @mixin color($theme) {
   .toolbar {
-    color: mat.get-theme-color($theme, on-primary-container);
-    background: mat.get-theme-color($theme, primary-container);
-    border-color: mat.get-theme-color($theme, primary);
-    @include mat.elevation(2, #e91e63, 0.8);
+    // color: mat.get-theme-color($theme, on-primary-container);
+    // background: mat.get-theme-color($theme, primary-container);
+    // border-color: mat.get-theme-color($theme, primary);
+    // // @include mat.elevation(2, #e91e63, 0.8);
 
     // .mat-icon {
     //   color: mat.get-theme-color($theme, on-primary-container);
     //   font-size: 24px;  // Adjust the icon size as needed
     // }
+
+      // @include mat.toolbar-overrides((
+      //   container-background-color: orange,
+      //   container-text-color: red,
+      // ));
 
 
   }

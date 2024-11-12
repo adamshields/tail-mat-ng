@@ -26,9 +26,10 @@ import { filter } from 'rxjs';
   template: `
     <app-toolbar></app-toolbar>
 
-    <mat-sidenav-container>
+    <mat-sidenav-container class="mat-elevation-z4">
       @if (showSidenav()) {
         <mat-sidenav
+
           [opened]="true"
           mode="side"
           [style.width]="sidenavWidth()"
@@ -59,12 +60,25 @@ import { filter } from 'rxjs';
 
   `,
   styles: `
+  @use '@angular/material' as mat;
+
   mat-sidenav-container {
     height: calc(100vh - 64px);
+
   }
   mat-sidenav,
   mat-sidenav-content {
     transition: all 500ms ease-in-out;
+  }
+  mat-sidenav {
+    box-shadow: var(--mat-app-elevation-shadow-level-8);
+    @include mat.sidenav-overrides((
+      // container-background-color: orange,
+      container-text-color: red,
+      container-shape: rectangle,
+      // container-elevation-shadow: var(--mat-app-elevation-shadow-level-8),
+      container-divider-color: var(--sys-on-surface-variant),
+    ));
   }
   `,
 })
