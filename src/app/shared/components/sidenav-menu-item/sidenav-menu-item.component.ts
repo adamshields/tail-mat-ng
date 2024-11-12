@@ -68,31 +68,23 @@ import { NavItem } from '../../../core/models/navigation.types';
     }
   `,
   styles: [`
-:host * {
-  transition: all 500ms ease-in-out;
-}
+    :host * {
+      transition: all 500ms ease-in-out;
+    }
 
-.menu-item {
-  border-left: 5px solid;
-  border-left-color: rgba(0, 0, 0, 0);
-  border-radius: 0%;
-}
-.selected-menu-item {
-  border-left-color: var(--on-primary);
-  background: rgba(0, 0, 0, 0.05);
-}
+    .menu-item {
+      border-left: 5px solid;
+      border-left-color: rgba(0, 0, 0, 0);
+      border-radius: 0%;
+    }
+    .selected-menu-item {
+      border-left-color: var(--primary-color);
+      background: rgba(0, 0, 0, 0.05);
+    }
 
-.indented {
-  --mat-list-list-item-leading-icon-start-space: 48px;
-}
-
-mat-sidenav-container {
-  height: calc(100vh - 64px);
-}
-mat-sidenav,
-mat-sidenav-content {
-  transition: all 500ms ease-in-out;
-}
+    .indented {
+      --mat-list-list-item-leading-icon-start-space: 48px;
+    }
 
   `],
   animations: [
@@ -124,7 +116,7 @@ export class SidenavMenuItemComponent {
     if (!this.item().children?.length) {
       return;
     }
-    this.nestedMenuOpen.update(v => !v);
+    this.nestedMenuOpen.set(!this.nestedMenuOpen());
   }
 }
 

@@ -79,6 +79,13 @@ import { NavItem } from '../../../core/models/navigation.types';
   mat-nav-list {
     padding-top: 0;
   }
+    // mat-sidenav-container {
+  //   height: calc(100vh - 64px);
+  // }
+  // mat-sidenav,
+  // mat-sidenav-content {
+  //   transition: all 500ms ease-in-out;
+  // }
 `]
 })
 export class SidenavComponent {

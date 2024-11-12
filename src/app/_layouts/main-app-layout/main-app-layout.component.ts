@@ -23,8 +23,50 @@ import { filter } from 'rxjs';
     ResponsiveHelperComponent,
     AppToolbarComponent
   ],
-  templateUrl: './main-app-layout.component.html',
-  styleUrl: './main-app-layout.component.scss'
+  template: `
+    <app-toolbar></app-toolbar>
+
+    <mat-sidenav-container>
+      @if (showSidenav()) {
+        <mat-sidenav
+          [opened]="true"
+          mode="side"
+          [style.width]="sidenavWidth()"
+        >
+        <app-sidenav
+        [collapsed]="collapsed()"
+        (collapsedChange)="toggleCollapsed()"
+      />
+        </mat-sidenav>
+      }
+
+      <mat-sidenav-content
+        class="p-5 transition-[margin-left] duration-500"
+        [style.marginLeft]="sidenavWidth()"
+      >
+        @if (loading()) {
+          <div class="flex justify-center items-center h-full">
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          </div>
+        } @else {
+          <ng-container #content>
+            <app-responsive-helper></app-responsive-helper>
+            <router-outlet></router-outlet>
+          </ng-container>
+        }
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+
+  `,
+  styles: `
+  mat-sidenav-container {
+    height: calc(100vh - 64px);
+  }
+  mat-sidenav,
+  mat-sidenav-content {
+    transition: all 500ms ease-in-out;
+  }
+  `,
 })
 export class MainAppLayoutComponent {
   private navigationService = inject(NavigationService);
