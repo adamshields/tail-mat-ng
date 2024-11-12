@@ -1,39 +1,62 @@
-
 // src/app/core/services/navigation.service.ts
 import { inject, Injectable, signal } from '@angular/core';
-import { Theme } from '../models/theme.model';
-import { effect } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { BehaviorSubject, filter, Observable, map, startWith } from 'rxjs';
-import { PORTFOLIO_NAVIGATION } from '../configs/portfolio-navigation.config';
-import { PROJECT_NAVIGATION } from '../configs/project-navigation.config';
+import { filter } from 'rxjs';
 import { NavItem, NavLocation } from '../models/navigation.types';
 import { SITE_NAVIGATION } from '../configs/navigation.config';
 
-// src/app/core/services/navigation.service.ts
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationService {
-  private readonly navigationItems = new BehaviorSubject<NavItem[]>(SITE_NAVIGATION);
   private router = inject(Router);
+  private activeSideNavItems = signal<NavItem[]>([]);
 
-
-  getSideNavigation(): Observable<NavItem[]> {
-    return this.router.events.pipe(
-      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-      startWith(null),
-      map(() => {
-        const rootSection = this.router.url.split('/')[1];
-        return this.findSideNavItems(rootSection);
-      })
-    );
+  constructor() {
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe(() => this.updateActiveSideNav());
   }
 
-  private findSideNavItems(rootSection: string): NavItem[] {
+  private updateActiveSideNav(): void {
+    const urlParts = this.router.url.split('/');
+    const rootSection = urlParts[1];
+
+    // For applications section
+    if (rootSection === 'applications') {
+      // Only show navigation for design routes
+      if (urlParts[3] === 'designs' && urlParts.length >= 5) {
+        const designItems = this.getDesignDetailsSideNav(urlParts[2], urlParts[4]);
+        this.activeSideNavItems.set(designItems);
+        return;
+      }
+      // Return empty array for all other application routes
+      this.activeSideNavItems.set([]);
+      return;
+    }
+
+    // Handle other sections
+    const sideNavItems = this.getSectionSideNav(rootSection);
+    this.activeSideNavItems.set(sideNavItems);
+  }
+
+  private getDesignDetailsSideNav(appId: string, designId: string): NavItem[] {
+    const appSection = SITE_NAVIGATION.find(item => item.path === '/applications');
+    const designNavItems = appSection?.children?.find(item =>
+      item.path.includes('/designs'))?.children ?? [];
+
+    return designNavItems.map(item => ({
+      ...item,
+      path: item.path
+        .replace(':appId', appId)
+        .replace(':designId', designId)
+    }));
+  }
+
+  private getSectionSideNav(sectionRoot: string): NavItem[] {
     const navSection = SITE_NAVIGATION.find(item =>
-      item.path.includes(rootSection) ||
-      item.children?.some(child => child.path.includes(rootSection))
+      item.path.includes(sectionRoot) ||
+      item.children?.some(child => child.path.includes(sectionRoot))
     );
 
     return navSection?.children?.filter(child =>
@@ -41,19 +64,16 @@ export class NavigationService {
     ) ?? [];
   }
 
-  getNavigation(location: NavLocation): Observable<NavItem[]> {
-    return this.navigationItems.pipe(
-      map(items => this.filterByLocation(items, location))
-    );
+  getCurrentSideNav(): NavItem[] {
+    return this.activeSideNavItems();
   }
 
-  private filterByLocation(items: NavItem[], location: NavLocation): NavItem[] {
-    return items.filter(item =>
+  getTopNavItems(location: NavLocation): NavItem[] {
+    return SITE_NAVIGATION.filter(item =>
       item.location.includes(location) ||
       (location === 'top' && item.children?.some(child =>
         child.location.includes('top')
       ))
     );
   }
-
 }

@@ -26,7 +26,8 @@ export class AppToolbarComponent {
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
   }
-  topNavItems$ = this.navigationService.getNavigation('top');
+  topNavItems = this.navigationService.getTopNavItems('top');
+
 
   hasTopChildren(item: NavItem): boolean {
     return item.children?.some(child => child.location.includes('top')) ?? false;

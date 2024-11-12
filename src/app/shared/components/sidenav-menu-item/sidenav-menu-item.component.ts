@@ -110,7 +110,8 @@ mat-sidenav-content {
 export class SidenavMenuItemComponent {
   constructor() {
     effect(() => {
-      console.log('collapsed state changed sidenav menu item:', this.collapsed());
+      console.log('APP SIDENAVMENUITEMCOMPONENT:');
+      // console.log('collapsed state changed sidenav menu item:', this.collapsed());
     });
   }
 

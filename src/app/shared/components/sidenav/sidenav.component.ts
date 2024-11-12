@@ -1,5 +1,5 @@
 // sidenav.component.ts
-import { Component, computed, inject, input, output, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MenuItem } from '../../data/menu-item.interface';
@@ -43,7 +43,7 @@ import { NavItem } from '../../../core/models/navigation.types';
       </div>
 
       <mat-nav-list>
-        @for (item of navigationItems(); track item.id) {
+        @for (item of activeSideNavItems(); track item.id) {
           <app-sidenav-menu-item
             [item]="item"
             [collapsed]="collapsed()"
@@ -87,7 +87,19 @@ export class SidenavComponent {
   collapsed = input<boolean>(false);
   collapsedChange = output<boolean>();
 
-  navigationItems = toSignal(this.navigationService.getSideNavigation(), {
-    initialValue: [] as NavItem[]
-  });
+  // Use computed to automatically update when the signal changes
+  // sideNavItems = computed(() => this.navigationService.getSideNavItems());
+  activeSideNavItems = () => this.navigationService.getCurrentSideNav();
+
+
+  constructor() {
+    effect(() => {
+      console.log('APP SIDENAV:');
+      console.log('collapsed APP SIDENAV:', this.collapsed());
+    });
+  }
+  onCollapse() {
+    console.log('onCollapse in sideNav output:', this.collapsed());
+    this.collapsedChange.emit(!this.collapsed());
+  }
 }

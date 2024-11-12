@@ -7,16 +7,16 @@ export const APPLICATIONS_ROUTES: Routes = [
   {
     path: '',
     component: ApplicationsComponent,
-    data: { showSidenav: false }  // Explicitly set sidenav visibility
+
   },
   {
     path: ':id',
     component: ApplicationDetailsComponent,
-    data: { showSidenav: false }  // Explicitly set sidenav visibility
+
   },
   {
     path: ':id/designs/:designId',
     component: DesignDetailsComponent,
-    data: { showSidenav: true }
+
   }
 ];

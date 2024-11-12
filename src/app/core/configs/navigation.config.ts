@@ -124,14 +124,47 @@ export const SITE_NAVIGATION: NavItem[] = [
       }
     ]
   },
-  // Applications Section
+  // Applications Section with Designs
   {
     id: 'applications',
     label: 'Applications',
     path: '/applications',
     icon: 'apps',
     location: ['top'],
+    children: [
+      {
+        id: 'design-menu',
+        label: 'Design Navigation',
+        path: '/applications/:appId/designs/:designId',
+        icon: 'design_services',
+        location: ['side'],
+        children: [
+          {
+            id: 'design-overview',
+            label: 'Design Overview',
+            path: '/applications/:appId/designs/:designId/overview',
+            icon: 'dashboard',
+            location: ['side']
+          },
+          {
+            id: 'design-components',
+            label: 'Components',
+            path: '/applications/:appId/designs/:designId/components',
+            icon: 'widgets',
+            location: ['side']
+          },
+          {
+            id: 'design-settings',
+            label: 'Settings',
+            path: '/applications/:appId/designs/:designId/settings',
+            icon: 'settings',
+            location: ['side']
+          }
+        ]
+      }
+    ]
   },
+
   // Projects with dynamic subroutes
   {
     id: 'projects',
