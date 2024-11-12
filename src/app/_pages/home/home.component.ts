@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Injectable } from '@angular/core';
-import { MaterialModules } from '../../..';
+import { MaterialModules } from '../../../mat-index';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';

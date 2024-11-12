@@ -1,48 +1,40 @@
 <mat-toolbar class="toolbar flex justify-end items-center p-4 relative mat-elevation-z8 z-10">
   <!-- Logo -->
-  <div class="flex items-center justify-start ">
+  <div class="flex items-center justify-start">
     <span class="text-xl font-bold" routerLink="/">APPNAME</span>
     <mat-icon class="text-2xl ml-2">bolt</mat-icon>
   </div>
 
-  <!-- <mat-toolbar-row>
-    <span>Second Line</span>
-    <span class="flex-auto"></span>
-    <mat-icon class="example-icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
-  </mat-toolbar-row> -->
-    <!-- Logo -->
-    <!-- <div class="flex items-center justify-start sm:order-2 md:mr-10 lg:hidden">
-      <a class="flex items-center justify-center rounded bg-primary p-2 focus:outline-none focus:ring-1">
-        <mat-icon class="text-2xl ml-2">bolt</mat-icon>
-      </a>
-      <b class="hidden pl-3 text-sm font-bold text-foreground sm:block"> Angular Tailwind </b>
-    </div> -->
-
   <!-- Menu Items -->
   <nav class="flex space-x-1">
-    @for (item of menuItems; track item) { @if (!item.subItems) {
-    <a mat-button [routerLink]="[item.route]" >
-      <mat-icon>{{ item.icon }}</mat-icon>
-      {{ item.label }}
-    </a>
-    } @else {
-    <button mat-button [matMenuTriggerFor]="menu" >
-      <mat-icon>{{ item.icon }}</mat-icon>
-      {{ item.label }}
-      <mat-icon>arrow_drop_down</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      @for (subItem of item.subItems; track subItem) {
-      <a mat-menu-item [routerLink]="[item.route, subItem.route]" >
-        <mat-icon>{{ subItem.icon }}</mat-icon>
-        {{ subItem.label }}
-      </a>
+    @for (item of topNavItems$ | async; track item.id) {
+      @if (!hasTopChildren(item)) {
+        <a mat-button [routerLink]="[item.path]">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          {{ item.label }}
+        </a>
+      } @else {
+        <button mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          {{ item.label }}
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          @for (child of item.children; track child.id) {
+            @if (child.location.includes('top')) {
+              <a mat-menu-item [routerLink]="[child.path]">
+                <mat-icon>{{ child.icon }}</mat-icon>
+                {{ child.label }}
+              </a>
+            }
+          }
+        </mat-menu>
       }
-    </mat-menu>
-    } }
+    }
   </nav>
 
   <span class="flex-1"></span>
+
   <!-- Theme Toggler -->
   <button
     mat-icon-button
@@ -54,15 +46,14 @@
       (isDark$ | async) === true ? "dark_mode" : "light_mode"
     }}</mat-icon>
   </button>
-  <!-- Color Picker -->
-  <!-- <app-color-picker class="color-picker"></app-color-picker> -->
   <mat-menu #themeMenu="matMenu">
     <button mat-menu-item (click)="changeTheme('auto')">System</button>
     <button mat-menu-item (click)="changeTheme('light')">Light</button>
     <button mat-menu-item (click)="changeTheme('dark')">Dark</button>
   </mat-menu>
+
   <!-- Profile Button -->
-  <button mat-icon-button [matMenuTriggerFor]="profileMenu" >
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu">
     <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #profileMenu="matMenu">

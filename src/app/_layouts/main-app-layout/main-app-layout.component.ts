@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject, signal, ViewChild } from '@angular/core';
-import { MaterialModules } from '../../..';
+import { MaterialModules } from '../../../mat-index';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ThemeManager } from '../../theme-manager.service';
@@ -12,6 +12,8 @@ import { SidenavService } from '../../shared/services/sidenav.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ResponsiveHelperComponent } from '../../../@breaker/components/responsive-helper/responsive-helper.component';
 import { AppToolbarComponent } from "../../../@breaker/components/app-toolbar/app-toolbar.component";
+import { NavigationService } from '../../core/services/navigation.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-main-app-layout',
@@ -23,43 +25,50 @@ import { AppToolbarComponent } from "../../../@breaker/components/app-toolbar/ap
 
 export class MainAppLayoutComponent {
 
-  @ViewChild('sidenav') sidenav!: SidenavComponent;
 
-  private sidenavService = inject(SidenavService);
-
+  private navigationService = inject(NavigationService);
+  private themeManager = inject(ThemeManager);
 
   collapsed = signal(false);
-
-
   loading = signal(false);
-
+  isDark$ = this.themeManager.isDark$;
+  onCollapsedChange(isCollapsed: boolean) {
+    this.collapsed.set(isCollapsed);
+  }
+  // New signal to track if we have sidenav items
+  hasSideNavItems = signal(false);
 
   sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');
 
+  // New computed signal for content margin
+  contentMargin = computed(() => {
+    if (!this.hasSideNavItems()) return '0px';
+    return this.collapsed() ? '65px' : '250px';
+  });
 
-  showSidenav = toSignal(this.sidenavService.showSidenav$, { initialValue: true });
+  constructor() {
+    // Subscribe to navigation changes to update hasSideNavItems
+    this.navigationService.getSideNavigation().pipe(
+      map(items => items.length > 0)
+    ).subscribe(hasItems => {
+      this.hasSideNavItems.set(hasItems);
+    });
 
+    effect(() => {
+      console.log('Sidenav state:', {
+        collapsed: this.collapsed(),
+        hasItems: this.hasSideNavItems(),
+        width: this.sidenavWidth(),
+        margin: this.contentMargin()
+      });
+    });
+  }
 
-  themeManager = inject(ThemeManager);
-
-
-  isDark$ = this.themeManager.isDark$;
-
+  toggleCollapsed() {
+    this.collapsed.update(v => !v);
+  }
 
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
-  }
-
-
-  // menuItems: MenuItem[] = TOOLBAR_MENU_ITEMS;
-
-
-  sideNavItems: MenuItem[] = SIDENAV_MENU_ITEMS;
-
-
-  constructor() {
-    effect(() => {
-      console.log('Sidenav visibility changed:', this.showSidenav());
-    });
   }
 }

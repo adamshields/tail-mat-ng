@@ -1,5 +1,5 @@
 // sidenav.component.ts
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MenuItem } from '../../data/menu-item.interface';
@@ -7,8 +7,11 @@ import { SidenavMenuItemComponent } from '../sidenav-menu-item/sidenav-menu-item
 import { SIDENAV_MENU_ITEMS } from '../../data/sidenav-menu-data';
 import { MatIconModule } from '@angular/material/icon';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { filter, map } from 'rxjs';
+import { NavigationService } from '../../../core/services/navigation.service';
+import { MaterialModules } from '../../../../mat-index';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sidenav',
@@ -17,42 +20,86 @@ import { filter, map } from 'rxjs';
     MatListModule,
     MatSidenavModule,
     SidenavMenuItemComponent,
-    MatIconModule
+    MatIconModule,
+    ...MaterialModules,
+    RouterLink,
+    CommonModule
   ],
-  templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss'
+  template: `
+    <div class="sidenav-container">
+
+
+      <div class="sidenav-header">
+        @if (!collapsed()) {
+          <span class="header-text">Navigation</span>
+        }
+        <button
+          mat-icon-button
+          class="collapse-btn"
+          (click)="onCollapse()"
+          [class.rotated]="collapsed()"
+        >
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+      </div>
+
+      <mat-nav-list>
+        @if (sideNavItems$ | async; as items) {
+          @for (item of items; track item.id) {
+            <app-sidenav-menu-item
+              [item]="item"
+              [collapsed]="collapsed()"
+            />
+          }
+        }
+      </mat-nav-list>
+    </div>
+  `,
+  styles: [`
+    .sidenav-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .sidenav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      min-height: 64px;
+    }
+
+    .collapse-btn {
+      transition: transform 0.3s ease;
+
+      &.rotated {
+        transform: rotate(180deg);
+      }
+    }
+
+    mat-nav-list {
+      padding-top: 0;
+    }
+  `]
 })
 export class SidenavComponent {
-  collapsed = signal(false);
-  menuItems = input<MenuItem[]>(SIDENAV_MENU_ITEMS);
+  private navigationService = inject(NavigationService);
 
-  private router = inject(Router);
+  collapsed = input<boolean>(false);
+  collapsedChange = output<boolean>();
 
-  sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');
+  sideNavItems$ = this.navigationService.getSideNavigation();
 
-  private currentUrl = toSignal(this.router.events.pipe(
-    filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-    map((event: NavigationEnd) => event.urlAfterRedirects)
-  ), { initialValue: '/' });
-
-  activeMenuItems = computed(() => {
-    const currentPath = this.currentUrl();
-    return this.menuItems().filter(item => this.shouldShowMenuItem(item, currentPath));
-  });
-
-  toggleCollapsed() {
-    this.collapsed.set(!this.collapsed());
+  constructor() {
+    // Debug subscription
+    this.sideNavItems$.subscribe(items => {
+      console.log('Sidenav items received:', items);
+    });
   }
 
-  private shouldShowMenuItem(item: MenuItem, currentPath: string): boolean {
-    if (item.route && currentPath.startsWith('/' + item.route)) {
-      return true;
-    }
-    if (item.subItems) {
-      return item.subItems.some(subItem =>
-        currentPath.startsWith('/' + item.route + '/' + subItem.route)
-      );
-    }
-    return true;
+  onCollapse() {
+    this.collapsedChange.emit(!this.collapsed());
   }
 }

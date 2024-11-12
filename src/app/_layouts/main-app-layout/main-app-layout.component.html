@@ -1,22 +1,32 @@
 <app-toolbar></app-toolbar>
 
 <mat-sidenav-container>
-  @if (showSidenav()) {
-  <mat-sidenav [opened]="true" mode="side" [style.width]="sidenavWidth()">
-    <app-sidenav [menuItems]="sideNavItems" #sidenav></app-sidenav>
-  </mat-sidenav>
+  @if (hasSideNavItems()) {
+    <mat-sidenav
+      [opened]="true"
+      mode="side"
+      [style.width]="sidenavWidth()"
+    >
+    <app-sidenav
+    [collapsed]="collapsed()"
+    (collapsedChange)="onCollapsedChange($event)"
+  />
+    </mat-sidenav>
   }
-  <mat-sidenav-content class="p-5 transition-[margin-left] duration-500"
-    [style.marginLeft]="showSidenav() ? sidenavWidth() : '0'">
+
+  <mat-sidenav-content
+    class="p-5 transition-[margin-left] duration-500"
+    [style.marginLeft]="contentMargin()"
+  >
     @if (loading()) {
-    <div class="flex justify-center items-center h-full">
-      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    </div>
+      <div class="flex justify-center items-center h-full">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
     } @else {
-    <ng-container #content>
-      <app-responsive-helper></app-responsive-helper>
-      <router-outlet></router-outlet>
-    </ng-container>
+      <ng-container #content>
+        <app-responsive-helper></app-responsive-helper>
+        <router-outlet></router-outlet>
+      </ng-container>
     }
   </mat-sidenav-content>
 </mat-sidenav-container>
