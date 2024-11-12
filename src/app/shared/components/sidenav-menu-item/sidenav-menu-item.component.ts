@@ -1,5 +1,5 @@
 // src/app/shared/components/sidenav-menu-item/sidenav-menu-item.component.ts
-import { Component, effect, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, signal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
@@ -9,6 +9,7 @@ import { NavItem } from '../../../core/models/navigation.types';
 
 @Component({
   selector: 'app-sidenav-menu-item',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [RouterModule, MatListModule, MatIcon],
   template: `

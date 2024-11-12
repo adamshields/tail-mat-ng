@@ -17,7 +17,7 @@ import { SITE_NAVIGATION } from '../configs/navigation.config';
 export class NavigationService {
   private readonly navigationItems = new BehaviorSubject<NavItem[]>(SITE_NAVIGATION);
   private router = inject(Router);
-  // constructor(private router: Router) {}
+
 
   getSideNavigation(): Observable<NavItem[]> {
     return this.router.events.pipe(
@@ -55,4 +55,5 @@ export class NavigationService {
       ))
     );
   }
+
 }
