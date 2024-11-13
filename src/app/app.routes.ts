@@ -1,12 +1,18 @@
 import { Routes } from '@angular/router';
 import { MainAppLayoutComponent } from './_layouts/main-app-layout/main-app-layout.component';
 import { LayoutComponent } from '../@breaker/layout/layout.component';
+import { LAB_ROUTES } from '../@breaker/lab/lab.routes';
 
 export const routes: Routes = [
   {
     path: '',
     component: MainAppLayoutComponent,
     children: [
+      {
+        path: 'lab',
+        loadChildren: () => import('../@breaker/lab/lab.routes').then(m => m.LAB_ROUTES),
+        // data: { showSidenav: false }
+      },
       {
         path: '',
         loadComponent: () => import('./_pages/home/home.component').then(m => m.HomeComponent),
