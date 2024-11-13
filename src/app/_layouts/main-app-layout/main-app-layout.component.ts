@@ -82,126 +82,28 @@ import { filter } from 'rxjs';
   }
   `,
 })
-/**
- * MainAppLayoutComponent
- *
- * Primary layout component managing the application's main structure including
- * sidenav state, theme management, and loading states.
- *
- * Dependencies:
- * - NavigationService: Manages navigation state and sidenav items
- * - ThemeManager: Handles theme switching and state
- *
- * Related Components:
- * - AppToolbarComponent: Receives theme state
- * - SidenavComponent: Receives collapsed state
- * - MatSidenavContainer: Manages sidenav layout
- */
-@Component({
-  selector: 'app-main-app-layout',
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
 export class MainAppLayoutComponent {
-  // === Dependencies ===
-  private readonly navigationService = inject(NavigationService);
-  private readonly themeManager = inject(ThemeManager);
+  private navigationService = inject(NavigationService);
+  private themeManager = inject(ThemeManager);
 
-  // === State Management ===
-  /**
-   * Controls the collapsed state of the sidenav
-   * Consumed by: SidenavComponent
-   */
-  protected readonly collapsed = signal<boolean>(false);
 
-  /**
-   * Controls loading state for content area
-   * Used in: Router outlet container
-   */
-  protected readonly loading = signal<boolean>(false);
+  collapsed = signal(false);
+  loading = signal(false);
+  isDark$ = this.themeManager.isDark$;
+  showSidenav = () => this.navigationService.getCurrentSideNav().length > 0;
 
-  /**
-   * Observable for current theme state
-   * Consumed by: AppToolbarComponent
-   */
-  protected readonly isDark$ = this.themeManager.isDark$;
-
-  // === Computed Properties ===
-  /**
-   * Determines if sidenav should be displayed
-   * Dependencies: navigationService.getCurrentSideNav()
-   * Used in: Template *ngIf condition
-   */
-  protected readonly showSidenav = computed(() =>
-    this.navigationService.getCurrentSideNav().length > 0
-  );
-
-  /**
-   * Calculates current sidenav width based on collapse state
-   * Dependencies: collapsed signal, showSidenav computed
-   * Used in: MatSidenav width binding
-   */
-  protected readonly sidenavWidth = computed(() => {
+  sidenavWidth = computed(() => {
     if (!this.showSidenav()) return '0px';
     return this.collapsed() ? '65px' : '250px';
   });
-
-  // === Lifecycle & Effects ===
   constructor() {
-    // Debug effect for monitoring layout changes
     effect(() => {
-      console.log('MAIN APP LAYOUT:', {
-        collapsed: this.collapsed(),
-        sidenavWidth: this.sidenavWidth(),
-        showSidenav: this.showSidenav()
-      });
+      console.log('MAIN APP LAYOUT:');
     });
   }
 
-  // === Public Methods ===
-  /**
-   * Updates application theme
-   * @param theme - The theme to switch to ('light' | 'dark' | 'system')
-   * Called by: AppToolbarComponent
-   */
-  protected changeTheme(theme: string): void {
+  changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
   }
 }
 
-/**
- * Component Relations Diagram:
- *
- * MainAppLayoutComponent
- * ├── AppToolbarComponent
- * │   ├── Input: none
- * │   └── Shared State: isDark$ (via ThemeManager)
- * │
- * ├── MatSidenavContainer
- * │   └── Binding: [style.width]="sidenavWidth()"
- * │
- * └── SidenavComponent
- *     ├── Input: [collapsed]="collapsed()"
- *     ├── Output: (collapsedChange)="collapsed.set($event)"
- *     └── Children: SidenavMenuItemComponent[]
- *
- * Service Dependencies:
- * ├── NavigationService
- * │   └── Methods Used: getCurrentSideNav()
- * │
- * └── ThemeManager
- *     ├── Properties Used: isDark$
- *     └── Methods Used: changeTheme()
- */
-
-/**
- * State Flow:
- *
- * 1. Sidenav State:
- *    collapsed signal → sidenavWidth computed → SidenavComponent → SidenavMenuItemComponent
- *
- * 2. Navigation State:
- *    NavigationService.getCurrentSideNav() → showSidenav computed → Template conditions
- *
- * 3. Theme State:
- *    ThemeManager.isDark$ → AppToolbarComponent → Theme display
- */
