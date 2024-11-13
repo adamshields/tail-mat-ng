@@ -1,5 +1,5 @@
 // sidenav.component.ts
-import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MenuItem } from '../../data/menu-item.interface';
@@ -17,6 +17,7 @@ import { NavItem } from '../../../core/models/navigation.types';
 @Component({
   selector: 'app-sidenav',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatListModule,
     MatSidenavModule,

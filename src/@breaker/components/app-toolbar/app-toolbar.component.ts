@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { MaterialModules } from '../../../mat-index';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,7 @@ import { NavItem } from '../../../app/core/models/navigation.types';
 @Component({
   selector: 'app-toolbar',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [...MaterialModules, RouterModule, CommonModule],
   templateUrl: './app-toolbar.component.html',
   styleUrl: './app-toolbar.component.scss'

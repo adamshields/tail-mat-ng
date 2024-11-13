@@ -9,8 +9,8 @@ import { NavItem } from '../../../core/models/navigation.types';
 
 @Component({
   selector: 'app-sidenav-menu-item',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterModule, MatListModule, MatIcon],
   template: `
     <a
@@ -106,7 +106,21 @@ export class SidenavMenuItemComponent {
       // console.log('collapsed state changed sidenav menu item:', this.collapsed());
     });
   }
+  // constructor() {
+  //   effect(() => {
+  //     console.log('APP SIDENAVMENUITEMCOMPONENT:');
+  //     // Log when signals actually change
+  //     console.log('Signal changed:', {
+  //       collapsed: this.collapsed(),
+  //       item: this.item()
+  //     });
+  //   });
+  // }
 
+  // ngDoCheck() {
+  //   // Log when change detection runs
+  //   console.log('Change detection ran for:', this.item()?.label);
+  // }
   item = input.required<NavItem>();
   collapsed = input<boolean>(false);
 

@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
 import { MaterialModules } from '../../../mat-index';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -14,6 +14,7 @@ import { filter } from 'rxjs';
 @Component({
   selector: 'app-main-app-layout',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ...MaterialModules,
     RouterModule,
@@ -24,6 +25,7 @@ import { filter } from 'rxjs';
     AppToolbarComponent
   ],
   template: `
+  <!-- <div class="flex h-screen flex-col"> -->
     <app-toolbar></app-toolbar>
 
     <mat-sidenav-container class="mat-elevation-z4">
@@ -57,6 +59,7 @@ import { filter } from 'rxjs';
         }
       </mat-sidenav-content>
     </mat-sidenav-container>
+  <!-- </div> -->
 
   `,
   styles: `

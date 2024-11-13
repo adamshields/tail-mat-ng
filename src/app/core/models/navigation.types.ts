@@ -16,7 +16,7 @@
 // }
 
 // src/app/core/models/navigation.types.ts
-export type NavLocation = 'top' | 'side' | 'admin';
+export type NavLocation = 'top' | 'side' ;
 
 export interface NavItem {
   id: string;
