@@ -3,50 +3,7 @@ import { NavItem } from "../models/navigation.types";
 export const SITE_NAVIGATION: NavItem[] = [
   // navigation.config.ts - Add this to your SITE_NAVIGATION array
 // navigation.config.ts - Add this to your SITE_NAVIGATION array
-{
-  id: 'lab',
-  label: 'Lab',
-  path: '/lab',
-  icon: 'science',
-  location: ['top'],
-  children: [
-    {
-      id: 'lab-signals',
-      label: 'Signal Testing',
-      path: '/lab/signals',
-      icon: 'bolt',
-      location: ['side']
-    },
-    {
-      id: 'lab-ticker',
-      label: 'Ticker',
-      path: '/lab/ticker',
-      icon: 'clock',
-      location: ['side']
-    },
-    {
-      id: 'lab-rxjs',
-      label: 'RxJS Playground',
-      path: '/lab/rxjs',
-      icon: 'transform',
-      location: ['side']
-    },
-    {
-      id: 'lab-parent-child',
-      label: 'Parent Child',
-      path: '/lab/parent-child',
-      icon: 'account_tree',
-      location: ['side']
-    },
-    {
-      id: 'lab-forms',
-      label: 'Form Testing',
-      path: '/lab/forms',
-      icon: 'dynamic_form',
-      location: ['side']
-    }
-  ]
-},
+
   // Portfolio section
   {
     id: 'portfolios',
@@ -331,5 +288,49 @@ export const SITE_NAVIGATION: NavItem[] = [
 
       }
     ]
-  }
+  },
+  {
+  id: 'lab',
+  label: 'Lab',
+  path: '/lab',
+  icon: 'science',
+  location: ['top'],
+  children: [
+    {
+      id: 'lab-signals',
+      label: 'Signal Testing',
+      path: '/lab/signals',
+      icon: 'bolt',
+      location: ['side']
+    },
+    {
+      id: 'lab-ticker',
+      label: 'Ticker',
+      path: '/lab/ticker',
+      icon: 'clock',
+      location: ['side']
+    },
+    {
+      id: 'lab-rxjs',
+      label: 'RxJS Playground',
+      path: '/lab/rxjs',
+      icon: 'transform',
+      location: ['side']
+    },
+    {
+      id: 'lab-parent-child',
+      label: 'Parent Child',
+      path: '/lab/parent-child',
+      icon: 'account_tree',
+      location: ['side']
+    },
+    {
+      id: 'lab-forms',
+      label: 'Form Testing',
+      path: '/lab/forms',
+      icon: 'dynamic_form',
+      location: ['side']
+    }
+  ]
+},
 ];

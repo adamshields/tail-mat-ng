@@ -8,15 +8,16 @@ export const routes: Routes = [
     path: '',
     component: MainAppLayoutComponent,
     children: [
-      {
-        path: 'lab',
-        loadChildren: () => import('../@breaker/lab/lab.routes').then(m => m.LAB_ROUTES),
-        // data: { showSidenav: false }
-      },
+
       {
         path: '',
         loadComponent: () => import('./_pages/home/home.component').then(m => m.HomeComponent),
         // data: { showSidenav: true }
+      },
+      {
+        path: 'lab',
+        loadChildren: () => import('../@breaker/lab/lab.routes').then(m => m.LAB_ROUTES),
+        // data: { showSidenav: false }
       },
       {
         path: 'test',

@@ -7,12 +7,14 @@ import { TOOLBAR_MENU_ITEMS } from '../../../app/shared/data/toolbar-menu-data';
 import { ThemeManager } from '../../../app/theme-manager.service';
 import { NavigationService } from '../../../app/core/services/navigation.service';
 import { NavItem } from '../../../app/core/models/navigation.types';
+import { ColorPaletteComponent } from '../../../app/_pages/color-palette/color-palette.component';
+import { ColorPickerComponent } from "../../../app/shared/components/color-picker/color-picker.component";
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [...MaterialModules, RouterModule, CommonModule],
+  imports: [...MaterialModules, RouterModule, CommonModule, ColorPaletteComponent, ColorPickerComponent],
   templateUrl: './app-toolbar.component.html',
   styleUrl: './app-toolbar.component.scss'
 })
