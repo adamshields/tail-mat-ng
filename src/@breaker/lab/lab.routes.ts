@@ -22,6 +22,12 @@ export const LAB_ROUTES: Routes = [
         loadComponent: () =>
           import('./pages/parent-child/parent-child.component')
             .then(m => m.ParentChildComponent)
+      },
+      {
+        path: 'ticker',
+        loadComponent: () =>
+          import('./components/ticker/ticker.component')
+            .then(m => m.Ticker)
       }
     ]
   }

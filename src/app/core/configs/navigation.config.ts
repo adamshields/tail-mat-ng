@@ -18,6 +18,13 @@ export const SITE_NAVIGATION: NavItem[] = [
       location: ['side']
     },
     {
+      id: 'lab-ticker',
+      label: 'Ticker',
+      path: '/lab/ticker',
+      icon: 'clock',
+      location: ['side']
+    },
+    {
       id: 'lab-rxjs',
       label: 'RxJS Playground',
       path: '/lab/rxjs',
