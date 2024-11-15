@@ -1,25 +1,44 @@
-// src/app/core/services/navigation.service.ts
-import { inject, Injectable, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
-import { NavItem, NavLocation } from '../models/navigation.types';
 import { SITE_NAVIGATION } from '../configs/navigation.config';
+import { NavItem } from '../models/navigation.types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationService {
+  private navigationSignal = signal<NavItem[]>(SITE_NAVIGATION);
+  private currentUrl = signal<string>('');
   private router = inject(Router);
-  private activeSideNavItems = signal<NavItem[]>([]);
 
   constructor() {
     this.router.events.pipe(
-      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
-    ).subscribe(() => this.updateActiveSideNav());
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      this.currentUrl.set((event as NavigationEnd).url);
+      this.updateVerticalNav();
+    });
   }
 
-  private updateActiveSideNav(): void {
-    const urlParts = this.router.url.split('/');
+  private verticalNavItems = signal<NavItem[]>([]);
+
+  getHorizontalNav = computed(() =>
+    this.navigationSignal()
+      .filter(item => item.displayType.includes('horizontal'))
+      .map(item => ({
+        ...item,
+        dropdownItems: item.children?.filter(child =>
+          child.displayType.includes('dropdown')) ?? []
+      }))
+  );
+
+  // Return the active side nav items
+  // Get vertical nav based on current route
+  getVerticalNav = computed(() => this.verticalNavItems());
+
+  private updateVerticalNav() {
+    const urlParts = this.currentUrl().split('/');
     const rootSection = urlParts[1];
 
     // For applications section
@@ -27,21 +46,21 @@ export class NavigationService {
       // Only show navigation for design routes
       if (urlParts[3] === 'designs' && urlParts.length >= 5) {
         const designItems = this.getDesignDetailsSideNav(urlParts[2], urlParts[4]);
-        this.activeSideNavItems.set(designItems);
+        this.verticalNavItems.set(designItems);
         return;
       }
       // Return empty array for all other application routes
-      this.activeSideNavItems.set([]);
+      this.verticalNavItems.set([]);
       return;
     }
 
     // Handle other sections
     const sideNavItems = this.getSectionSideNav(rootSection);
-    this.activeSideNavItems.set(sideNavItems);
+    this.verticalNavItems.set(sideNavItems);
   }
 
   private getDesignDetailsSideNav(appId: string, designId: string): NavItem[] {
-    const appSection = SITE_NAVIGATION.find(item => item.path === '/applications');
+    const appSection = this.navigationSignal().find(item => item.path === '/applications');
     const designNavItems = appSection?.children?.find(item =>
       item.path.includes('/designs'))?.children ?? [];
 
@@ -54,26 +73,21 @@ export class NavigationService {
   }
 
   private getSectionSideNav(sectionRoot: string): NavItem[] {
-    const navSection = SITE_NAVIGATION.find(item =>
+    const navSection = this.navigationSignal().find(item =>
       item.path.includes(sectionRoot) ||
       item.children?.some(child => child.path.includes(sectionRoot))
     );
 
     return navSection?.children?.filter(child =>
-      child.location.includes('side')
+      child.displayType.includes('vertical')
     ) ?? [];
   }
 
-  getCurrentSideNav(): NavItem[] {
-    return this.activeSideNavItems();
-  }
+  // // Get dropdown items for a parent item
+  // getDropdownItems = computed(() =>
+  //   this.navigationSignal().filter(item =>
+  //     item.children?.some(child => child.displayType.includes('dropdown'))
+  //   )
+  // );
 
-  getTopNavItems(location: NavLocation): NavItem[] {
-    return SITE_NAVIGATION.filter(item =>
-      item.location.includes(location) ||
-      (location === 'top' && item.children?.some(child =>
-        child.location.includes('top')
-      ))
-    );
-  }
 }

@@ -25,7 +25,7 @@ import { filter } from 'rxjs';
     AppToolbarComponent
   ],
   template: `
-    <app-toolbar></app-toolbar>
+    <app-toolbar [horizontalNavItems]="horizontalNav()"/>
 
     <mat-sidenav-container class="mat-elevation-z4">
       @if (showSidenav()) {
@@ -35,6 +35,7 @@ import { filter } from 'rxjs';
           [style.width]="sidenavWidth()"
         >
         <app-sidenav
+            [verticalNavItems]="verticalNav()"
             [collapsed]="collapsed()"
             (collapsedChange)="collapsed.set($event)"
           />
@@ -90,7 +91,11 @@ export class MainAppLayoutComponent {
   collapsed = signal(false);
   loading = signal(false);
   isDark$ = this.themeManager.isDark$;
-  showSidenav = () => this.navigationService.getCurrentSideNav().length > 0;
+  // Navigation signals
+  horizontalNav = this.navigationService.getHorizontalNav;
+  verticalNav = this.navigationService.getVerticalNav;
+
+  showSidenav = computed(() => this.verticalNav().length > 0);
 
   sidenavWidth = computed(() => {
     if (!this.showSidenav()) return '0px';

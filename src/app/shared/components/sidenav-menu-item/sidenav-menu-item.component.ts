@@ -7,6 +7,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { NavItem } from '../../../core/models/navigation.types';
 
 
+
 @Component({
   selector: 'app-sidenav-menu-item',
   standalone: true,

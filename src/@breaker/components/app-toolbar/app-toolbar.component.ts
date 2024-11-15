@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
 import { MaterialModules } from '../../../mat-index';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -6,9 +6,10 @@ import { MenuItem } from '../../../app/shared/data/menu-item.interface';
 import { TOOLBAR_MENU_ITEMS } from '../../../app/shared/data/toolbar-menu-data';
 import { ThemeManager } from '../../../app/theme-manager.service';
 import { NavigationService } from '../../../app/core/services/navigation.service';
-import { NavItem } from '../../../app/core/models/navigation.types';
+
 import { ColorPaletteComponent } from '../../../app/_pages/color-palette/color-palette.component';
 import { ColorPickerComponent } from "../../../app/shared/components/color-picker/color-picker.component";
+import { NavItem } from '../../../app/core/models/navigation.types';
 
 @Component({
   selector: 'app-toolbar',
@@ -29,11 +30,18 @@ export class AppToolbarComponent {
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
   }
-  topNavItems = this.navigationService.getTopNavItems('top');
+  horizontalNavItems = input.required<NavItem[]>();
 
+  hasDropdown(item: NavItem): boolean {
+    return item.children?.some(child =>
+      child.displayType.includes('dropdown')
+    ) ?? false;
+  }
 
-  hasTopChildren(item: NavItem): boolean {
-    return item.children?.some(child => child.location.includes('top')) ?? false;
+  getDropdownItems(item: NavItem): NavItem[] {
+    return item.children?.filter(child =>
+      child.displayType.includes('dropdown')
+    ) ?? [];
   }
   constructor() {
     effect(() => {

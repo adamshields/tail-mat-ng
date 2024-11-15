@@ -1,35 +1,34 @@
-// // src/app/core/models/navigation.types.ts
-// export type NavLocation = 'top' | 'side' | 'admin';
+export type NavDisplayType =
+ | 'horizontal'      // Main top navigation bar items
+ | 'vertical'        // Sidebar navigation items
+ | 'dropdown'        // Items that appear in dropdown menus
+ | 'mobile'          // Items shown in mobile/responsive menu
+ | 'footer';         // Footer navigation items
 
-// export interface NavItem {
-//   id: string;                 // Unique identifier
-//   label: string;             // Display label
-//   path?: string;             // Optional because group items might not have a path
-//   icon?: string;             // Material icon name
-//   location: NavLocation[];   // Where this item can appear
-//   children?: NavItem[];      // For nested items
-//   group?: string;            // Group identifier for organization
-//   roles?: string[];         // Role-based access control
-//   visible?: boolean;        // Control visibility (default: true)
-//   disabled?: boolean;       // Control disabled state
-//   order?: number;          // Control display order within location/group
-// }
+ export interface NavItem {
+ id: string;         // Unique identifier for the nav item
+ label: string;      // Display text shown to users
+ path: string;       // URL path for routing
+ icon?: string;      // Material icon name
+ displayType: NavDisplayType[];  // Where/how this item should be displayed
+ children?: NavItem[];  // Nested navigation items
+ order?: number;     // Display order within its context
+ mobileOrder?: number; // Specific ordering for mobile display
+ parentId?: string;  // Reference to parent item for breadcrumbs/hierarchy
+ isDynamic?: boolean;  // Indicates if route contains dynamic parameters
+ parentParam?: string; // Parameter to inherit from parent route
+ isExternal?: boolean; // Indicates external URL vs internal route
+ dropdownItems?: NavItem[];  // Add this line
 
-// src/app/core/models/navigation.types.ts
-export type NavLocation = 'top' | 'side' ;
 
-export interface NavItem {
-  id: string;
-  label: string;
-  path: string;
-  icon?: string;
-  location: NavLocation[];
-  children?: NavItem[];
-  roles?: string[];
-  visible?: boolean;
-  disabled?: boolean;
-  order?: number;
-  group?: string;
-  isDynamic?: boolean;  // Flag for dynamic routes
-  parentParam?: string; // Parameter from parent route to pass down
+ grouping?: {
+   category?: string;   // Logical grouping category (e.g., "admin", "user")
+   priority?: number;   // Priority within its category
+ };
+
+ visibility?: {
+   roles?: string[];      // Required user roles to see this item
+   features?: string[];   // Feature flags that must be enabled
+   environment?: string[]; // Environments where item should be shown
+ };
 }
