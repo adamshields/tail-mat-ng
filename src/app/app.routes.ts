@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainAppLayoutComponent } from './_layouts/main-app-layout/main-app-layout.component';
 import { LayoutComponent } from '../@breaker/layout/layout.component';
 import { LAB_ROUTES } from '../@breaker/lab/lab.routes';
+import { GenericPageComponent } from '../@breaker/components/generic-page/generic-page.component';
 
 export const routes: Routes = [
   {
@@ -21,8 +22,12 @@ export const routes: Routes = [
       },
       {
         path: 'test',
-        loadComponent: () => import('./_pages/test/test.component').then(m => m.TestComponent),
-        data: { showSidenav: false }
+        children: [
+          {
+            path: '**',
+            component: GenericPageComponent
+          }
+        ]
       },
       {
         path: 'portfolios',
