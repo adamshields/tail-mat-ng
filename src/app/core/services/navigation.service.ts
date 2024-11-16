@@ -20,45 +20,54 @@ export class NavigationService {
       this.updateVerticalNav();
     });
   }
-
   private verticalNavItems = signal<NavItem[]>([]);
 
+  // navigation.service.ts
   getHorizontalNav = computed(() =>
     this.navigationSignal()
       .filter(item => item.displayType.includes('horizontal'))
       .map(item => ({
         ...item,
-        dropdownItems: item.children?.filter(child =>
-          child.displayType.includes('dropdown')) ?? []
+        hasDropdown: item.children?.some(child => !child.displayType.includes('vertical')) ?? false,
+        dropdownItems: item.children?.filter(child => !child.displayType.includes('vertical')) ?? []
       }))
   );
 
-  // Return the active side nav items
-  // Get vertical nav based on current route
+  /**
+   * Computed property to get the vertical navigation items.
+   */
   getVerticalNav = computed(() => this.verticalNavItems());
 
+  /**
+   * Updates the vertical navigation items based on the current URL.
+   * Handles different sections and updates the vertical navigation items accordingly.
+   */
   private updateVerticalNav() {
     const urlParts = this.currentUrl().split('/');
     const rootSection = urlParts[1];
 
-    // For applications section
     if (rootSection === 'applications') {
-      // Only show navigation for design routes
       if (urlParts[3] === 'designs' && urlParts.length >= 5) {
         const designItems = this.getDesignDetailsSideNav(urlParts[2], urlParts[4]);
         this.verticalNavItems.set(designItems);
         return;
       }
-      // Return empty array for all other application routes
       this.verticalNavItems.set([]);
       return;
     }
 
-    // Handle other sections
     const sideNavItems = this.getSectionSideNav(rootSection);
     this.verticalNavItems.set(sideNavItems);
   }
 
+  /**
+   * Gets the side navigation items for the design details section.
+   * Replaces placeholders in the path with actual appId and designId.
+   *
+   * @param appId - The application ID.
+   * @param designId - The design ID.
+   * @returns An array of navigation items for the design details section.
+   */
   private getDesignDetailsSideNav(appId: string, designId: string): NavItem[] {
     const appSection = this.navigationSignal().find(item => item.path === '/applications');
     const designNavItems = appSection?.children?.find(item =>
@@ -72,6 +81,13 @@ export class NavigationService {
     }));
   }
 
+  /**
+   * Gets the side navigation items for a given section.
+   * Filters the navigation items to include only those with 'vertical' display type.
+   *
+   * @param sectionRoot - The root path of the section.
+   * @returns An array of navigation items for the section.
+   */
   private getSectionSideNav(sectionRoot: string): NavItem[] {
     const navSection = this.navigationSignal().find(item =>
       item.path.includes(sectionRoot) ||
@@ -83,11 +99,5 @@ export class NavigationService {
     ) ?? [];
   }
 
-  // // Get dropdown items for a parent item
-  // getDropdownItems = computed(() =>
-  //   this.navigationSignal().filter(item =>
-  //     item.children?.some(child => child.displayType.includes('dropdown'))
-  //   )
-  // );
 
 }

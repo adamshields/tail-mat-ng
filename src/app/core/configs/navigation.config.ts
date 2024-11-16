@@ -58,27 +58,6 @@ export const SITE_NAVIGATION: NavItem[] = [
             displayType: ['vertical']
           }))
         }))
-      },
-      {
-        id: 'test-settings',
-        label: 'Test Settings',
-        path: '/test/settings',
-        icon: 'settings',
-        displayType: ['vertical'],
-        children: Array.from({ length: 10 }, (_, i) => ({
-          id: `test-settings-option-${i + 1}`,
-          label: `Settings Option ${i + 1}`,
-          path: `/test/settings/option-${i + 1}`,
-          icon: 'tune',
-          displayType: ['vertical'],
-          children: Array.from({ length: 4 }, (_, j) => ({
-            id: `test-settings-option-detail-${i + 1}-${j + 1}`,
-            label: `Detail ${j + 1}`,
-            path: `/test/settings/option-${i + 1}/detail-${j + 1}`,
-            icon: 'details',
-            displayType: ['vertical']
-          }))
-        }))
       }
     ]
   },
@@ -88,7 +67,7 @@ export const SITE_NAVIGATION: NavItem[] = [
     path: '/applications',
     icon: 'apps',
     displayType: ['horizontal'],
-    order: 0,
+    order: 3,
     children: [
       {
         id: 'design-menu',
@@ -124,55 +103,6 @@ export const SITE_NAVIGATION: NavItem[] = [
     ]
   },
   {
-    id: 'projects',
-    label: 'Projects',
-    path: '/projects',
-    icon: 'assignment',
-    displayType: ['horizontal'],
-    order: 4,
-    children: [
-      {
-        id: 'project-list',
-        label: 'All Projects',
-        path: '/projects1',
-        icon: 'list',
-        displayType: ['vertical']
-      },
-      {
-        id: 'project-details',
-        label: 'Project Details',
-        path: '/projects/:projectId',
-        icon: 'info',
-        displayType: ['vertical'],
-        isDynamic: true,
-        children: [
-          {
-            id: 'project-overview',
-            label: 'Overview',
-            path: '/projects/:projectId/overview',
-            icon: 'dashboard',
-            displayType: ['vertical']
-          },
-          {
-            id: 'project-tasks',
-            label: 'Tasks',
-            path: '/projects/:projectId/tasks',
-            icon: 'task',
-            displayType: ['vertical']
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'estimates',
-    label: 'Estimates',
-    path: '/estimates',
-    icon: 'receipt_long',
-    displayType: ['horizontal'],
-    order: 5
-  },
-  {
     id: 'documents',
     label: 'Documents',
     path: '/documents',
@@ -185,14 +115,14 @@ export const SITE_NAVIGATION: NavItem[] = [
         label: 'Document Storage',
         path: '/documents/storage',
         icon: 'cloud_upload',
-        displayType: ['dropdown']
+        displayType: ['horizontal']  // Empty array since it only appears in dropdown
       },
       {
         id: 'doc-legacy',
         label: 'Legacy Documents',
         path: '/documents/legacy',
         icon: 'history',
-        displayType: ['dropdown']
+        displayType: ['horizontal']  // Empty array since it only appears in dropdown
       }
     ]
   },
@@ -212,35 +142,35 @@ export const SITE_NAVIGATION: NavItem[] = [
         label: 'User Management',
         path: '/admin/user-management',
         icon: 'people',
-        displayType: ['dropdown', 'vertical']
+        displayType: ['horizontal']  // Removed dropdown, will be handled by service
       },
       {
         id: 'admin-roles',
         label: 'Roles',
         path: '/admin/roles',
         icon: 'assignment_ind',
-        displayType: ['dropdown']
+        displayType: ['horizontal']  // Empty array since it only appears in dropdown
       },
       {
         id: 'admin-hosting',
         label: 'Hosting Resources',
         path: '/admin/hosting-resources',
         icon: 'cloud',
-        displayType: ['dropdown']
+        displayType: ['horizontal']
       },
       {
         id: 'admin-lookup',
         label: 'System Lookup Tables',
         path: '/admin/system-lookup-tables',
         icon: 'table_chart',
-        displayType: ['dropdown']
+        displayType: ['horizontal']
       },
       {
         id: 'admin-portfolio',
         label: 'Portfolio Management',
         path: '/admin/portfolio-management',
         icon: 'folder_special',
-        displayType: ['dropdown']
+        displayType: ['horizontal']
       }
     ]
   },

@@ -1,11 +1,11 @@
+// navigation.types.ts
 export type NavDisplayType =
  | 'horizontal'      // Main top navigation bar items
  | 'vertical'        // Sidebar navigation items
- | 'dropdown'        // Items that appear in dropdown menus
  | 'mobile'          // Items shown in mobile/responsive menu
  | 'footer';         // Footer navigation items
 
- export interface NavItem {
+export interface NavItem {
  id: string;         // Unique identifier for the nav item
  label: string;      // Display text shown to users
  path: string;       // URL path for routing
@@ -16,10 +16,9 @@ export type NavDisplayType =
  mobileOrder?: number; // Specific ordering for mobile display
  parentId?: string;  // Reference to parent item for breadcrumbs/hierarchy
  isDynamic?: boolean;  // Indicates if route contains dynamic parameters
- parentParam?: string; // Parameter to inherit from parent route
  isExternal?: boolean; // Indicates external URL vs internal route
- dropdownItems?: NavItem[];  // Add this line
-
+ hasDropdown?: boolean; // Indicates if item has dropdown menu items
+ dropdownItems?: NavItem[]; // Items to show in dropdown menu
 
  grouping?: {
    category?: string;   // Logical grouping category (e.g., "admin", "user")
