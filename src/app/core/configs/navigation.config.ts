@@ -132,7 +132,7 @@ export const SITE_NAVIGATION: NavItem[] = [
         id: 'lab-ticker',
         label: 'Ticker',
         path: '/lab/ticker',
-        icon: 'clock',
+        icon: 'access_time',
         displayType: ['vertical']
       },
       {
