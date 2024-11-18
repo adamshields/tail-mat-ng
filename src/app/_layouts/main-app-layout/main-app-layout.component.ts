@@ -27,7 +27,7 @@ import { PageShellComponent } from "../../../@breaker/components/page-shell/page
     PageShellComponent
   ],
   template: `
-    <app-toolbar class="w-full" [horizontalNavItems]="horizontalNav()"/>
+    <app-toolbar  [horizontalNavItems]="horizontalNav()"/>
 
     <mat-sidenav-container class="mat-elevation-z4">
       @if (showSidenav()) {

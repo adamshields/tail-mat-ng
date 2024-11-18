@@ -10,6 +10,7 @@ import { NavigationService } from '../../../app/core/services/navigation.service
 import { ColorPaletteComponent } from '../../../app/_pages/color-palette/color-palette.component';
 import { ColorPickerComponent } from "../../../app/shared/components/color-picker/color-picker.component";
 import { NavItem } from '../../../app/core/models/navigation.types';
+import { APP_CONFIG_TOKEN } from '../../../app/app.config';
 
 @Component({
   selector: 'app-toolbar',
@@ -20,7 +21,7 @@ import { NavItem } from '../../../app/core/models/navigation.types';
     <mat-toolbar class="toolbar relative mat-elevation-z8 z-10">
       <!-- Logo -->
       <div class="flex items-center justify-start">
-        <span class="text-xl font-bold" routerLink="/">APPNAME</span>
+        <span class="text-xl font-bold" routerLink="/">{{appName}}</span>
         <mat-icon class="text-2xl ml-2">bolt</mat-icon>
       </div>
 
@@ -95,6 +96,9 @@ import { NavItem } from '../../../app/core/models/navigation.types';
 })
 export class AppToolbarComponent {
   themeManager = inject(ThemeManager);
+  private appConfig = inject(APP_CONFIG_TOKEN);
+  appName = this.appConfig.name;
+  appShortName = this.appConfig.shortName;
 
   isDark$ = this.themeManager.isDark$;
 
