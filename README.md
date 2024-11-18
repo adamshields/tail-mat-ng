@@ -25,3 +25,46 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+```
+src/
+├── app/
+│   ├── core/                  # Core services, guards, configs
+│   │   ├── configs/           # Application-wide configuration files
+│   │   ├── guards/            # Route guards for authentication, etc.
+│   │   ├── interceptors/      # HTTP interceptors
+│   │   ├── services/          # Singleton services like authentication
+│   ├── shared/                # Reusable components, directives, and pipes
+│   │   ├── components/        # Shared UI components like buttons, modals
+│   │   ├── directives/        # Custom directives
+│   │   ├── pipes/             # Custom pipes
+│   │   ├── models/            # Shared types and interfaces
+│   │   ├── utils/             # Shared utility functions
+│   ├── features/              # Each feature lives here
+│   │   ├── applications/      # Feature: Applications
+│   │   │   ├── components/    # Components specific to Applications
+│   │   │   ├── routes.ts      # Route definitions for Applications
+│   │   │   ├── services/      # Services specific to Applications
+│   │   │   ├── index.ts       # Barrel file for exporting
+│   │   ├── admin/             # Feature: Admin
+│   │   │   ├── components/
+│   │   │   ├── routes.ts
+│   │   │   ├── index.ts
+│   │   ├── documents/         # Feature: Documents
+│   │   │   ├── components/
+│   │   │   ├── routes.ts
+│   │   │   ├── index.ts
+│   │   ├── lab/               # Feature: Lab
+│   │   ├── test/              # Feature: Test
+│   ├── layouts/               # Layouts for different sections
+│   │   ├── main-layout/       # Main layout with side nav and toolbar
+│   │   │   ├── main-layout.component.ts
+│   │   │   ├── main-layout.component.html
+│   │   │   ├── index.ts
+│   │   ├── auth-layout/       # Authentication layout
+│   │       ├── auth-layout.component.ts
+│   │       ├── auth-layout.component.html
+│   │       ├── index.ts
+│   ├── app.config.ts          # App-wide configuration
+│   ├── app.routes.ts          # Root routing configuration
+```
