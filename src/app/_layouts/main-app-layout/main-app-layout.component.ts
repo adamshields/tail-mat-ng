@@ -10,6 +10,7 @@ import { AppToolbarComponent } from "../../../@breaker/components/app-toolbar/ap
 import { NavigationService } from '../../core/services/navigation.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
+import { PageShellComponent } from "../../../@breaker/components/page-shell/page-shell.component";
 
 @Component({
   selector: 'app-main-app-layout',
@@ -22,7 +23,8 @@ import { filter } from 'rxjs';
     ColorPickerComponent,
     SidenavComponent,
     ResponsiveHelperComponent,
-    AppToolbarComponent
+    AppToolbarComponent,
+    PageShellComponent
   ],
   template: `
     <app-toolbar [horizontalNavItems]="horizontalNav()"/>
@@ -52,8 +54,13 @@ import { filter } from 'rxjs';
           </div>
         } @else {
           <ng-container #content>
-            <app-responsive-helper></app-responsive-helper>
-            <router-outlet></router-outlet>
+            <app-responsive-helper/>
+            <app-page-shell
+            [currentUrl]="router.url"
+            [navigationItems]="horizontalNav()"
+          >
+          <router-outlet></router-outlet>
+        </app-page-shell>
           </ng-container>
         }
       </mat-sidenav-content>
@@ -86,6 +93,7 @@ import { filter } from 'rxjs';
 export class MainAppLayoutComponent {
   private navigationService = inject(NavigationService);
   private themeManager = inject(ThemeManager);
+  router = inject(Router);
 
 
   collapsed = signal(false);
