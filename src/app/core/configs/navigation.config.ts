@@ -7,7 +7,6 @@ export const SITE_NAVIGATION: NavItem[] = [
     path: '/portfolios',
     icon: 'folder_open',
     displayType: ['horizontal'],
-    order: 1
   },
   {
     id: 'applications',
@@ -15,7 +14,6 @@ export const SITE_NAVIGATION: NavItem[] = [
     path: '/applications',
     icon: 'apps',
     displayType: ['horizontal'],
-    order: 3,
     children: [
       {
         id: 'design-menu',
@@ -56,7 +54,6 @@ export const SITE_NAVIGATION: NavItem[] = [
     path: '/documents',
     icon: 'description',
     displayType: ['horizontal'],
-    order: 6,
     children: [
       {
         id: 'doc-storage',
@@ -76,14 +73,10 @@ export const SITE_NAVIGATION: NavItem[] = [
   },
   {
     id: 'admin',
-    path: '',
+    path: '/admin',
     label: 'Admin',
     icon: 'admin_panel_settings',
     displayType: ['horizontal'],
-    order: 7,
-    visibility: {
-      roles: ['admin']
-    },
     children: [
       {
         id: 'admin-user-management',
@@ -173,7 +166,6 @@ export const SITE_NAVIGATION: NavItem[] = [
     path: '/test',
     icon: 'trending_up',
     displayType: ['horizontal'],
-    order: 2,
     children: [
       {
         id: 'test-overview',
