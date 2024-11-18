@@ -10,58 +10,6 @@ export const SITE_NAVIGATION: NavItem[] = [
     order: 1
   },
   {
-    id: 'test',
-    label: 'Test',
-    path: '/test',
-    icon: 'trending_up',
-    displayType: ['horizontal'],
-    order: 2,
-    children: [
-      {
-        id: 'test-overview',
-        label: 'Test Overview',
-        path: '/test/overview',
-        icon: 'dashboard',
-        displayType: ['vertical'],
-        children: Array.from({ length: 10 }, (_, i) => ({
-          id: `test-overview-summary-${i + 1}`,
-          label: `Summary ${i + 1}`,
-          path: `/test/overview/summary-${i + 1}`,
-          icon: 'summarize',
-          displayType: ['vertical'],
-          children: Array.from({ length: 5 }, (_, j) => ({
-            id: `test-overview-summary-detail-${i + 1}-${j + 1}`,
-            label: `Detail ${j + 1}`,
-            path: `/test/overview/summary-${i + 1}/detail-${j + 1}`,
-            icon: 'details',
-            displayType: ['vertical']
-          }))
-        }))
-      },
-      {
-        id: 'test-results',
-        label: 'Test Results',
-        path: '/test/results',
-        icon: 'bar_chart',
-        displayType: ['vertical'],
-        children: Array.from({ length: 8 }, (_, i) => ({
-          id: `test-results-category-${i + 1}`,
-          label: `Results Category ${i + 1}`,
-          path: `/test/results/category-${i + 1}`,
-          icon: 'category',
-          displayType: ['vertical'],
-          children: Array.from({ length: 6 }, (_, j) => ({
-            id: `test-results-category-item-${i + 1}-${j + 1}`,
-            label: `Item ${j + 1}`,
-            path: `/test/results/category-${i + 1}/item-${j + 1}`,
-            icon: 'bar_chart',
-            displayType: ['vertical']
-          }))
-        }))
-      }
-    ]
-  },
-  {
     id: 'applications',
     label: 'Applications',
     path: '/applications',
@@ -218,5 +166,57 @@ export const SITE_NAVIGATION: NavItem[] = [
         displayType: ['vertical']
       }
     ]
-  }
+  },
+  {
+    id: 'test',
+    label: 'Test',
+    path: '/test',
+    icon: 'trending_up',
+    displayType: ['horizontal'],
+    order: 2,
+    children: [
+      {
+        id: 'test-overview',
+        label: 'Test Overview',
+        path: '/test/overview',
+        icon: 'dashboard',
+        displayType: ['vertical'],
+        children: Array.from({ length: 10 }, (_, i) => ({
+          id: `test-overview-summary-${i + 1}`,
+          label: `Summary ${i + 1}`,
+          path: `/test/overview/summary-${i + 1}`,
+          icon: 'summarize',
+          displayType: ['vertical'],
+          children: Array.from({ length: 5 }, (_, j) => ({
+            id: `test-overview-summary-detail-${i + 1}-${j + 1}`,
+            label: `Detail ${j + 1}`,
+            path: `/test/overview/summary-${i + 1}/detail-${j + 1}`,
+            icon: 'details',
+            displayType: ['vertical']
+          }))
+        }))
+      },
+      {
+        id: 'test-results',
+        label: 'Test Results',
+        path: '/test/results',
+        icon: 'bar_chart',
+        displayType: ['vertical'],
+        children: Array.from({ length: 8 }, (_, i) => ({
+          id: `test-results-category-${i + 1}`,
+          label: `Results Category ${i + 1}`,
+          path: `/test/results/category-${i + 1}`,
+          icon: 'category',
+          displayType: ['vertical'],
+          children: Array.from({ length: 6 }, (_, j) => ({
+            id: `test-results-category-item-${i + 1}-${j + 1}`,
+            label: `Item ${j + 1}`,
+            path: `/test/results/category-${i + 1}/item-${j + 1}`,
+            icon: 'bar_chart',
+            displayType: ['vertical']
+          }))
+        }))
+      }
+    ]
+  },
  ];
