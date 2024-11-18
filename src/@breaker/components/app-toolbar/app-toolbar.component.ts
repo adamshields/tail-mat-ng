@@ -17,7 +17,7 @@ import { NavItem } from '../../../app/core/models/navigation.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [...MaterialModules, RouterModule, CommonModule, ColorPaletteComponent, ColorPickerComponent],
   template: `
-    <mat-toolbar class="toolbar flex justify-end items-center p-4 relative mat-elevation-z8 z-10">
+    <mat-toolbar class="toolbar relative mat-elevation-z8 z-10">
       <!-- Logo -->
       <div class="flex items-center justify-start">
         <span class="text-xl font-bold" routerLink="/">APPNAME</span>
