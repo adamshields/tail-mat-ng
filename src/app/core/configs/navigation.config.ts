@@ -21,7 +21,6 @@ export const SITE_NAVIGATION: NavItem[] = [
         path: '/applications/:appId/designs/:designId',
         icon: 'design_services',
         displayType: ['vertical'],
-        isDynamic: true,
         children: [
           {
             id: 'design-overview',
@@ -60,14 +59,14 @@ export const SITE_NAVIGATION: NavItem[] = [
         label: 'Document Storage',
         path: '/documents/storage',
         icon: 'cloud_upload',
-        displayType: ['horizontal']  // Empty array since it only appears in dropdown
+        displayType: ['horizontal']
       },
       {
         id: 'doc-legacy',
         label: 'Legacy Documents',
         path: '/documents/legacy',
         icon: 'history',
-        displayType: ['horizontal']  // Empty array since it only appears in dropdown
+        displayType: ['horizontal']
       }
     ]
   },
@@ -83,14 +82,14 @@ export const SITE_NAVIGATION: NavItem[] = [
         label: 'User Management',
         path: '/admin/user-management',
         icon: 'people',
-        displayType: ['horizontal']  // Removed dropdown, will be handled by service
+        displayType: ['horizontal']
       },
       {
         id: 'admin-roles',
         label: 'Roles',
         path: '/admin/roles',
         icon: 'assignment_ind',
-        displayType: ['horizontal']  // Empty array since it only appears in dropdown
+        displayType: ['horizontal']
       },
       {
         id: 'admin-hosting',
@@ -121,7 +120,6 @@ export const SITE_NAVIGATION: NavItem[] = [
     path: '/lab',
     icon: 'science',
     displayType: ['horizontal'],
-    order: 8,
     children: [
       {
         id: 'lab-signals',

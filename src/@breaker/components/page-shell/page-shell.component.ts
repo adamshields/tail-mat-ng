@@ -21,7 +21,7 @@ export class PageShellComponent {
   @Input({ required: true }) navigationItems: NavItem[] = [];
 
   private titleService = inject(Title);
-  private appConfig = inject(APP_CONFIG_TOKEN); // Inject the config
+  private config = inject(APP_CONFIG_TOKEN);
 
   getTitle(): string {
     const urlParts = this.currentUrl.split('/');
@@ -46,7 +46,7 @@ export class PageShellComponent {
 
     // Update browser tab title using the injected config
     this.titleService.setTitle(
-      `${this.appConfig.name}${this.appConfig.titleSeparator}${pageTitle}`
+      `${this.config.name}${this.config.titleSeparator}${pageTitle}`
     );
 
     return pageTitle;

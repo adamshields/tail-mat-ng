@@ -3,16 +3,32 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 import { SITE_NAVIGATION } from '../configs/navigation.config';
 import { NavItem } from '../models/navigation.types';
+import { APP_CONFIG_TOKEN } from '../../app.config';
 
+/**
+* Service responsible for managing application navigation state.
+* Handles both horizontal (top) navigation and vertical (side) navigation.
+*
+* Key features:
+* - Manages navigation based on SITE_NAVIGATION config
+* - Handles dynamic routes for applications/designs
+* - Updates vertical nav based on current route
+* - Computes dropdown states for horizontal nav
+*/
 @Injectable({
   providedIn: 'root'
-})
-export class NavigationService {
-  private navigationSignal = signal<NavItem[]>(SITE_NAVIGATION);
+ })
+ export class NavigationService {
+  // Signals to track navigation state
+  private config = inject(APP_CONFIG_TOKEN);
+  private navigationSignal = signal<NavItem[]>(this.config.navigation);
   private currentUrl = signal<string>('');
+  private verticalNavItems = signal<NavItem[]>([]);
+
   private router = inject(Router);
 
   constructor() {
+    // Update navigation on route changes
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event) => {
@@ -20,53 +36,58 @@ export class NavigationService {
       this.updateVerticalNav();
     });
   }
-  private verticalNavItems = signal<NavItem[]>([]);
 
-  // navigation.service.ts
+  /**
+   * Returns horizontal navigation items with computed dropdown states
+   * Used by app-toolbar component
+   */
   getHorizontalNav = computed(() =>
     this.navigationSignal()
       .filter(item => item.displayType.includes('horizontal'))
       .map(item => ({
         ...item,
+        // Compute dropdown states for items that have non-vertical children
         hasDropdown: item.children?.some(child => !child.displayType.includes('vertical')) ?? false,
         dropdownItems: item.children?.filter(child => !child.displayType.includes('vertical')) ?? []
       }))
   );
 
   /**
-   * Computed property to get the vertical navigation items.
+   * Returns current vertical navigation items
+   * Used by app-sidenav component
    */
   getVerticalNav = computed(() => this.verticalNavItems());
 
   /**
-   * Updates the vertical navigation items based on the current URL.
-   * Handles different sections and updates the vertical navigation items accordingly.
+   * Updates vertical navigation based on current URL
+   * Handles special case for design details route
    */
   private updateVerticalNav() {
     const urlParts = this.currentUrl().split('/');
     const rootSection = urlParts[1];
 
+    // Special handling for applications/designs route
     if (rootSection === 'applications') {
       if (urlParts[3] === 'designs' && urlParts.length >= 5) {
         const designItems = this.getDesignDetailsSideNav(urlParts[2], urlParts[4]);
         this.verticalNavItems.set(designItems);
         return;
       }
+      // Clear vertical nav for other application routes
       this.verticalNavItems.set([]);
       return;
     }
 
+    // Handle regular sections
     const sideNavItems = this.getSectionSideNav(rootSection);
     this.verticalNavItems.set(sideNavItems);
   }
 
   /**
-   * Gets the side navigation items for the design details section.
-   * Replaces placeholders in the path with actual appId and designId.
-   *
-   * @param appId - The application ID.
-   * @param designId - The design ID.
-   * @returns An array of navigation items for the design details section.
+   * Gets navigation items for design details view
+   * Replaces :appId and :designId params in paths
+   * @param appId - Application ID from route
+   * @param designId - Design ID from route
    */
   private getDesignDetailsSideNav(appId: string, designId: string): NavItem[] {
     const appSection = this.navigationSignal().find(item => item.path === '/applications');
@@ -82,11 +103,8 @@ export class NavigationService {
   }
 
   /**
-   * Gets the side navigation items for a given section.
-   * Filters the navigation items to include only those with 'vertical' display type.
-   *
-   * @param sectionRoot - The root path of the section.
-   * @returns An array of navigation items for the section.
+   * Gets vertical navigation items for a given section
+   * @param sectionRoot - Root section from URL
    */
   private getSectionSideNav(sectionRoot: string): NavItem[] {
     const navSection = this.navigationSignal().find(item =>
@@ -98,6 +116,4 @@ export class NavigationService {
       child.displayType.includes('vertical')
     ) ?? [];
   }
-
-
-}
+ }

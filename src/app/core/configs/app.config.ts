@@ -1,3 +1,5 @@
+import { SITE_NAVIGATION } from "./navigation.config";
+
 // core/configs/app.config.ts
 export const APP_CONFIG = {
   name: 'APPNAME',
@@ -5,8 +7,8 @@ export const APP_CONFIG = {
   version: '1.0.0',
   titleSeparator: ' | ',  // For page titles
   company: 'Your Company',
-  env: 'development',    // Could be tied to environment files
-  // Add other global configs as needed
+  navigation: SITE_NAVIGATION,
+
 } as const;
 
 // Can also create a type for type safety

@@ -21,7 +21,7 @@ import { APP_CONFIG_TOKEN } from '../../../app/app.config';
     <mat-toolbar class="toolbar relative mat-elevation-z8 z-10">
       <!-- Logo -->
       <div class="flex items-center justify-start">
-        <span class="text-xl font-bold" routerLink="/">{{appName}}</span>
+        <span class="text-xl font-bold" routerLink="/">{{config.name}}</span>
         <mat-icon class="text-2xl ml-2">bolt</mat-icon>
       </div>
 
@@ -95,10 +95,8 @@ import { APP_CONFIG_TOKEN } from '../../../app/app.config';
   styles: [],
 })
 export class AppToolbarComponent {
-  themeManager = inject(ThemeManager);
-  private appConfig = inject(APP_CONFIG_TOKEN);
-  appName = this.appConfig.name;
-  appShortName = this.appConfig.shortName;
+  private themeManager = inject(ThemeManager);
+  protected config = inject(APP_CONFIG_TOKEN);
 
   isDark$ = this.themeManager.isDark$;
 
