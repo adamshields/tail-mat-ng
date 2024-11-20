@@ -31,5 +31,3 @@ private getSectionSideNav(sectionRoot: string): NavItem[] {
 
 
 // just adding testing
-
-// testing 2
