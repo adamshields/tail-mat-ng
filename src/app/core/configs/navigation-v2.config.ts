@@ -28,3 +28,6 @@ private getSectionSideNav(sectionRoot: string): NavItem[] {
     child.displayType.includes('vertical')
   ) ?? [];
 }
+
+
+// just adding testing
