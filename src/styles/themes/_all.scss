@@ -2,10 +2,12 @@
 @use "@angular/material" as mat;
 @use "../../../m3-theme.scss";
 @use "./custom-theme.scss";
+@use "./adam-theme.scss";
 
 $my-app-theme: m3-theme.$light-theme;
 $my-app-dark-theme: m3-theme.$dark-theme;
 $my-custom-theme: custom-theme.$custom-theme;
+$adam-theme: adam-theme.$compact-theme;
 // @use "@angular/material" as mat;
 
 // $my-app-theme: mat.define-theme(

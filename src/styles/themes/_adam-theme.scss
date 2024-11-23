@@ -1,0 +1,25 @@
+// src/styles/themes/_custom-theme.scss
+
+@use "@angular/material" as mat;
+
+$compact-theme: mat.define-theme(
+  (
+    density: (
+      scale: -4,
+    ),
+  )
+);
+.custom-theme {
+  @include mat.button-color($compact-theme);
+
+}
+
+.button-rounded {
+  --border-radius: 10px;
+  --mdc-text-button-container-shape: var(--border-radius);
+  --mdc-protected-button-container-shape: var(--border-radius);
+  --mdc-outlined-button-container-shape: var(--border-radius);
+  --mdc-filled-button-container-shape: var(--border-radius);
+}
+
+

@@ -95,6 +95,7 @@ $color-variants: (secondary, tertiary);
 :root {
   @include mat.core-theme(themes.$my-app-theme);
   @include mat.all-component-themes(themes.$my-app-theme);
+  // @include mat.form-field-theme(themes.$compact-theme);
   // @include mat.button-theme(themes.$my-app-theme);
   // @include mat.icon-theme(themes.$my-app-theme);
   // @include mat.menu-theme(themes.$my-app-theme);
@@ -223,4 +224,26 @@ body {
   p {
     @apply text-body-large;
   }
+}
+
+
+.cdk-drop-list-dragging {
+  opacity: 0.5;
+
+  border-left: 5px solid var(--sys-outline);
+  padding-left: 8px;
+}
+
+.mat-drawer-inner-container {
+  scrollbar-width: thin;
+}
+
+
+//Material Tailwind Fixes
+.mdc-notched-outline__notch {
+  border-style: none;
+}
+
+.mat-mdc-icon-button {
+  line-height: normal;
 }
