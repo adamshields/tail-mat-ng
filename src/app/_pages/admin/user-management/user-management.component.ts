@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TableConfig } from '../../../../@breaker/models/table-config.model';
 import { MockDataService } from '../../../../@breaker/services/mock-data.service';
 import { DynamicTableComponent } from "../../../../@breaker/components/dynamic-table/dynamic-table.component";
+import { AddEditDialogComponent } from '../../../../@breaker/components/add-edit-dialog/add-edit-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-management',
@@ -13,7 +15,7 @@ import { DynamicTableComponent } from "../../../../@breaker/components/dynamic-t
 export class UserManagementComponent implements OnInit {
   userTableConfig!: TableConfig;
 
-  constructor(private mockDataService: MockDataService) {}
+  constructor(private mockDataService: MockDataService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     const users = this.mockDataService.getUsers();
@@ -62,13 +64,37 @@ export class UserManagementComponent implements OnInit {
           callback: (row: any) => this.resendInvite(row),
         },
       ],
+      formConfig: [
+        { key: 'firstName', label: 'First Name', type: 'text', required: true },
+        { key: 'lastName', label: 'Last Name', type: 'text', required: true },
+        { key: 'company', label: 'Company', type: 'text', required: true },
+        { key: 'title', label: 'Title', type: 'text' },
+        { key: 'email', label: 'Email', type: 'email', required: true },
+        { key: 'phone', label: 'Phone', type: 'text' },
+      ],
     };
   }
 
   addUser(): void {
-    console.log('Add User');
-    // Logic for adding a user
+    const dialogRef = this.dialog.open(AddEditDialogComponent, {
+      width: '600px',
+      height: '800px',
+      data: {
+        title: 'Add User', // Title of the dialog
+        mode: 'add',       // Mode ('add' in this case)
+        fields: this.userTableConfig.formConfig || [], // Ensure fields are passed
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('New User Data:', result);
+        this.userTableConfig.data.push(result);
+        this.userTableConfig = { ...this.userTableConfig }; // Trigger change detection
+      }
+    });
   }
+
 
   editUser(): void {
     console.log('Edit User');

@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+  <form *ngIf="form" [formGroup]="form">
+    <div *ngFor="let field of data.fields" class="form-group">
+      <label>{{ field.label }}</label>
+      <ng-container [ngSwitch]="field.type">
+        <input *ngSwitchCase="'text'" [formControlName]="field.key" type="text" />
+        <input *ngSwitchCase="'number'" [formControlName]="field.key" type="number" />
+        <input *ngSwitchCase="'email'" [formControlName]="field.key" type="email" />
+        <input *ngSwitchCase="'date'" [formControlName]="field.key" type="date" />
+        <select *ngSwitchCase="'select'" [formControlName]="field.key">
+          <option *ngFor="let option of field.options" [value]="option.value">
+            {{ option.display }}
+          </option>
+        </select>
+      </ng-container>
+      <div *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched">
+        <small *ngIf="form.get(field.key)?.hasError('required')">
+          {{ field.label }} is required.
+        </small>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+    Submit
+  </button>
+</div>
