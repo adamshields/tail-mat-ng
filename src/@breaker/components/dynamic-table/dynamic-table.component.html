@@ -2,7 +2,7 @@
   <!-- Toolbar -->
   <app-table-toolbar
     *ngIf="tableConfig.toolbar"
-    [toolbarConfig]="tableConfig.toolbar ?? { actions: [] }"
+    [toolbarConfig]="tableConfig.toolbar"
     (search)="applySearch($event)"
     (clearFilters)="clearFilters()">
   </app-table-toolbar>

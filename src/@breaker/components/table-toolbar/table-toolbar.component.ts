@@ -3,11 +3,12 @@ import { TableToolbarConfig } from '../../models/table-config.model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-table-toolbar',
   standalone: true,
-  imports: [MatIconModule, MatFormFieldModule, CommonModule],
+  imports: [MatIconModule, MatFormFieldModule, CommonModule, MatInputModule],
   templateUrl: './table-toolbar.component.html',
   styleUrl: './table-toolbar.component.scss'
 })

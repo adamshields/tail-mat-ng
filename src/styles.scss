@@ -78,11 +78,11 @@
 @use "./styles/components";
 
 
-
-@include mat.core();
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@include mat.core();
 // Adding color variants to the button using button-color API
 // Primary is the default color variant for button,
 // so we don't need to specify it

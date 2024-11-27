@@ -3,11 +3,12 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TableConfig } from '../../models/table-config.model';
 import { TableToolbarComponent } from '../table-toolbar/table-toolbar.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dynamic-table',
   standalone: true,
-  imports: [TableToolbarComponent, MatTableModule, MatPaginatorModule],
+  imports: [TableToolbarComponent, MatTableModule, MatPaginatorModule, CommonModule],
   templateUrl: './dynamic-table.component.html',
   styleUrls: ['./dynamic-table.component.scss'],
 })

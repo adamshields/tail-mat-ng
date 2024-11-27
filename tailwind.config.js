@@ -1,9 +1,8 @@
-
-// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
+const colors = require("tailwindcss/colors");
 module.exports = {
 
-  important: true,
+  // important: true,
   content: ["./src/**/*.{html,scss,ts}",],
   darkMode: ['selector', '[data-bs-theme="dark"]'],
   theme: {
@@ -67,6 +66,11 @@ module.exports = {
         'error-fixed-dim': 'var(--sys-error-fixed-dim)',
         'on-error-fixed': 'var(--sys-on-error-fixed)',
         'on-error-fixed-variant': 'var(--sys-on-error-fixed-variant)',
+
+        // Tailwind colors
+        gray: colors.gray,
+        white: colors.white,
+        blue: colors.blue,
       },
       fontSize: {
         'display-large': ['2rem', { lineHeight: '2.5rem' }],
