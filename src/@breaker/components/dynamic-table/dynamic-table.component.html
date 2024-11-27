@@ -1,0 +1,25 @@
+<div>
+  <!-- Toolbar -->
+  <app-table-toolbar
+    *ngIf="tableConfig.toolbar"
+    [toolbarConfig]="tableConfig.toolbar ?? { actions: [] }"
+    (search)="applySearch($event)"
+    (clearFilters)="clearFilters()">
+  </app-table-toolbar>
+
+  <!-- Table -->
+  <mat-table [dataSource]="dataSource" matSort>
+    <!-- Generate columns dynamically -->
+    <ng-container *ngFor="let column of tableConfig.columns" [matColumnDef]="column.key">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.label }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element[column.key] }}</mat-cell>
+    </ng-container>
+
+    <!-- Table header and rows -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <!-- Pagination -->
+  <mat-paginator [length]="totalItems" [pageSize]="tableConfig.pageSize"></mat-paginator>
+</div>

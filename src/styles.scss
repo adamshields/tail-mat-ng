@@ -77,11 +77,12 @@
 @use "./styles/sizes";
 @use "./styles/components";
 
+
+
+@include mat.core();
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@include mat.core();
 // Adding color variants to the button using button-color API
 // Primary is the default color variant for button,
 // so we don't need to specify it
@@ -155,95 +156,95 @@ body {
   }
 }
 
-// Table overrides using Material 3 properties
-.mat-mdc-table {
-  @include mat.table-overrides((
-    // Background color for the table
-    // background-color: white,
+// // Table overrides using Material 3 properties
+// .mat-mdc-table {
+//   @include mat.table-overrides((
+//     // Background color for the table
+//     // background-color: white,
 
-    // Footer properties
-    footer-container-height: 56px,
-    footer-supporting-text-font: Roboto,
-    footer-supporting-text-line-height: 24px,
-    footer-supporting-text-size: 14px,
-    footer-supporting-text-tracking: 0.1px,
-    footer-supporting-text-weight: 500,
+//     // Footer properties
+//     footer-container-height: 56px,
+//     footer-supporting-text-font: Roboto,
+//     footer-supporting-text-line-height: 24px,
+//     footer-supporting-text-size: 14px,
+//     footer-supporting-text-tracking: 0.1px,
+//     footer-supporting-text-weight: 500,
 
-    // Header properties
-    header-container-height: 56px,
-    header-headline-color: var(--sys-primary),
-    header-headline-font: Roboto,
-    header-headline-line-height: 24px,
-    header-headline-size: 14px,
-    header-headline-tracking: 0.1px,
-    header-headline-weight: 900,
+//     // Header properties
+//     header-container-height: 56px,
+//     header-headline-color: var(--sys-primary),
+//     header-headline-font: Roboto,
+//     header-headline-line-height: 24px,
+//     header-headline-size: 14px,
+//     header-headline-tracking: 0.1px,
+//     header-headline-weight: 900,
 
-    // Row properties
-    row-item-container-height: 52px,
-    row-item-label-text-color: var(--sys-primary),
-    row-item-label-text-font: Roboto,
-    row-item-label-text-line-height: 20px,
-    row-item-label-text-size: 14px,
-    row-item-label-text-tracking: 0.1px,
-    row-item-label-text-weight: 400,
-    row-item-outline-color: rgba(0, 0, 0, 0.12),
-    row-item-outline-width: 1px
-  ));
-}
+//     // Row properties
+//     row-item-container-height: 52px,
+//     row-item-label-text-color: var(--sys-primary),
+//     row-item-label-text-font: Roboto,
+//     row-item-label-text-line-height: 20px,
+//     row-item-label-text-size: 14px,
+//     row-item-label-text-tracking: 0.1px,
+//     row-item-label-text-weight: 400,
+//     row-item-outline-color: rgba(0, 0, 0, 0.12),
+//     row-item-outline-width: 1px
+//   ));
+// }
 
-// Custom class for page headers using Tailwind utilities
-.page-header {
-  @apply text-display-large font-bold text-primary;
-}
+// // Custom class for page headers using Tailwind utilities
+// .page-header {
+//   @apply text-display-large font-bold text-primary;
+// }
 
-@layer base {
-  h1 {
-    @apply text-display-large;
-  }
+// @layer base {
+//   h1 {
+//     @apply text-display-large;
+//   }
 
-  h2 {
-    @apply text-display-medium;
-  }
+//   h2 {
+//     @apply text-display-medium;
+//   }
 
-  h3 {
-    @apply text-display-small;
-  }
+//   h3 {
+//     @apply text-display-small;
+//   }
 
-  h4 {
-    @apply text-headline-large;
-  }
+//   h4 {
+//     @apply text-headline-large;
+//   }
 
-  h5 {
-    @apply text-headline-medium;
-  }
+//   h5 {
+//     @apply text-headline-medium;
+//   }
 
-  h6 {
-    @apply text-headline-small;
-  }
+//   h6 {
+//     @apply text-headline-small;
+//   }
 
-  p {
-    @apply text-body-large;
-  }
-}
-
-
-.cdk-drop-list-dragging {
-  opacity: 0.5;
-
-  border-left: 5px solid var(--sys-outline);
-  padding-left: 8px;
-}
-
-.mat-drawer-inner-container {
-  scrollbar-width: thin;
-}
+//   p {
+//     @apply text-body-large;
+//   }
+// }
 
 
-//Material Tailwind Fixes
-.mdc-notched-outline__notch {
-  border-style: none;
-}
+// .cdk-drop-list-dragging {
+//   opacity: 0.5;
 
-.mat-mdc-icon-button {
-  line-height: normal;
-}
+//   border-left: 5px solid var(--sys-outline);
+//   padding-left: 8px;
+// }
+
+// .mat-drawer-inner-container {
+//   scrollbar-width: thin;
+// }
+
+
+// //Material Tailwind Fixes
+// .mdc-notched-outline__notch {
+//   border-style: none;
+// }
+
+// .mat-mdc-icon-button {
+//   line-height: normal;
+// }

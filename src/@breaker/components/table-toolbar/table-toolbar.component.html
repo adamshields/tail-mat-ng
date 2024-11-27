@@ -1,0 +1,23 @@
+<!-- table-toolbar.component.html -->
+<div class="toolbar">
+  <button
+    *ngFor="let action of toolbarConfig.actions"
+    mat-raised-button
+    [disabled]="action.isDisabled"
+    (click)="action.callback()">
+    <mat-icon>{{ action.icon }}</mat-icon>
+    {{ action.label }}
+  </button>
+
+  <mat-form-field *ngIf="toolbarConfig.searchEnabled" appearance="fill">
+    <mat-label>Search</mat-label>
+    <input matInput (keyup)="onSearch($event)" />
+  </mat-form-field>
+
+  <button
+    *ngIf="toolbarConfig.clearFiltersEnabled"
+    mat-raised-button
+    (click)="clearFilters.emit()">
+    Clear Filters
+  </button>
+</div>

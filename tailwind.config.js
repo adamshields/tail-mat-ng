@@ -1,8 +1,9 @@
+
 // tailwind.config.js
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  prefix: '',
-  mode: 'jit',
-  important: false,
+
+  important: true,
   content: ["./src/**/*.{html,scss,ts}",],
   darkMode: ['selector', '[data-bs-theme="dark"]'],
   theme: {
@@ -87,6 +88,6 @@ module.exports = {
     },
   },
   plugins: [],
-  corePlugins: { preflight: false },
+
 
 }
