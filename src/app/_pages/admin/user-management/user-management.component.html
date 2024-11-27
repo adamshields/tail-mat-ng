@@ -1,3 +1,15 @@
+<breaker-grid
+  [dataSource]="users"
+  [allowPaging]="true"
+  [allowSorting]="true"
+  [allowFiltering]="true"
+  [commands]="commands"
 
-  <h1>User Management</h1>
-  <app-dynamic-table [tableConfig]="userTableConfig"></app-dynamic-table>
+  >
+  <b-column field="id" headerText="ID"></b-column>
+  <b-column field="firstName" headerText="First Name"></b-column>
+  <b-column field="lastName" headerText="Last Name"></b-column>
+  <b-column field="email" headerText="Email" ></b-column>
+  <b-column field="phone" headerText="Phone"></b-column>
+  <b-column field="company" headerText="Company"></b-column>
+</breaker-grid>
