@@ -47,6 +47,18 @@ export interface ColumnConfig {
   visible?: boolean;
 }
 
+export interface TableActionConfig {
+  /** The icon to display for the action (e.g., Material icon name). */
+  icon: string;
+
+  /** Tooltip text for the action button. */
+  tooltip: string;
+
+  /** The callback function to execute when the action button is clicked. */
+  callback: (row: any) => void;
+}
+
+
 /**
  * Unified configuration for the table component, including columns, data, toolbar, and form fields.
  */
@@ -71,7 +83,11 @@ export interface TableConfig {
 
   /** Configuration for the fields displayed in Add/Edit dialogs. */
   formConfig?: FieldConfig[];
+
+  /** Configuration for row-specific actions. */
+  actions?: TableActionConfig[]; // New property for row-specific actions
 }
+
 
 /**
  * Configuration for the toolbar, including available actions and features.

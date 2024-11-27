@@ -20,7 +20,8 @@ export class UserManagementComponent implements OnInit {
 
     this.userTableConfig = {
       columns: [
-        { key: 'id', label: 'ID', sortable: true },
+        { key: 'id', label: 'ID', sortable: true, visible: true },
+        { key: 'name', label: 'Name', sortable: true },
         { key: 'company', label: 'Company', sortable: true },
         { key: 'title', label: 'Title', sortable: true },
         { key: 'primaryEmail', label: 'Primary Email', sortable: true },
@@ -28,50 +29,37 @@ export class UserManagementComponent implements OnInit {
       ],
       data: users.map((user) => ({
         ...user,
-        primaryEmail: user.emails[0]?.email || 'N/A', // Show first email as primary
-        primaryPhone: user.phoneNumbers[0]?.phoneNumber || 'N/A', // Show first phone as primary
+        name: `${user.firstName} ${user.lastName}`,
+        primaryEmail: user.emails[0]?.email || 'N/A',
+        primaryPhone: user.phoneNumbers[0]?.phoneNumber || 'N/A',
       })),
       pageSize: 10,
       toolbar: {
         actions: [
-          {
-            icon: 'add',
-            label: 'Add User',
-            callback: () => this.addUser(),
-          },
-          {
-            icon: 'edit',
-            label: 'Edit User',
-            callback: () => this.editUser(),
-            isDisabled: true, // Logic for enabling/disabling goes here
-          },
-          {
-            icon: 'delete',
-            label: 'Delete User',
-            callback: () => this.deleteUser(),
-            isDisabled: true,
-          },
+          // {
+          //   icon: 'add',
+          //   label: 'Add User',
+          //   callback: () => this.addUser(),
+          // },
+          // {
+          //   icon: 'delete',
+          //   label: 'Delete Selected',
+          //   callback: () => this.deleteUser(),
+          // },
         ],
         searchEnabled: true,
         clearFiltersEnabled: true,
       },
-      formConfig: [
-        { key: 'company', label: 'Company', type: 'text', required: true },
-        { key: 'title', label: 'Title', type: 'text' },
+      actions: [
         {
-          key: 'emails',
-          label: 'Emails',
-          type: 'text', // Handle this dynamically in the form
+          icon: 'visibility',
+          tooltip: 'View Details',
+          callback: (row: any) => this.viewDetails(row),
         },
         {
-          key: 'phoneNumbers',
-          label: 'Phone Numbers',
-          type: 'text', // Handle this dynamically in the form
-        },
-        {
-          key: 'addresses',
-          label: 'Addresses',
-          type: 'text', // Handle this dynamically in the form
+          icon: 'email',
+          tooltip: 'Resend Invite',
+          callback: (row: any) => this.resendInvite(row),
         },
       ],
     };
@@ -90,5 +78,15 @@ export class UserManagementComponent implements OnInit {
   deleteUser(): void {
     console.log('Delete User');
     // Logic for deleting a user
+  }
+
+  viewDetails(row: any): void {
+    console.log('View Details:', row);
+    // Logic to view detailed information about a user
+  }
+
+  resendInvite(row: any): void {
+    console.log('Resend Invite:', row);
+    // Logic to resend an invite to the user
   }
 }
