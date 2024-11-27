@@ -20,7 +20,7 @@ export class UserManagementComponent implements OnInit {
 
     this.userTableConfig = {
       columns: [
-        { key: 'id', label: 'ID', sortable: true, visible: true },
+        { key: 'id', label: 'ID', sortable: true },
         { key: 'name', label: 'Name', sortable: true },
         { key: 'company', label: 'Company', sortable: true },
         { key: 'title', label: 'Title', sortable: true },
@@ -36,16 +36,16 @@ export class UserManagementComponent implements OnInit {
       pageSize: 10,
       toolbar: {
         actions: [
-          // {
-          //   icon: 'add',
-          //   label: 'Add User',
-          //   callback: () => this.addUser(),
-          // },
-          // {
-          //   icon: 'delete',
-          //   label: 'Delete Selected',
-          //   callback: () => this.deleteUser(),
-          // },
+          {
+            icon: 'add',
+            label: 'Add User',
+            callback: () => this.addUser(),
+          },
+          {
+            icon: 'delete',
+            label: 'Delete Selected',
+            callback: () => this.deleteUser(),
+          },
         ],
         searchEnabled: true,
         clearFiltersEnabled: true,
