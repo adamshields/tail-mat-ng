@@ -1,4 +1,4 @@
-import { Component, Input, ContentChildren, QueryList, AfterContentInit, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, ContentChildren, QueryList, AfterContentInit, ViewChild, OnInit, inject, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'breaker-grid',
@@ -15,14 +16,47 @@ import { MatInputModule } from '@angular/material/input';
   imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule, MatIconModule, MatTooltipModule, MatInputModule],
   templateUrl: './breaker-grid.component.html',
   styleUrls: ['./breaker-grid.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class BreakerGridComponent implements OnInit, AfterContentInit {
-  @Input() dataSource: any[] = [];
+  // @Input() dataSource: any[] = [];
   @Input() allowPaging: boolean = true;
   @Input() allowSorting: boolean = true;
   @Input() allowFiltering: boolean = false;
   @Input() commands?: { icon: string; tooltip: string; callback: (row: any) => void }[] = [];
+  private _dataSource: any[] = [];
+  private dataSubject = new BehaviorSubject<any[]>([]);
 
+  @Input() set dataSource(value: any[]) {
+    this._dataSource = value;
+    this.dataSubject.next(value);
+  }
+
+  constructor(private cdr: ChangeDetectorRef) {
+    // Subscribe to data changes
+    this.dataSubject.subscribe(data => {
+      if (this.materialDataSource) {
+        this.materialDataSource.data = data;
+        if (this.materialDataSource.paginator) {
+          this.materialDataSource.paginator.length = data.length;
+          this.materialDataSource.paginator.firstPage();
+          this.cdr.detectChanges();
+        }
+      }
+    });
+  }
+
+
+  // // Add this method to handle paginator updates
+  // private updatePaginator(): void {
+  //   // Ensure we have both the paginator and data
+  //   if (this.materialDataSource?.paginator && this._dataSource) {
+  //     this.materialDataSource.paginator.length = this._dataSource.length;
+  //     this.materialDataSource.paginator.firstPage();
+  //     this.cdr.markForCheck(); // Using markForCheck instead of detectChanges
+  //   }
+  // }
   @ContentChildren(BreakerColumnDirective) columns!: QueryList<BreakerColumnDirective>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -33,7 +67,7 @@ export class BreakerGridComponent implements OnInit, AfterContentInit {
   columnFilters: { [key: string]: string } = {};
 
   ngOnInit(): void {
-    this.materialDataSource = new MatTableDataSource(this.dataSource);
+    this.materialDataSource = new MatTableDataSource(this._dataSource);
     this.setupFilterPredicate();
   }
 
@@ -47,10 +81,13 @@ export class BreakerGridComponent implements OnInit, AfterContentInit {
   ngAfterViewInit(): void {
     if (this.allowPaging) {
       this.materialDataSource.paginator = this.paginator;
+      // this.updatePaginator(); // Initial paginator setup
     }
     if (this.allowSorting) {
       this.materialDataSource.sort = this.sort;
     }
+    this.cdr.markForCheck();
+
   }
 
   applyGlobalFilter(event: Event): void {

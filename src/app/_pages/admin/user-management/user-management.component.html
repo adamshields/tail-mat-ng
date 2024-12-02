@@ -1,3 +1,7 @@
+<breaker-toolbar
+  [config]="toolbarConfig"
+  (actionClick)="handleToolbarAction($event)">
+</breaker-toolbar>
 <breaker-grid
   [dataSource]="users"
   [allowPaging]="true"

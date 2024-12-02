@@ -1,0 +1,66 @@
+<h2 mat-dialog-title>{{ config.title }}</h2>
+
+<form [formGroup]="form">
+  <mat-dialog-content>
+    <div class="dialog-fields">
+      <ng-container *ngFor="let field of config.fields">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>{{ field.label }}</mat-label>
+
+          <ng-container [ngSwitch]="field.type">
+            <input matInput
+                   *ngSwitchCase="'text'"
+                   [formControlName]="field.key"
+                   [required]="field.required || false">
+
+            <input matInput
+                   *ngSwitchCase="'email'"
+                   [formControlName]="field.key"
+                   type="email"
+                   [required]="field.required || false">
+
+            <input matInput
+                   *ngSwitchCase="'number'"
+                   [formControlName]="field.key"
+                   type="number"
+                   [required]="field.required || false">
+
+            <mat-select *ngSwitchCase="'select'"
+                       [formControlName]="field.key"
+                       [required]="field.required || false">
+              <mat-option *ngFor="let option of field.options"
+                         [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+
+            <input matInput
+                   *ngSwitchCase="'date'"
+                   [matDatepicker]="picker"
+                   [formControlName]="field.key"
+                   [required]="field.required || false">
+            <mat-datepicker-toggle *ngSwitchCase="'date'"
+                                  matSuffix
+                                  [for]="picker">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </ng-container>
+
+          <mat-error *ngIf="form.get(field.key)?.invalid && form.get(field.key)?.touched">
+            This field is required
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button
+            color="primary"
+            (click)="onSubmit()"
+            [disabled]="!form.valid || config.mode === 'view'">
+      {{ getActionButtonText() }}
+    </button>
+  </mat-dialog-actions>
+</form>
