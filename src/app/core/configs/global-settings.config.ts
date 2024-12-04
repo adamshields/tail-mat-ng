@@ -2,7 +2,7 @@ import { SITE_NAVIGATION } from "./navigation.config";
 
 // core/configs/settings.config.ts
 export const GLOBAL_APP_CONFIG = {
-  name: 'APPNAME',
+  name: 'BREAKER19er',
   shortName: 'APP', // For mobile or space-constrained areas
   version: '1.0.0',
   titleSeparator: ' | ', // For page titles
