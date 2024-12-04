@@ -2,24 +2,17 @@
 
 @use "@angular/material" as mat;
 
-$custom-theme: mat.define-theme(
-  (
-    color: (
-      primary: mat.$rose-palette,
-      tertiary: mat.$red-palette,
-    ),
-  )
-);
+$custom-theme: mat.define-theme();
 
 .custom-theme {
   @include mat.button-color($custom-theme);
 
 }
 
-.button-rounded {
-  --border-radius: 10px;
-  --mdc-text-button-container-shape: var(--border-radius);
-  --mdc-protected-button-container-shape: var(--border-radius);
-  --mdc-outlined-button-container-shape: var(--border-radius);
-  --mdc-filled-button-container-shape: var(--border-radius);
-}
+// .button-rounded {
+//   --border-radius: 10px;
+//   --mdc-text-button-container-shape: var(--border-radius);
+//   --mdc-protected-button-container-shape: var(--border-radius);
+//   --mdc-outlined-button-container-shape: var(--border-radius);
+//   --mdc-filled-button-container-shape: var(--border-radius);
+// }

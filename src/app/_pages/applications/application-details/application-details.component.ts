@@ -19,7 +19,7 @@ import { DataService, Design } from '../../../shared/data/data.serivce';
   ],
   template: `
     <h2>Application Designs</h2>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
       <!-- Design Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>

@@ -7,10 +7,10 @@ import { provideHttpClient } from '@angular/common/http';
 import { InjectionToken } from '@angular/core';
 import { routes } from './app.routes';
 
-import { APP_CONFIG } from './core/configs/app.config';
+import { GLOBAL_APP_CONFIG } from './core/configs/global-settings.config';
 
 // Create an InjectionToken for the configuration
-export const APP_CONFIG_TOKEN = new InjectionToken<typeof APP_CONFIG>('app.config');
+export const APP_CONFIG_TOKEN = new InjectionToken<typeof GLOBAL_APP_CONFIG>('app.config');
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,7 +26,7 @@ export const appConfig: ApplicationConfig = {
     // Provide APP_CONFIG globally
     {
       provide: APP_CONFIG_TOKEN,
-      useValue: APP_CONFIG,
+      useValue: GLOBAL_APP_CONFIG,
     },
   ],
 };

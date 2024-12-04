@@ -156,6 +156,47 @@ body {
   }
 }
 
+
+// .square-button {
+//   button {
+//     @include mat.button-overrides(
+//       (
+//         container-color: #00ff00,
+//         container-height: 64px,
+//         container-shape: 32px,
+//         label-text-color: orange,
+//         ripple-color: #ff0000,
+//         outline-color: #0000ff
+//       )
+//     );
+//   }
+// }
+
+.custom-filled-button {
+  button {
+    @include mat.button-overrides(
+      (
+        container-height: 2rem,
+        container-shape: 0.25rem,
+        horizontal-padding: 1rem
+      )
+    );
+  }
+}
+
+// .site-button {
+//   button {
+//     @include mat.button-overrides(
+//       (
+//         container-height: 2rem,
+//         container-shape: 0.25rem,
+//         horizontal-padding: 1rem
+//       )
+//     );
+//   }
+// }
+
+
 // // Table overrides using Material 3 properties
 // .mat-mdc-table {
 //   @include mat.table-overrides((
@@ -248,3 +289,47 @@ body {
 .mat-mdc-icon-button {
   line-height: normal;
 }
+
+
+.custom-table {
+  table {
+    @include mat.table-overrides(
+      (
+        background-color: red,
+
+        /* Header Styles */
+        header-container-height: 3rem,
+        // header-headline-color: var(on-surface),
+        header-headline-color: red,
+        header-headline-font: "Roboto, sans-serif",
+        header-headline-line-height: 1.5,
+        header-headline-size: 1.25rem, /* 20px */
+        header-headline-tracking: 0.05em,
+        header-headline-weight: 600,
+
+        /* Row Styles */
+        row-item-container-height: 2.5rem,
+        row-item-label-text-color: var(on-surface-variant),
+        row-item-label-text-font: "Roboto, sans-serif",
+        row-item-label-text-line-height: 1.4,
+        row-item-label-text-size: 1rem, /* 16px */
+        row-item-label-text-tracking: 0.03em,
+        row-item-label-text-weight: 500,
+        row-item-outline-color: var(outline),
+        row-item-outline-width: 2px,
+
+        /* Footer Styles */
+        footer-container-height: 2.5rem,
+        footer-supporting-text-font: "Roboto, sans-serif",
+        footer-supporting-text-line-height: 1.5,
+        footer-supporting-text-size: 0.875rem, /* 14px */
+        footer-supporting-text-tracking: 0.02em,
+        footer-supporting-text-weight: 400
+      )
+    );
+  }
+}
+
+  // th, td {
+  //   font-family: "Connections, Arial, sans-serif";
+  // }

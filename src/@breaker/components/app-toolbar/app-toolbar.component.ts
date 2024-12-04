@@ -52,8 +52,10 @@ import { APP_CONFIG_TOKEN } from '../../../app/app.config';
     </nav>
 
       <span class="flex-1"></span>
-
-      <app-color-picker/>
+      <!-- custom color picker -->
+        @if (config.features.allowColorPicker) {
+        <app-color-picker/>
+        }
       <!-- Theme Toggler -->
       <button
         mat-icon-button
