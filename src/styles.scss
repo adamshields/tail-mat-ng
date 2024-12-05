@@ -93,6 +93,7 @@ $color-variants: (secondary, tertiary);
     @include mat.button-color(themes.$my-app-theme, $color-variant: $variant);
   }
 }
+
 :root {
   @include mat.core-theme(themes.$my-app-theme);
   @include mat.all-component-themes(themes.$my-app-theme);
@@ -113,7 +114,11 @@ $color-variants: (secondary, tertiary);
   // ));
   // @include mat.button-density(themes.$my-app-theme);
   // @include mat.button-typography(themes.$my-app-theme);
-
+  @include mat.button-overrides((
+    container-height: 2rem,
+    container-shape: 0.25rem,
+    horizontal-padding: 1rem
+  ));
 
   // --sys-display-large-size: 128px;
   // --sys-display-large-line-height: 1.25;

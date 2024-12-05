@@ -28,32 +28,34 @@ export interface ToolbarConfig {
     MatTooltipModule
   ],
   template: `
-    <div class="toolbar-container">
-      <div class="actions-group">
-        <button mat-raised-button
-          *ngFor="let action of config.actions"
-          [color]="action.color"
-          [disabled]="action.disabled"
-          [matTooltip]="action.text"
-          (click)="onActionClick(action)">
-          <mat-icon>{{action.icon}}</mat-icon>
-          {{action.text}}
-        </button>
-      </div>
+  <div class="p-4 flex items-center gap-2">
+    <!-- Wrapper for buttons -->
+    <div class="flex gap-2">
+      <button mat-raised-button
+        *ngFor="let action of config.actions"
+        [color]="action.color"
+        [disabled]="action.disabled"
+        [matTooltip]="action.text"
+        class="flex items-center gap-2 px-4 py-2"
+        (click)="onActionClick(action)">
+        <mat-icon>{{action.icon}}</mat-icon>
+        {{action.text}}
+      </button>
     </div>
+  </div>
+
   `,
   styles: [`
-    .toolbar-container {
-      padding: 16px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
+  // @use '@angular/material' as mat;
 
-    .actions-group {
-      display: flex;
-      gap: 8px;
-    }
+  // // Customize the entire app. Change :root to your selector if you want to scope the styles.
+  // :host {
+  //   @include mat.button-overrides((
+  //     container-height: 2rem,
+  //     container-shape: 0.25rem,
+  //     horizontal-padding: 1rem
+  //   ));
+  // }
   `]
 })
 export class BreakerToolbarComponent {

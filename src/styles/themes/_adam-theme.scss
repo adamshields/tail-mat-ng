@@ -11,7 +11,11 @@ $compact-theme: mat.define-theme(
 );
 .custom-theme {
   @include mat.button-color($compact-theme);
-
+  @include mat.button-overrides((
+    container-height: 2rem,
+    container-shape: 0.25rem,
+    horizontal-padding: 1rem
+  ));
 }
 
 .button-rounded {
