@@ -29,6 +29,9 @@ export interface Application {
   id: number;
   name: string;
   description: string;
+  ait: string; // Unique tracking number
+  rpo: string; // Recovery Point Objective
+  rto: string; // Recovery Time Objective
   designs: Design[];
 }
 
@@ -38,7 +41,6 @@ export interface Portfolio {
   owner: string;
   applications: Application[];
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +56,9 @@ export class DataService {
           id: 101,
           name: 'E-Commerce Platform',
           description: 'Online shopping application with user accounts and payment integration',
+          ait: 'AIT-101-ECOMM',
+          rpo: '15 minutes',
+          rto: '1 hour',
           designs: [
             {
               id: 1001,
@@ -92,6 +97,9 @@ export class DataService {
           id: 102,
           name: 'CRM System',
           description: 'Customer Relationship Management system for sales and support teams',
+          ait: 'AIT-102-CRM',
+          rpo: '30 minutes',
+          rto: '2 hours',
           designs: [
             {
               id: 1003,
@@ -119,6 +127,9 @@ export class DataService {
           id: 201,
           name: 'AI-Powered Analytics Dashboard',
           description: 'Real-time analytics with AI-driven insights',
+          ait: 'AIT-201-AI',
+          rpo: '10 minutes',
+          rto: '30 minutes',
           designs: [
             {
               id: 2001,
@@ -143,6 +154,9 @@ export class DataService {
           id: 202,
           name: 'IoT Device Management Platform',
           description: 'Centralized management for IoT devices and data collection',
+          ait: 'AIT-202-IOT',
+          rpo: '5 minutes',
+          rto: '15 minutes',
           designs: [
             {
               id: 2002,
@@ -158,66 +172,6 @@ export class DataService {
                 { id: 30005, name: 'device-registry', image: 'iot-registry:2.1', status: 'running' },
                 { id: 30006, name: 'data-collector', image: 'data-collector:1.3', status: 'running' },
                 { id: 30007, name: 'edge-processor', image: 'edge-compute:1.1', status: 'running' }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 3,
-      name: "Global Finance Solutions",
-      owner: "Michael Chang",
-      applications: [
-        {
-          id: 301,
-          name: 'Blockchain-based Payment System',
-          description: 'Secure and transparent payment processing using blockchain technology',
-          designs: [
-            {
-              id: 3001,
-              name: 'Distributed Ledger Architecture',
-              version: '1.0.0',
-              description: 'Initial implementation of blockchain-based payment processing',
-              servers: [
-                { id: 30001, name: 'node-1', ip: '172.16.1.10', status: 'online' },
-                { id: 30002, name: 'node-2', ip: '172.16.1.11', status: 'online' },
-                { id: 30003, name: 'node-3', ip: '172.16.1.12', status: 'online' }
-              ],
-              containers: [
-                { id: 40001, name: 'blockchain-core', image: 'custom-blockchain:1.0', status: 'running' },
-                { id: 40002, name: 'payment-api', image: 'payment-gateway:1.0', status: 'running' },
-                { id: 40003, name: 'wallet-service', image: 'crypto-wallet:1.2', status: 'running' }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 4,
-      name: "Healthcare Innovations",
-      owner: "Emily Rodriguez",
-      applications: [
-        {
-          id: 401,
-          name: 'Telemedicine Platform',
-          description: 'Secure video conferencing and patient management for remote healthcare',
-          designs: [
-            {
-              id: 4001,
-              name: 'HIPAA Compliant Cloud Design',
-              version: '2.3.0',
-              description: 'Cloud-based architecture ensuring HIPAA compliance and data security',
-              servers: [
-                { id: 40001, name: 'app-server-1', ip: '192.168.5.10', status: 'online' },
-                { id: 40002, name: 'app-server-2', ip: '192.168.5.11', status: 'online' },
-                { id: 40003, name: 'db-server', ip: '192.168.5.12', status: 'online' }
-              ],
-              containers: [
-                { id: 50001, name: 'video-conferencing', image: 'secure-video:2.3', status: 'running' },
-                { id: 50002, name: 'patient-portal', image: 'patient-ui:1.5', status: 'running' },
-                { id: 50003, name: 'ehr-integration', image: 'ehr-connect:1.1', status: 'running' }
               ]
             }
           ]

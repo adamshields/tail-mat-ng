@@ -28,6 +28,18 @@ export const LAB_ROUTES: Routes = [
         loadComponent: () =>
           import('./components/ticker/ticker.component')
             .then(m => m.Ticker)
+      },
+      {
+        path: 'forms',
+        loadComponent: () =>
+          import('./pages/form-testing/form-testing.component')
+            .then(m => m.FormTestingComponent)
+      },
+      {
+        path: 'colors',
+        loadComponent: () =>
+          import('./pages/color-palette/color-palette.component')
+            .then(m => m.ColorPaletteComponent)
       }
     ]
   }

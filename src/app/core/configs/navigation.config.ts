@@ -155,6 +155,13 @@ export const SITE_NAVIGATION: NavItem[] = [
         path: '/lab/forms',
         icon: 'dynamic_form',
         displayType: ['vertical']
+      },
+      {
+        id: 'colors',
+        label: 'Color Palette',
+        path: '/lab/colors',
+        icon: 'palette',
+        displayType: ['vertical']
       }
     ]
   },

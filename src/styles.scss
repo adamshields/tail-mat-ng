@@ -97,7 +97,7 @@ $color-variants: (secondary, tertiary);
 :root {
   @include mat.core-theme(themes.$my-app-theme);
   @include mat.all-component-themes(themes.$my-app-theme);
-  // @include mat.form-field-theme(themes.$compact-theme);
+  // @include mat.form-field-density(themes.$adam-theme);
   // @include mat.button-theme(themes.$my-app-theme);
   // @include mat.icon-theme(themes.$my-app-theme);
   // @include mat.menu-theme(themes.$my-app-theme);

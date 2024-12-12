@@ -7,7 +7,7 @@ import { TOOLBAR_MENU_ITEMS } from '../../../app/shared/data/toolbar-menu-data';
 import { ThemeManager } from '../../../app/theme-manager.service';
 import { NavigationService } from '../../../app/core/services/navigation.service';
 
-import { ColorPaletteComponent } from '../../../app/_pages/color-palette/color-palette.component';
+
 import { ColorPickerComponent } from "../../../app/shared/components/color-picker/color-picker.component";
 import { NavItem } from '../../../app/core/models/navigation.types';
 import { APP_CONFIG_TOKEN } from '../../../app/app.config';
@@ -16,7 +16,7 @@ import { APP_CONFIG_TOKEN } from '../../../app/app.config';
   selector: 'app-toolbar',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [...MaterialModules, RouterModule, CommonModule, ColorPaletteComponent, ColorPickerComponent],
+  imports: [...MaterialModules, RouterModule, CommonModule, ColorPickerComponent],
   template: `
     <mat-toolbar class="toolbar relative mat-elevation-z8 z-10">
       <!-- Logo -->
