@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
+import { RouteSpec } from './route-spec.interface';  // Import your interface
 
 @Injectable()
 export class AutoTitleStrategy extends TitleStrategy {
@@ -26,8 +27,9 @@ export class AutoTitleStrategy extends TitleStrategy {
     while (currentRoute.firstChild) {
       currentRoute = currentRoute.firstChild;
       // Look for route with label data
-      if (currentRoute.data['label']) {
-        return currentRoute.data['label'];
+      const routeData = currentRoute.data as RouteSpec;
+      if (routeData?.label) {
+        return routeData.label;
       }
     }
     return undefined;
