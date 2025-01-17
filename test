@@ -1,7 +1,10 @@
 /**
- * Custom Title Strategy that creates hierarchical page titles reflecting the full path:
- * /applications/1234/designs/10/server -> "APP 1234 - DESIGN 10 - SERVERS"
- * /applications/1234/designs/10/server/1 -> "APP 1234 - DESIGN 10 - SERVER 1"
+ * Custom Title Strategy that handles all page title scenarios:
+ * - Regular pages: "USERS"
+ * - App-level pages: "DESIGNS - APP 1234"
+ * - Design resources: "APP 1234 - DESIGN 10 - SERVERS"
+ * - Resource details: "APP 1234 - DESIGN 10 - SERVER 1"
+ * - CamelCase pages: "LOOKUP TABLES - APP 1234"
  */
 @Injectable()
 export class AutoTitleStrategy extends TitleStrategy {
@@ -10,34 +13,48 @@ export class AutoTitleStrategy extends TitleStrategy {
   override updateTitle(routerState: RouterStateSnapshot): void {
     if (!routerState) return;
     const segments = routerState.url.split('/').filter(Boolean);
-    
-    // Get important segments from URL
+    const lastPath = segments[segments.length - 1];
     const appId = segments[1];
-    const designId = segments[segments.indexOf('designs') + 1];
-    const isResourceDetail = this.isNumeric(segments[segments.length - 1]);
-    const resourceType = isResourceDetail ? segments[segments.length - 2] : segments[segments.length - 1];
+    
+    // Build the title based on URL structure
+    let title: string;
 
-    let title = `APP ${appId} - DESIGN ${designId}`;
+    // Check if we're in a design section
+    if (segments.includes('designs')) {
+      const designId = segments[segments.indexOf('designs') + 1];
+      const isResourceDetail = this.isNumeric(lastPath);
+      const resourceType = isResourceDetail ? segments[segments.length - 2] : lastPath;
 
-    // Add resource information
-    if (isResourceDetail) {
-      const resourceId = segments[segments.length - 1];
-      title += ` - ${this.formatTitle(resourceType)} ${resourceId}`;
-    } else {
-      title += ` - ${this.formatTitle(resourceType)}S`;
+      title = `APP ${appId} - DESIGN ${designId} - ${this.formatCamelCase(resourceType)}`;
+      if (isResourceDetail) {
+        title += ` ${lastPath}`;
+      } else {
+        title += 'S';
+      }
+    } 
+    // Handle regular pages with appId
+    else if (appId && this.isNumeric(appId)) {
+      const pageName = this.formatCamelCase(lastPath);
+      title = `${pageName} - APP ${appId}`;
+    }
+    // Handle basic pages (like Users, Lookup Tables)
+    else {
+      title = this.formatCamelCase(lastPath);
     }
 
-    document.title = `${title} | ${this.appName}`;
+    document.title = `${title.toUpperCase()} | ${this.appName}`;
   }
 
   private isNumeric(value: string): boolean {
     return /^\d+$/.test(value);
   }
 
-  private formatTitle(text: string): string {
+  private formatCamelCase(text: string): string {
     return text
+      // Split on capital letters
       .replace(/([A-Z])/g, ' $1')
-      .trim()
-      .toUpperCase();
+      // Handle acronyms (e.g., XYZ)
+      .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+      .trim();
   }
 }
