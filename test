@@ -2,6 +2,7 @@
  * Custom Title Strategy that handles all page title scenarios:
  * - Regular pages: "USERS"
  * - App-level pages: "DESIGNS - APP 1234"
+ * - Single design view: "DESIGN 10 - APP 1234"
  * - Design resources: "APP 1234 - DESIGN 10 - SERVERS"
  * - Resource details: "APP 1234 - DESIGN 10 - SERVER 1"
  * - CamelCase pages: "LOOKUP TABLES - APP 1234"
@@ -22,6 +23,10 @@ export class AutoTitleStrategy extends TitleStrategy {
     // Check if we're in a details section
     if (segments.includes('details')) {
       title = `${this.formatCamelCase(lastPath)} - APP ${appId}`;
+    }
+    // Check if we're viewing a single design
+    else if (segments.includes('designs') && segments.length === 4) {
+      title = `DESIGN ${lastPath} - APP ${appId}`;
     }
     // Check if we're in a design section with resources
     else if (segments.includes('designs') && segments.length > 4) {
