@@ -7,15 +7,21 @@ export class AutoTitleStrategy extends TitleStrategy {
     const segments = routerState.url.split('/').filter(Boolean);
     const lastPath = segments[segments.length - 1];
     const parentPath = segments[segments.length - 2];
-    const appId = segments[1]; // This will get your 1234 from the URL
+    const appId = segments[1]; // Gets 1234 from URL
 
     let title: string;
 
     // Handle numeric IDs with their parent (server/123)
     if (this.isNumeric(lastPath)) {
-      title = `${this.formatTitle(parentPath)} ${lastPath}`;
+      title = `${this.formatTitle(parentPath)} - ${lastPath}`;
     } else {
-      title = `${this.formatTitle(lastPath)} ${appId}`;
+      // Format CamelCase words (SystemLookupTables -> System Lookup Tables)
+      const formattedPath = this.formatCamelCase(lastPath);
+      
+      // Only add appId if it exists and is numeric
+      title = appId && this.isNumeric(appId) 
+        ? `${formattedPath} - ${appId}`
+        : formattedPath;
     }
 
     document.title = `${title} | ${this.appName}`;
@@ -27,5 +33,15 @@ export class AutoTitleStrategy extends TitleStrategy {
 
   private formatTitle(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
+  private formatCamelCase(text: string): string {
+    return text
+      // Split on capital letters
+      .replace(/([A-Z])/g, ' $1')
+      // Handle first character
+      .replace(/^./, str => str.toUpperCase())
+      // Clean up extra spaces
+      .trim();
   }
 }
