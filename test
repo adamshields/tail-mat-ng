@@ -1,47 +1,74 @@
+/**
+* Custom Title Strategy for handling page titles across the application.
+* Automatically formats titles based on URL segments and includes application IDs where relevant.
+* 
+* Handles several cases:
+* - Basic pages: "USERS | Adam"
+* - Pages with App ID: "DESIGNS - 1234 | Adam"
+* - Resource detail pages: "SERVER - 123 | Adam"
+* - CamelCase pages: "SYSTEM LOOKUP TABLES | Adam"
+*/
 @Injectable()
 export class AutoTitleStrategy extends TitleStrategy {
-  private readonly appName = 'Adam';
+ /** Application name to be appended to all titles */
+ private readonly appName = 'Adam';
 
-  override updateTitle(routerState: RouterStateSnapshot): void {
-    if (!routerState) return;
-    const segments = routerState.url.split('/').filter(Boolean);
-    const lastPath = segments[segments.length - 1];
-    const parentPath = segments[segments.length - 2];
-    const appId = segments[1]; // Gets 1234 from URL
+ /**
+  * Updates the document title based on the current route state
+  * @param routerState Current router state snapshot
+  */
+ override updateTitle(routerState: RouterStateSnapshot): void {
+   if (!routerState) return;
+   const segments = routerState.url.split('/').filter(Boolean);
+   const lastPath = segments[segments.length - 1];
+   const parentPath = segments[segments.length - 2];
+   const appId = segments[1]; // Gets application ID from URL (e.g., /applications/1234/...)
 
-    let title: string;
+   let title: string;
 
-    // Handle numeric IDs with their parent (server/123)
-    if (this.isNumeric(lastPath)) {
-      title = `${this.formatTitle(parentPath)} - ${lastPath}`;
-    } else {
-      // Format CamelCase words (SystemLookupTables -> System Lookup Tables)
-      const formattedPath = this.formatCamelCase(lastPath);
-      
-      // Only add appId if it exists and is numeric
-      title = appId && this.isNumeric(appId) 
-        ? `${formattedPath} - ${appId}`
-        : formattedPath;
-    }
+   // Handle resource detail pages (e.g., server/123)
+   if (this.isNumeric(lastPath)) {
+     title = `${this.formatTitle(parentPath)} - ${lastPath}`;
+   } else {
+     const formattedPath = this.formatCamelCase(lastPath);
+     
+     // Add appId to title if it exists and is numeric
+     title = appId && this.isNumeric(appId) 
+       ? `${formattedPath} - ${appId}`
+       : formattedPath;
+   }
 
-    document.title = `${title} | ${this.appName}`;
-  }
+   document.title = `${title.toUpperCase()} | ${this.appName}`;
+ }
 
-  private isNumeric(value: string): boolean {
-    return /^\d+$/.test(value);
-  }
+ /**
+  * Checks if a string is a numeric value
+  * @param value String to check
+  * @returns True if string contains only numbers
+  */
+ private isNumeric(value: string): boolean {
+   return /^\d+$/.test(value);
+ }
 
-  private formatTitle(text: string): string {
-    return text.charAt(0).toUpperCase() + text.slice(1);
-  }
+ /**
+  * Formats a string to uppercase
+  * @param text String to format
+  * @returns Uppercase string
+  */
+ private formatTitle(text: string): string {
+   return text.toUpperCase();
+ }
 
-  private formatCamelCase(text: string): string {
-    return text
-      // Split on capital letters
-      .replace(/([A-Z])/g, ' $1')
-      // Handle first character
-      .replace(/^./, str => str.toUpperCase())
-      // Clean up extra spaces
-      .trim();
-  }
+ /**
+  * Formats camelCase strings with spaces and uppercase
+  * @param text CamelCase string to format
+  * @returns Formatted uppercase string with spaces
+  * @example "systemLookupTables" -> "SYSTEM LOOKUP TABLES"
+  */
+ private formatCamelCase(text: string): string {
+   return text
+     .replace(/([A-Z])/g, ' $1') // Add space before capital letters
+     .trim()
+     .toUpperCase();
+ }
 }
