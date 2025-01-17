@@ -7,6 +7,7 @@ export class AutoTitleStrategy extends TitleStrategy {
     const segments = routerState.url.split('/').filter(Boolean);
     const lastPath = segments[segments.length - 1];
     const parentPath = segments[segments.length - 2];
+    const appId = segments[1]; // This will get your 1234 from the URL
 
     let title: string;
 
@@ -14,7 +15,7 @@ export class AutoTitleStrategy extends TitleStrategy {
     if (this.isNumeric(lastPath)) {
       title = `${this.formatTitle(parentPath)} ${lastPath}`;
     } else {
-      title = this.formatTitle(lastPath);
+      title = `${this.formatTitle(lastPath)} ${appId}`;
     }
 
     document.title = `${title} | ${this.appName}`;
