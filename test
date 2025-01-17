@@ -1,0 +1,30 @@
+@Injectable()
+export class AutoTitleStrategy extends TitleStrategy {
+  private readonly appName = 'Adam';
+
+  override updateTitle(routerState: RouterStateSnapshot): void {
+    if (!routerState) return;
+    const segments = routerState.url.split('/').filter(Boolean);
+    const lastPath = segments[segments.length - 1];
+    const parentPath = segments[segments.length - 2];
+
+    let title: string;
+
+    // Handle numeric IDs with their parent (server/123)
+    if (this.isNumeric(lastPath)) {
+      title = `${this.formatTitle(parentPath)} ${lastPath}`;
+    } else {
+      title = this.formatTitle(lastPath);
+    }
+
+    document.title = `${title} | ${this.appName}`;
+  }
+
+  private isNumeric(value: string): boolean {
+    return /^\d+$/.test(value);
+  }
+
+  private formatTitle(text: string): string {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+}
