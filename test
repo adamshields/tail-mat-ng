@@ -5,6 +5,7 @@
  * - Design resources: "APP 1234 - DESIGN 10 - SERVERS"
  * - Resource details: "APP 1234 - DESIGN 10 - SERVER 1"
  * - CamelCase pages: "LOOKUP TABLES - APP 1234"
+ * - Details pages: "DESIGNS - APP 1234"
  */
 @Injectable()
 export class AutoTitleStrategy extends TitleStrategy {
@@ -16,11 +17,14 @@ export class AutoTitleStrategy extends TitleStrategy {
     const lastPath = segments[segments.length - 1];
     const appId = segments[1];
     
-    // Build the title based on URL structure
     let title: string;
 
-    // Check if we're in a design section
-    if (segments.includes('designs')) {
+    // Check if we're in a details section
+    if (segments.includes('details')) {
+      title = `${this.formatCamelCase(lastPath)} - APP ${appId}`;
+    }
+    // Check if we're in a design section with resources
+    else if (segments.includes('designs') && segments.length > 4) {
       const designId = segments[segments.indexOf('designs') + 1];
       const isResourceDetail = this.isNumeric(lastPath);
       const resourceType = isResourceDetail ? segments[segments.length - 2] : lastPath;
@@ -37,7 +41,7 @@ export class AutoTitleStrategy extends TitleStrategy {
       const pageName = this.formatCamelCase(lastPath);
       title = `${pageName} - APP ${appId}`;
     }
-    // Handle basic pages (like Users, Lookup Tables)
+    // Handle basic pages
     else {
       title = this.formatCamelCase(lastPath);
     }
@@ -51,9 +55,7 @@ export class AutoTitleStrategy extends TitleStrategy {
 
   private formatCamelCase(text: string): string {
     return text
-      // Split on capital letters
       .replace(/([A-Z])/g, ' $1')
-      // Handle acronyms (e.g., XYZ)
       .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
       .trim();
   }
