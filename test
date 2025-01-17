@@ -1,12 +1,15 @@
 /**
- * Custom Title Strategy that handles all page title scenarios:
+ * Custom Title Strategy that handles all page title scenarios with standardized format:
+ * Always leads with "APP {ID}" when an application ID is present.
+ * 
+ * Examples:
  * - Regular pages: "USERS"
- * - App-level pages: "DESIGNS - APP 1234"
- * - Single design view: "DESIGN 10 - APP 1234"
+ * - App-level pages: "APP 1234 - DESIGNS"
+ * - Single design view: "APP 1234 - DESIGN 10"
  * - Design resources: "APP 1234 - DESIGN 10 - SERVERS"
  * - Resource details: "APP 1234 - DESIGN 10 - SERVER 1"
- * - CamelCase pages: "LOOKUP TABLES - APP 1234"
- * - Details pages: "DESIGNS - APP 1234"
+ * - CamelCase pages: "APP 1234 - LOOKUP TABLES"
+ * - Details pages: "APP 1234 - DESIGNS"
  */
 @Injectable()
 export class AutoTitleStrategy extends TitleStrategy {
@@ -20,13 +23,16 @@ export class AutoTitleStrategy extends TitleStrategy {
     
     let title: string;
 
+    // Start with APP ID if it exists
+    const appPrefix = appId && this.isNumeric(appId) ? `APP ${appId} - ` : '';
+
     // Check if we're in a details section
     if (segments.includes('details')) {
-      title = `${this.formatCamelCase(lastPath)} - APP ${appId}`;
+      title = `${appPrefix}${this.formatCamelCase(lastPath)}`;
     }
     // Check if we're viewing a single design
     else if (segments.includes('designs') && segments.length === 4) {
-      title = `DESIGN ${lastPath} - APP ${appId}`;
+      title = `${appPrefix}DESIGN ${lastPath}`;
     }
     // Check if we're in a design section with resources
     else if (segments.includes('designs') && segments.length > 4) {
@@ -34,7 +40,7 @@ export class AutoTitleStrategy extends TitleStrategy {
       const isResourceDetail = this.isNumeric(lastPath);
       const resourceType = isResourceDetail ? segments[segments.length - 2] : lastPath;
 
-      title = `APP ${appId} - DESIGN ${designId} - ${this.formatCamelCase(resourceType)}`;
+      title = `${appPrefix}DESIGN ${designId} - ${this.formatCamelCase(resourceType)}`;
       if (isResourceDetail) {
         title += ` ${lastPath}`;
       } else {
@@ -44,7 +50,7 @@ export class AutoTitleStrategy extends TitleStrategy {
     // Handle regular pages with appId
     else if (appId && this.isNumeric(appId)) {
       const pageName = this.formatCamelCase(lastPath);
-      title = `${pageName} - APP ${appId}`;
+      title = `${appPrefix}${pageName}`;
     }
     // Handle basic pages
     else {
