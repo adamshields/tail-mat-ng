@@ -11,6 +11,8 @@ import { NavigationService } from '../../../app/core/services/navigation.service
 import { ColorPickerComponent } from "../../../app/shared/components/color-picker/color-picker.component";
 import { NavItem } from '../../../app/core/models/navigation.types';
 import { APP_CONFIG_TOKEN } from '../../../app/app.config';
+import { MatDialog } from '@angular/material/dialog';
+import { UserProfileDialogComponent } from '../../user-profile-dialog/user-profile-dialog.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -78,10 +80,10 @@ import { APP_CONFIG_TOKEN } from '../../../app/app.config';
         <mat-icon>account_circle</mat-icon>
       </button>
       <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item>
-          <mat-icon>edit</mat-icon>
-          <span>Edit Profile</span>
-        </button>
+      <button mat-menu-item (click)="openDialog()">
+    <mat-icon>edit</mat-icon>
+    <span>Edit Profile</span>
+  </button>
         <button mat-menu-item>
           <mat-icon>settings</mat-icon>
           <span>Account Settings</span>
@@ -107,4 +109,13 @@ export class AppToolbarComponent {
   }
   horizontalNavItems = input.required<NavItem[]>();
 
+  private dialog = inject(MatDialog);
+
+  openDialog() {
+    this.dialog.open(UserProfileDialogComponent, {
+      width: '600px', // Set a reasonable width
+      maxHeight: '90vh', // Ensures the dialog does not overflow
+      panelClass: 'custom-dialog' // Optional for additional styling
+    });
+  }
 }

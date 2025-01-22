@@ -1,0 +1,63 @@
+<mat-card class="w-full h-full flex flex-col">
+  <!-- Header with Title and Close Button -->
+  <mat-card-header class="flex justify-between items-center p-4 border-b border-gray-200">
+    <mat-card-title class="text-lg font-semibold">User Profile</mat-card-title>
+    <button mat-icon-button (click)="closeDialog()" class="text-gray-500 hover:text-gray-700">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <!-- Main Content -->
+  <mat-card-content class="flex flex-col flex-grow gap-4 p-4">
+    <!-- User ID, Name, and Email in a Single Row -->
+    <div class="flex w-full gap-4">
+      <!-- User ID Field -->
+      <mat-form-field class="flex-1 min-w-0" subscriptSizing="dynamic">
+        <mat-label>User ID</mat-label>
+        <input matInput [value]="userId" readonly />
+      </mat-form-field>
+
+      <!-- Name Field -->
+      <mat-form-field class="flex-1 min-w-0" subscriptSizing="dynamic">
+        <mat-label>Name</mat-label>
+        <input matInput [value]="name" readonly />
+      </mat-form-field>
+
+      <!-- Email Field -->
+      <mat-form-field class="flex-1 min-w-0" subscriptSizing="dynamic">
+        <mat-label>Email Address</mat-label>
+        <input matInput [value]="email" readonly />
+      </mat-form-field>
+    </div>
+
+    <!-- Roles -->
+    <div>
+      <mat-label>Roles</mat-label>
+      <mat-chip-set aria-label="Roles">
+        @for (role of roles; track role) {
+          <mat-chip>{{ role }}</mat-chip>
+        }
+      </mat-chip-set>
+    </div>
+
+    <!-- Entitlements (Scrollable) -->
+    <mat-card class="w-full flex-grow-0">
+      <mat-card-content>
+        <mat-label>Entitlements</mat-label>
+        <div class="overflow-y-auto max-h-40 p-2 border border-gray-300 rounded">
+          <mat-chip-set aria-label="Entitlements">
+            @for (entitlement of entitlements; track entitlement) {
+              <mat-chip>{{ entitlement }}</mat-chip>
+            }
+          </mat-chip-set>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-card-content>
+
+  <!-- Buttons (Always Visible at Bottom) -->
+  <mat-card-actions class="flex justify-end p-4 border-t border-gray-200">
+    <button mat-button (click)="closeDialog()" class="text-gray-500">Cancel</button>
+    <button mat-flat-button color="primary" (click)="saveChanges()">Save</button>
+  </mat-card-actions>
+</mat-card>
