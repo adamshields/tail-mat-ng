@@ -48,6 +48,13 @@ export const SITE_NAVIGATION: NavItem[] = [
     ]
   },
   {
+    id: 'projects',
+    label: 'Projects',
+    path: '/projects',
+    icon: 'change_circle',
+    displayType: ['horizontal']
+  },
+  {
     id: 'documents',
     label: 'Documents',
     path: '/documents',

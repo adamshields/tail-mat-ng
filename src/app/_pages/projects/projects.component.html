@@ -1,1 +1,70 @@
-<p>projects works!</p>
+<div class="flex flex-col lg:flex-row gap-2">
+  <!-- Grid section - full width on mobile, 40% on large screens -->
+  <div class="w-full lg:w-2/5 mb-4 lg:mb-0">
+    <breaker-grid
+      [dataSource]="users"
+      [allowPaging]="true"
+      [allowSorting]="true"
+      [allowFiltering]="true">
+      <b-column field="id" headerText="ID"></b-column>
+      <b-column field="firstName" headerText="First Name"></b-column>
+      <b-column field="lastName" headerText="Last Name"></b-column>
+      <b-column field="email" headerText="Email"></b-column>
+      <b-column field="phone" headerText="Phone"></b-column>
+      <b-column field="company" headerText="Company"></b-column>
+    </breaker-grid>
+  </div>
+
+  <mat-card appearance="outlined" class="w-full lg:w-3/5">
+    <mat-card-header>
+      <mat-card-title class="mb-2">Project Impacts</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="overflow-auto max-h-[calc(100vh-150px)] lg:max-h-[calc(100vh-100px)]">
+      <ng-container *ngIf="appImpactList">
+        <mat-card *ngIf="appImpactList.length === 0">
+          <mat-card-content>No Impact Found</mat-card-content>
+        </mat-card>
+
+        @for(impact of appImpactList; track impact) {
+          <div class="flex flex-col md:flex-row border-2 rounded my-2">
+            <div class="w-full md:w-1/2 p-2">
+              <h3 class="flex-wrap hover:bg-inverse-primary">
+                <a [routerLink]="[impact.appURL]" class="flex items-center gap-2">
+                  <mat-icon class="material-symbols-outlined shrink-0">view_quilt</mat-icon>
+                  <span class="break-words" [title]="impact?.ait + ' ' + impact?.appShortName + ' - ' + impact?.appName">
+                    {{impact?.ait || '-'}} {{impact?.appShortName || '-'}} - {{impact?.appName || '-'}}
+                  </span>
+                </a>
+              </h3>
+              <div class="mt-2">
+                <strong class="shrink-0">Sizing:</strong>
+                <span class="break-words" [title]="impact.sizing">{{impact.sizing}}</span>
+              </div>
+              <div class="mt-2">
+                <strong class="shrink-0">Description:</strong>
+                <span class="break-words" [title]="impact.description">{{impact.description}}</span>
+              </div>
+              <div class="mt-2">
+                <strong class="shrink-0">Solution:</strong>
+                <span class="break-words" [title]="impact.solutionApproach">{{impact.solutionApproach}}</span>
+              </div>
+            </div>
+            <div class="w-full md:w-1/2 border-t md:border-t-0 md:border-l p-2">
+              <h3 class="font-medium mb-2">Designs</h3>
+              <div class="flex flex-col gap-2">
+                @for(design of impact.designList; track design) {
+                  <div [title]="design.name" class="break-words">
+                    <a class="hover:bg-inverse-primary flex items-center gap-2 p-1 rounded">
+                      <mat-icon class="material-symbols-outlined shrink-0">lab_profile</mat-icon>
+                      <span class="break-words">{{design.name}}</span>
+                    </a>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>

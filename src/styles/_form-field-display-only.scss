@@ -1,0 +1,40 @@
+// styles/_form-field-display-only.scss
+
+// Import material theming functions
+@use '@angular/material' as mat;
+
+// Define the mixin for display-only appearance
+@mixin display-only-appearance() {
+  .mat-mdc-form-field.mat-form-field-appearance-display-only {
+    .mdc-text-field {
+      @apply bg-transparent;
+
+      &:not(.mdc-text-field--disabled) {
+        @apply bg-transparent;
+      }
+    }
+
+    .mdc-floating-label {
+      &.mdc-floating-label--float-above {
+        mat-icon {
+          @apply text-sm w-2 h-2 p-0 box-content inline-block text-gray-400 dark:text-gray-500;
+        }
+      }
+    }
+
+    .mdc-text-field--filled {
+      &::before {
+        @apply border-none;
+      }
+    }
+
+    // Remove underline
+    .mdc-line-ripple {
+      @apply hidden;
+    }
+
+    input.mat-mdc-input-element {
+      @apply cursor-default;
+    }
+  }
+}

@@ -82,6 +82,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import 'material-symbols';
 @include mat.core();
 // Adding color variants to the button using button-color API
 // Primary is the default color variant for button,
@@ -161,7 +162,43 @@ body {
   }
 }
 
+mat-icon {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+}
 
+
+// styles.scss
+.display-only-field {
+  @apply bg-green-600;
+
+  .mat-mdc-form-field-flex {
+    @apply bg-transparent hover:bg-transparent;
+  }
+
+  .mat-mdc-floating-label {
+    mat-icon {
+      @apply text-sm w-2 h-2 p-0 box-content inline-block text-gray-400 dark:text-gray-500;
+    }
+  }
+
+  .mdc-line-ripple {
+    @apply hidden;
+  }
+
+  input.mat-mdc-input-element {
+    @apply cursor-default;
+  }
+}
 // .square-button {
 //   button {
 //     @include mat.button-overrides(

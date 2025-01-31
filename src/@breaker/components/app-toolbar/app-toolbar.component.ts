@@ -6,7 +6,8 @@ import { MenuItem } from '../../../app/shared/data/menu-item.interface';
 import { TOOLBAR_MENU_ITEMS } from '../../../app/shared/data/toolbar-menu-data';
 import { ThemeManager } from '../../../app/theme-manager.service';
 import { NavigationService } from '../../../app/core/services/navigation.service';
-
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Observable, map, startWith } from 'rxjs';
 
 import { ColorPickerComponent } from "../../../app/shared/components/color-picker/color-picker.component";
 import { NavItem } from '../../../app/core/models/navigation.types';
@@ -18,46 +19,67 @@ import { UserProfileDialogComponent } from '../../user-profile-dialog/user-profi
   selector: 'app-toolbar',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [...MaterialModules, RouterModule, CommonModule, ColorPickerComponent],
+  imports: [...MaterialModules, RouterModule, CommonModule, ColorPickerComponent, ReactiveFormsModule],
   template: `
-    <mat-toolbar class="toolbar relative mat-elevation-z8 z-10">
+    <mat-toolbar class="relative mat-elevation-z8 z-10 ">
       <!-- Logo -->
       <div class="flex items-center justify-start">
-        <span class="text-xl font-bold" routerLink="/">{{config.name}}</span>
-        <mat-icon class="text-2xl ml-2">bolt</mat-icon>
+        <a routerLink="/" class="inline-flex items-center hover:text-secondary">
+          <span class="text-xl font-bold">{{config.name}}</span>
+          <mat-icon class="text-xl mr-2">bolt</mat-icon>
+        </a>
       </div>
 
       <!-- Menu Items -->
       <nav class="flex space-x-1">
       @for (item of horizontalNavItems(); track item.id) {
         @if (!item.hasDropdown) {
-          <button mat-button [routerLink]="[item.path]">
-            <mat-icon>{{item.icon}}</mat-icon>
-            {{item.label}}
-          </button>
+          <a [routerLink]="[item.path]" class="flex items-center text-sm py-2 px-3 hover:text-secondary">
+            <mat-icon class="text-base">{{item.icon}}</mat-icon>
+            <span class="ml-2">{{item.label}}</span>
+          </a>
         } @else {
-          <button mat-button [matMenuTriggerFor]="menu">
-            <mat-icon>{{item.icon}}</mat-icon>
-            {{item.label}}
-            <mat-icon>arrow_drop_down</mat-icon>
-          </button>
+          <a [matMenuTriggerFor]="menu" class="flex items-center text-sm py-2 px-3 hover:text-secondary">
+            <mat-icon class="text-base">{{item.icon}}</mat-icon>
+            <span class="ml-2">{{item.label}}</span>
+            <mat-icon class="text-base ml-1">arrow_drop_down</mat-icon>
+          </a>
           <mat-menu #menu="matMenu">
             @for (child of item.dropdownItems; track child.id) {
-              <button mat-menu-item [routerLink]="[child.path]">
-                <mat-icon>{{child.icon}}</mat-icon>
-                {{child.label}}
-              </button>
+              <a mat-menu-item [routerLink]="[child.path]" class="inline-flex items-center">
+                <mat-icon class="text-lg mr-2">{{child.icon}}</mat-icon>
+                <span>{{child.label}}</span>
+              </a>
             }
           </mat-menu>
         }
       }
     </nav>
 
-      <span class="flex-1"></span>
+      <!-- Search Bar -->
+      <div class="flex-1 flex justify-center density-3xs">
+        <form class="w-64">
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-icon matPrefix class="mr-2">search</mat-icon>
+            <input type="text"
+                   matInput
+                   [formControl]="searchControl"
+                   [matAutocomplete]="auto"
+                   placeholder="Search...">
+            <mat-autocomplete #auto="matAutocomplete">
+              @for (option of filteredOptions$ | async; track option) {
+                <mat-option [value]="option">{{option}}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+      </div>
+
       <!-- custom color picker -->
-        @if (config.features.allowColorPicker) {
+      @if (config.features.allowColorPicker) {
         <app-color-picker/>
-        }
+      }
+
       <!-- Theme Toggler -->
       <button
         mat-icon-button
@@ -80,10 +102,10 @@ import { UserProfileDialogComponent } from '../../user-profile-dialog/user-profi
         <mat-icon>account_circle</mat-icon>
       </button>
       <mat-menu #profileMenu="matMenu">
-      <button mat-menu-item (click)="openDialog()">
-    <mat-icon>edit</mat-icon>
-    <span>Edit Profile</span>
-  </button>
+        <button mat-menu-item (click)="openDialog()">
+          <mat-icon>edit</mat-icon>
+          <span>Edit Profile</span>
+        </button>
         <button mat-menu-item>
           <mat-icon>settings</mat-icon>
           <span>Account Settings</span>
@@ -102,20 +124,37 @@ export class AppToolbarComponent {
   private themeManager = inject(ThemeManager);
   protected config = inject(APP_CONFIG_TOKEN);
 
+  searchControl = new FormControl('');
+  options: string[] = ['Option 1', 'Option 2', 'Option 3'];
+  filteredOptions$: Observable<string[]>;
+
   isDark$ = this.themeManager.isDark$;
+  horizontalNavItems = input.required<NavItem[]>();
+  private dialog = inject(MatDialog);
+
+  constructor() {
+    this.filteredOptions$ = this.searchControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || ''))
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option =>
+      option.toLowerCase().includes(filterValue)
+    );
+  }
 
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
   }
-  horizontalNavItems = input.required<NavItem[]>();
-
-  private dialog = inject(MatDialog);
 
   openDialog() {
     this.dialog.open(UserProfileDialogComponent, {
-      width: '600px', // Set a reasonable width
-      maxHeight: '90vh', // Ensures the dialog does not overflow
-      panelClass: 'custom-dialog' // Optional for additional styling
+      width: '600px',
+      maxHeight: '90vh',
+      panelClass: 'custom-dialog'
     });
   }
 }
