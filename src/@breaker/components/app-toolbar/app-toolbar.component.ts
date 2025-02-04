@@ -21,108 +21,152 @@ import { UserProfileDialogComponent } from '../../user-profile-dialog/user-profi
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [...MaterialModules, RouterModule, CommonModule, ColorPickerComponent, ReactiveFormsModule],
   template: `
-    <mat-toolbar class="relative mat-elevation-z8 z-10 ">
-      <!-- Logo -->
-      <div class="flex items-center justify-start">
-        <a routerLink="/" class="inline-flex items-center hover:text-secondary">
-          <span class="text-xl font-bold">{{config.name}}</span>
-          <mat-icon class="text-xl mr-2">bolt</mat-icon>
-        </a>
-      </div>
+<nav class="relative z-50 bg-gray-900 text-white px-4 py-2 flex items-center justify-between">
+  <!-- Logo -->
+  <div class="flex items-center">
+    <a routerLink="/" class="inline-flex items-center hover:text-secondary space-x-2">
+      <span class="text-xl font-bold">{{ config.name }}</span>
+      <mat-icon class="text-base">bolt</mat-icon>
+    </a>
+  </div>
 
-      <!-- Menu Items -->
-      <nav class="flex space-x-1">
-      @for (item of horizontalNavItems(); track item.id) {
-        @if (!item.hasDropdown) {
-          <a [routerLink]="[item.path]" class="flex items-center text-sm py-2 px-3 hover:text-secondary">
-            <mat-icon class="text-base">{{item.icon}}</mat-icon>
-            <span class="ml-2">{{item.label}}</span>
-          </a>
-        } @else {
-          <a [matMenuTriggerFor]="menu" class="flex items-center text-sm py-2 px-3 hover:text-secondary">
-            <mat-icon class="text-base">{{item.icon}}</mat-icon>
-            <span class="ml-2">{{item.label}}</span>
-            <mat-icon class="text-base ml-1">arrow_drop_down</mat-icon>
-          </a>
-          <mat-menu #menu="matMenu">
+  <!-- Desktop Menu -->
+  <div class="hidden xl:flex space-x-4">
+    @for (item of horizontalNavItems(); track item.id) {
+      @if (!item.hasDropdown) {
+        <a [routerLink]="[item.path]" (click)="closeAllDropdowns()"
+           class="flex items-center space-x-2 text-sm py-2 px-4 hover:bg-gray-700 rounded">
+          <mat-icon class="text-base">{{ item.icon }}</mat-icon>
+          <span class="leading-none">{{ item.label }}</span>
+        </a>
+      } @else {
+        <div class="relative">
+          <button (click)="toggleDropdown(item.id)" class="flex items-center space-x-2 text-sm py-2 px-4 hover:bg-gray-700 rounded">
+            <mat-icon class="text-base">{{ item.icon }}</mat-icon>
+            <span class="leading-none">{{ item.label }}</span>
+            <mat-icon class="text-base">arrow_drop_down</mat-icon>
+          </button>
+          <div *ngIf="openDropdown === item.id && item.dropdownItems?.length"
+               class="absolute left-0 mt-2 min-w-[220px] bg-gray-800 text-white shadow-lg rounded z-50">
             @for (child of item.dropdownItems; track child.id) {
-              <a mat-menu-item [routerLink]="[child.path]" class="inline-flex items-center">
-                <mat-icon class="text-lg mr-2">{{child.icon}}</mat-icon>
-                <span>{{child.label}}</span>
+              <a [routerLink]="[child.path]" (click)="closeAllDropdowns()"
+                 class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-700 whitespace-nowrap">
+                <mat-icon class="text-base">{{ child.icon }}</mat-icon>
+                <span class="leading-none">{{ child.label }}</span>
               </a>
             }
-          </mat-menu>
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- Mobile Menu Button -->
+  <button (click)="toggleMobileMenu()" class="xl:hidden block p-2">
+  <mat-icon class="text-base">menu</mat-icon>
+  </button>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="mobileMenuOpen" class="absolute top-full left-0 w-full bg-gray-800 shadow-lg xl:hidden flex flex-col z-50">
+    @for (item of horizontalNavItems(); track item.id) {
+      <div class="relative">
+        @if (!item.hasDropdown) {
+          <a [routerLink]="[item.path]" (click)="closeAllDropdowns()"
+             class="flex items-center space-x-2 py-2 px-4 hover:bg-gray-700 w-full">
+            <mat-icon class="text-base">{{ item.icon }}</mat-icon>
+            <span class="leading-none">{{ item.label }}</span>
+          </a>
+        } @else {
+          <button (click)="toggleDropdown(item.id)" class="flex items-center space-x-2 py-2 px-4 hover:bg-gray-700 w-full">
+            <mat-icon class="text-base">{{ item.icon }}</mat-icon>
+            <span class="leading-none">{{ item.label }}</span>
+            <mat-icon class="text-base">arrow_drop_down</mat-icon>
+          </button>
+          <div *ngIf="openDropdown === item.id && item.dropdownItems?.length"
+               class="bg-gray-700 text-white shadow-lg rounded w-full z-50">
+            @for (child of item.dropdownItems; track child.id) {
+              <a [routerLink]="[child.path]" (click)="closeAllDropdowns()"
+                 class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-600 whitespace-nowrap">
+                 <mat-icon class="text-base">{{ child.icon }}</mat-icon>
+                <span class="leading-none">{{ child.label }}</span>
+              </a>
+            }
+          </div>
         }
-      }
-    </nav>
-
-      <!-- Search Bar -->
-      <div class="flex-1 flex justify-center density-3xs">
-        <form class="w-64">
-          <mat-form-field class="w-full" appearance="outline">
-            <mat-icon matPrefix class="mr-2">search</mat-icon>
-            <input type="text"
-                   matInput
-                   [formControl]="searchControl"
-                   [matAutocomplete]="auto"
-                   placeholder="Search...">
-            <mat-autocomplete #auto="matAutocomplete">
-              @for (option of filteredOptions$ | async; track option) {
-                <mat-option [value]="option">{{option}}</mat-option>
-              }
-            </mat-autocomplete>
-          </mat-form-field>
-        </form>
       </div>
+    }
+  </div>
 
-      <!-- custom color picker -->
-      @if (config.features.allowColorPicker) {
-        <app-color-picker/>
-      }
+  <!-- Search Bar -->
+  <div class="hidden md:flex items-center w-64">
+    <input type="text"
+      [formControl]="searchControl"
+      class="w-full px-3 py-2 rounded bg-gray-800 text-white placeholder-gray-400 focus:ring focus:ring-blue-500"
+      placeholder="Search...">
+  </div>
 
-      <!-- Theme Toggler -->
-      <button
-        mat-icon-button
-        class="theme-toggle"
-        aria-label="Change theme"
-        [matMenuTriggerFor]="themeMenu"
-      >
-        <mat-icon>{{
-          (isDark$ | async) === true ? "dark_mode" : "light_mode"
-        }}</mat-icon>
-      </button>
-      <mat-menu #themeMenu="matMenu">
-        <button mat-menu-item (click)="changeTheme('auto')">System</button>
-        <button mat-menu-item (click)="changeTheme('light')">Light</button>
-        <button mat-menu-item (click)="changeTheme('dark')">Dark</button>
-      </mat-menu>
+  <!-- Theme Toggle (Dropdown) -->
+  <div class="relative">
+    <button (click)="toggleDropdown('theme')" class="p-2 rounded hover:bg-gray-700">
+    <mat-icon class="text-xl">
+        {{ (isDark$ | async) === true ? "dark_mode" : "light_mode" }}
+    </mat-icon>
+    </button>
+    <div *ngIf="openDropdown === 'theme'" class="absolute top-full right-4 min-w-[150px] bg-gray-800 text-white shadow-lg rounded z-50">
+      <button (click)="changeTheme('auto'); closeAllDropdowns()" class="block w-full text-left px-4 py-2 hover:bg-gray-700">System</button>
+      <button (click)="changeTheme('light'); closeAllDropdowns()" class="block w-full text-left px-4 py-2 hover:bg-gray-700">Light</button>
+      <button (click)="changeTheme('dark'); closeAllDropdowns()" class="block w-full text-left px-4 py-2 hover:bg-gray-700">Dark</button>
+    </div>
+  </div>
 
-      <!-- Profile Button -->
-      <button mat-icon-button [matMenuTriggerFor]="profileMenu">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-      <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item (click)="openDialog()">
-          <mat-icon>edit</mat-icon>
-          <span>Edit Profile</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>settings</mat-icon>
-          <span>Account Settings</span>
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-menu-item>
-          <mat-icon>exit_to_app</mat-icon>
-          <span>Logout</span>
-        </button>
-      </mat-menu>
-    </mat-toolbar>
+
+    <!-- Profile Dropdown () -->
+    <div class="relative">
+    <button (click)="toggleDropdown('profile')" class="p-2 rounded hover:bg-gray-700">
+    <mat-icon class="text-xl">account_circle</mat-icon>
+    </button>
+    <div *ngIf="openDropdown === 'profile'" class="absolute top-full right-4 min-w-[200px] bg-gray-800 text-white shadow-lg rounded p-2 z-50">
+      <a href="#" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-700 whitespace-nowrap" (click)="closeAllDropdowns()">
+        <mat-icon class="text-base">edit</mat-icon>
+        <span>Edit Profile</span>
+      </a>
+      <a href="#" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-700 whitespace-nowrap" (click)="closeAllDropdowns()">
+        <mat-icon class="text-base">settings</mat-icon>
+        <span>Settings</span>
+      </a>
+      <div class="border-t border-gray-700 my-1"></div>
+      <a href="#" class="flex items-center space-x-2 px-4 py-2 hover:bg-gray-700 whitespace-nowrap" (click)="closeAllDropdowns()">
+        <mat-icon class="text-base">logout</mat-icon>
+        <span>Logout</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+
   `,
   styles: [],
 })
 export class AppToolbarComponent {
   private themeManager = inject(ThemeManager);
   protected config = inject(APP_CONFIG_TOKEN);
+  mobileMenuOpen = false;
+  openDropdown: string | null = null;
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+    this.openDropdown = null;
+  }
+
+  toggleDropdown(id: string) {
+    this.openDropdown = this.openDropdown === id ? null : id;
+  }
+
+  closeAllDropdowns() {
+    this.openDropdown = null;
+    this.mobileMenuOpen = false;
+  }
 
   searchControl = new FormControl('');
   options: string[] = ['Option 1', 'Option 2', 'Option 3'];
