@@ -1,0 +1,161 @@
+<nav class="mat-elevation-z8 relative z-10 border-b border-on-surface-variant !bg-primary w-full">
+  <div class="flex items-center px-4 py-2 w-full">
+    <!-- Logo -->
+    <div class="flex items-center">
+      <a [routerLink]="['/']" class="inline-flex items-center hover:text-inverse-primary text-on-primary">
+        <span class="text-lg mr-1 font-semibold">APP</span>
+        <mat-icon class="text-2xl leading-none">bolt</mat-icon>
+      </a>
+    </div>
+
+    <!-- Main Navigation (Hidden on Mobile, Inline on MD+) -->
+    <div class="hidden md:flex ml-4 flex-wrap">
+      @for (item of menuItems; track item) {
+      @if (!item.subItems) {
+      <button [routerLink]="[item.route]"
+        class="flex items-center text-sm py-2 px-3 hover:text-inverse-primary text-on-primary">
+        <mat-icon class="text-base">{{ item.icon }}</mat-icon>
+        <span class="ml-1">{{ item.label }}</span>
+      </button>
+      }
+      @else {
+      <button [matMenuTriggerFor]="menu"
+        class="flex items-center text-sm py-2 px-3 hover:text-inverse-primary text-on-primary">
+        <mat-icon class="text-base">{{ item.icon }}</mat-icon>
+        <span class="ml-1">{{ item.label }}</span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        @for (subItem of item.subItems; track subItem) {
+        <a mat-menu-item [routerLink]="[item.route, subItem.route]">
+          <mat-icon>{{ subItem.icon }}</mat-icon>
+          <span>{{ subItem.label }}</span>
+        </a>
+        }
+      </mat-menu>
+      }
+      }
+    </div>
+
+    <!-- Application Search (Always Visible) -->
+    @if (applications) {
+    <div class="flex-grow flex justify-center md:justify-end px-4">
+      <form class="w-full max-w-xs md:max-w-sm bg-on-primary rounded-lg density-3xs">
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="w-full">
+          <mat-icon matPrefix class="mr-2">search</mat-icon>
+          <input type="text" placeholder="Search Applications" aria-label="Search Applications" matInput>
+        </mat-form-field>
+      </form>
+    </div>
+    }
+
+    <!-- Mobile Menu + Profile & Theme Toggle (Only on Mobile) -->
+    <div class="flex items-center md:hidden space-x-2">
+      <!-- Theme Toggle -->
+      <button mat-icon-button class="!text-on-primary" aria-label="Change theme" [matMenuTriggerFor]="themeMenu">
+        <mat-icon>{{ (isDark$ | async) === true ? "dark_mode" : "light_mode" }}</mat-icon>
+      </button>
+
+      <mat-menu #themeMenu="matMenu">
+        <button mat-menu-item (click)="changeTheme('auto')">System</button>
+        <button mat-menu-item (click)="changeTheme('light')">Light</button>
+        <button mat-menu-item (click)="changeTheme('dark')">Dark</button>
+      </mat-menu>
+
+      <!-- Profile Button -->
+      <button mat-icon-button class="!text-on-primary" [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>person</mat-icon>
+          <span>User Profile</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Account Settings</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+
+      <!-- Mobile Menu Button -->
+      <button class="text-on-primary focus:outline-none" (click)="mobileMenuOpen = !mobileMenuOpen">
+        <mat-icon>{{ mobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+      </button>
+    </div>
+
+    <!-- Right Side Icons & Actions (Desktop Only) -->
+    <div class="hidden md:flex items-center space-x-3">
+      <!-- Theme Toggler -->
+      <button mat-icon-button class="!text-on-primary" aria-label="Change theme" [matMenuTriggerFor]="themeMenu"
+        [matTooltip]="themeManager.getStoredTheme()">
+        <mat-icon>{{ (isDark$ | async) === true ? "dark_mode" : "light_mode" }}</mat-icon>
+      </button>
+
+      <mat-menu #themeMenu="matMenu">
+        <button mat-menu-item (click)="changeTheme('auto')">System</button>
+        <button mat-menu-item (click)="changeTheme('light')">Light</button>
+        <button mat-menu-item (click)="changeTheme('dark')">Dark</button>
+      </mat-menu>
+
+      <!-- Profile Button -->
+      <button mat-icon-button class="!text-on-primary" [matMenuTriggerFor]="profileMenu" [matTooltip]="userName">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>person</mat-icon>
+          <span>User Profile</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Account Settings</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Menu (Hidden by Default) -->
+  @if (mobileMenuOpen) {
+  <div class="md:hidden flex flex-col space-y-2 px-4 py-2 border-t border-on-surface-variant">
+    @for (item of menuItems; track item) {
+    @if (!item.subItems) {
+    <button [routerLink]="[item.route]"
+      class="flex items-center text-sm py-2 px-3 hover:text-inverse-primary text-on-primary">
+      <mat-icon class="text-base">{{ item.icon }}</mat-icon>
+      <span class="ml-1">{{ item.label }}</span>
+    </button>
+    }
+    @else {
+    <button [matMenuTriggerFor]="menu"
+      class="flex items-center text-sm py-2 px-3 hover:text-inverse-primary text-on-primary">
+      <mat-icon class="text-base">{{ item.icon }}</mat-icon>
+      <span class="ml-1">{{ item.label }}</span>
+      <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      @for (subItem of item.subItems; track subItem) {
+      <a mat-menu-item [routerLink]="[item.route, subItem.route]">
+        <mat-icon>{{ subItem.icon }}</mat-icon>
+        <span>{{ subItem.label }}</span>
+      </a>
+      }
+    </mat-menu>
+    }
+    }
+  </div>
+  }
+</nav>

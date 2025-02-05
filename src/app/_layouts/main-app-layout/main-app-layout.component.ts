@@ -11,6 +11,7 @@ import { NavigationService } from '../../core/services/navigation.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 import { PageShellComponent } from "../../../@breaker/components/page-shell/page-shell.component";
+import { AdamToolbarComponent } from "../../adam-toolbar/adam-toolbar.component";
 
 @Component({
   selector: 'app-main-app-layout',
@@ -20,16 +21,18 @@ import { PageShellComponent } from "../../../@breaker/components/page-shell/page
     ...MaterialModules,
     RouterModule,
     CommonModule,
-    ColorPickerComponent,
-    SidenavComponent,
-    ResponsiveHelperComponent,
-    AppToolbarComponent,
-    PageShellComponent
-  ],
+    // ColorPickerComponent,
+    // SidenavComponent,
+    // ResponsiveHelperComponent,
+    // AppToolbarComponent,
+    // PageShellComponent,
+    AdamToolbarComponent
+],
   template: `
-    <app-toolbar  [horizontalNavItems]="horizontalNav()"/>
+  <app-adam-toolbar></app-adam-toolbar>
+    <!-- <app-toolbar  [horizontalNavItems]="horizontalNav()"/> -->
 
-    <mat-sidenav-container class="mat-elevation-z4">
+    <!-- <mat-sidenav-container class="mat-elevation-z4">
       @if (showSidenav()) {
         <mat-sidenav
           [opened]="true"
@@ -61,37 +64,38 @@ import { PageShellComponent } from "../../../@breaker/components/page-shell/page
           >
           <router-outlet></router-outlet>
         </app-page-shell>
-          </ng-container>
-        }
-      </mat-sidenav-content>
-    </mat-sidenav-container>
+      </ng-container>
+      }
+    </mat-sidenav-content>
+  </mat-sidenav-container> -->
+  <router-outlet></router-outlet>
 
   `,
   styles: `
-  @use '@angular/material' as mat;
+  // @use '@angular/material' as mat;
 
-  mat-sidenav-container {
-    height: calc(100vh - 64px);
+  // mat-sidenav-container {
+  //   height: calc(100vh - 64px);
 
-  }
-  mat-sidenav,
-  mat-sidenav-content {
-    transition: all 500ms ease-in-out;
-  }
-  mat-sidenav {
-    box-shadow: var(--mat-app-elevation-shadow-level-8);
-    @include mat.sidenav-overrides((
-      // container-background-color: orange,
-      container-text-color: red,
-      container-shape: rectangle,
-      // container-elevation-shadow: var(--mat-app-elevation-shadow-level-8),
-      container-divider-color: var(--sys-on-surface-variant),
-    ));
-  }
+  // }
+  // mat-sidenav,
+  // mat-sidenav-content {
+  //   transition: all 500ms ease-in-out;
+  // }
+  // mat-sidenav {
+  //   box-shadow: var(--mat-app-elevation-shadow-level-8);
+  //   @include mat.sidenav-overrides((
+  //     // container-background-color: orange,
+  //     container-text-color: red,
+  //     container-shape: rectangle,
+  //     // container-elevation-shadow: var(--mat-app-elevation-shadow-level-8),
+  //     container-divider-color: var(--sys-on-surface-variant),
+  //   ));
+  // }
   `,
 })
 export class MainAppLayoutComponent {
-  private navigationService = inject(NavigationService);
+  // private navigationService = inject(NavigationService);
   private themeManager = inject(ThemeManager);
   router = inject(Router);
 
@@ -100,20 +104,20 @@ export class MainAppLayoutComponent {
   loading = signal(false);
   isDark$ = this.themeManager.isDark$;
   // Navigation signals
-  horizontalNav = this.navigationService.getHorizontalNav;
-  verticalNav = this.navigationService.getVerticalNav;
+  // horizontalNav = this.navigationService.getHorizontalNav;
+  // verticalNav = this.navigationService.getVerticalNav;
 
-  showSidenav = computed(() => this.verticalNav().length > 0);
+  // showSidenav = computed(() => this.verticalNav().length > 0);
 
-  sidenavWidth = computed(() => {
-    if (!this.showSidenav()) return '0px';
-    return this.collapsed() ? '65px' : '250px';
-  });
-  constructor() {
-    effect(() => {
-      console.log('MAIN APP LAYOUT:');
-    });
-  }
+  // sidenavWidth = computed(() => {
+  //   if (!this.showSidenav()) return '0px';
+  //   return this.collapsed() ? '65px' : '250px';
+  // });
+  // constructor() {
+  //   effect(() => {
+  //     console.log('MAIN APP LAYOUT:');
+  //   });
+  // }
 
   changeTheme(theme: string) {
     this.themeManager.changeTheme(theme);
