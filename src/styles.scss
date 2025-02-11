@@ -375,3 +375,18 @@ mat-icon {
   // th, td {
   //   font-family: "Connections, Arial, sans-serif";
   // }
+
+
+  /* styles.css */
+.btn-dense {
+  @apply flex items-center gap-1 px-2 py-1 border rounded-sm shadow-sm transition-all
+         overflow-hidden whitespace-nowrap text-xs text-[var(--sys-primary)]
+         bg-[var(--sys-surface)] hover:bg-[var(--sys-primary-container)]
+         hover:text-[var(--sys-on-primary-container)] focus:outline focus:outline-2
+         focus:outline-[var(--sys-primary)];
+}
+
+/* Optional: If you want to style the icon consistently */
+.btn-dense-icon {
+  @apply text-base flex-shrink-0 relative;
+}

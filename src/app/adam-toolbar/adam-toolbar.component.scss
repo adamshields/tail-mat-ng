@@ -1,3 +1,25 @@
 // * {
 //   outline: 1px solid red;
 // }
+.mat-button-custom {
+  display: flex !important;  /* Force proper flex behavior */
+  align-items: center !important;
+  justify-content: space-between !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  max-width: 100% !important;
+}
+
+.mat-button-custom span {
+  flex-grow: 1 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.mat-button-custom mat-icon {
+  flex-shrink: 0 !important;
+}
+
+

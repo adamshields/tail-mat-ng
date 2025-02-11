@@ -27,6 +27,20 @@ export class AdamToolbarComponent {
   menuItems = menuItems;
 
   applications = true;
+  data = {
+    appl: {
+      id: 123,
+      ait: '12223',
+      name: 'SuperCoolApp Name of AppAppAppAppAppAppAppAppAppAppAppApp'
+    },
+    design: {
+      name: 'Mock Project Super lgndjkdjkdjlkjd descriptionsakidnkhdohdihkdhlkdhlkhdljhdljdljhldkhlkjdjhdhdhdlkhdlkhdhdlkhldhldghddgdhdlhldhdhdlkhdhdlkhdlhdlh',
+      projectId: 456,
+      projectName: 'NextGen UI Overhaul super long details of this test data for testing us layout of mat buttons with super super super loiong text for the icon and button testing ',
+      version: '1.2.3',
+      status: 'In Progress'
+    }
+  };
 
 userName: string|null|undefined;
 
@@ -77,9 +91,21 @@ userName: string|null|undefined;
       panelClass: 'custom-dialog'
     });
   }
+  // Mock Functions for Status Colors
+  isPast(design: any): boolean {
+    return design.status === 'Completed';
+  }
 
+  isPresent(design: any): boolean {
+    return design.status === 'In Progress';
+  }
 
+  isFuture(design: any): boolean {
+    return design.status === 'Planned';
+  }
 }
+
+
 
 
 
