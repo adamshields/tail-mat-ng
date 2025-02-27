@@ -214,86 +214,93 @@ async def copy_data_between_databases(source_env, target_env, table_name=None):
         print(f"Source database: {source_db_config['database']} on {source_db_config['host']}:{source_db_config['port']}")
         print(f"Target database: {target_db_config['database']} on {target_db_config['host']}:{target_db_config['port']}")
 
-        # Create a dedicated temporary directory for this process
-        temp_dir = tempfile.mkdtemp()
-        print(f"Created temporary directory: {temp_dir}")
+        # Create a dedicated directory for this copy operation in the backup dir
+        copy_dir = os.path.join(BACKUP_DIR, f"{source_env}_to_{target_env}")
+        os.makedirs(copy_dir, exist_ok=True)
+        print(f"Created copy directory: {copy_dir}")
 
-        try:
-            if table_name:
-                # For a single table
-                print(f"Copying single table: {table_name}")
-                temp_backup_file = os.path.join(temp_dir, f"{source_db_config['database']}_{table_name}_backup.sql")
-                print(f"Will save to temporary file: {temp_backup_file}")
-                
-                # First check if table exists
-                try:
-                    connection = mysql.connector.connect(
-                        host=source_db_config['host'],
-                        port=source_db_config['port'],
-                        user=source_db_config['user'],
-                        password=source_db_config['password'],
-                        database=source_db_config['database']
-                    )
-                    cursor = connection.cursor()
-                    cursor.execute(f"SHOW TABLES LIKE '{table_name}'")
-                    if not cursor.fetchone():
-                        raise ValueError(f"Table '{table_name}' not found in source database")
-                    cursor.close()
-                    connection.close()
-                except Error as e:
-                    raise Exception(f"Error checking source table: {e}")
-                
-                # Backup the table
-                print("Backing up table...")
-                await backup_table(table_name, temp_backup_file, source_db_config)
-                
-                # Check if backup file was created
-                if not os.path.exists(temp_backup_file):
-                    raise FileNotFoundError(f"Backup file was not created: {temp_backup_file}")
-                
-                print(f"Table backup successful, file size: {os.path.getsize(temp_backup_file)} bytes")
-                
-                # Restore to target
-                print("Restoring table to target database...")
-                await restore_table(temp_backup_file, target_db_config, table_name)
-                print("Table restore successful")
-                
-                # Cleanup table backup
-                if os.path.exists(temp_backup_file):
-                    os.remove(temp_backup_file)
-                    print(f"Removed temporary file: {temp_backup_file}")
-            else:
-                # For the entire database
-                print("Copying entire database")
-                
-                # Backup the source database
-                print("Backing up source database...")
-                backup_file = await backup_database(temp_dir, source_db_config)
-                
-                # Check if backup file was created
-                if not os.path.exists(backup_file):
-                    raise FileNotFoundError(f"Backup file was not created: {backup_file}")
-                    
-                print(f"Database backup successful, file size: {os.path.getsize(backup_file)} bytes")
-                
-                # Restore to target
-                print("Restoring database to target...")
-                await restore_database(backup_file, target_db_config)
-                print("Database restore successful")
-                
-                # Cleanup database backup
-                if os.path.exists(backup_file):
-                    os.remove(backup_file)
-                    print(f"Removed temporary file: {backup_file}")
-        finally:
-            # Make sure to clean up the temp directory
+        if table_name:
+            # For a single table
+            print(f"Copying single table: {table_name}")
+            backup_file = os.path.join(copy_dir, f"{source_db_config['database']}_{table_name}_backup.sql")
+            print(f"Will save to file: {backup_file}")
+            
+            # First check if table exists
             try:
-                os.rmdir(temp_dir)
-                print(f"Removed temporary directory: {temp_dir}")
-            except:
-                print(f"Could not remove temporary directory: {temp_dir}")
+                connection = mysql.connector.connect(
+                    host=source_db_config['host'],
+                    port=source_db_config['port'],
+                    user=source_db_config['user'],
+                    password=source_db_config['password'],
+                    database=source_db_config['database']
+                )
+                cursor = connection.cursor()
+                cursor.execute(f"SHOW TABLES LIKE '{table_name}'")
+                if not cursor.fetchone():
+                    raise ValueError(f"Table '{table_name}' not found in source database")
+                cursor.close()
+                connection.close()
+            except Error as e:
+                raise Exception(f"Error checking source table: {e}")
+            
+            # Backup the table
+            print("Backing up table...")
+            await backup_table(table_name, backup_file, source_db_config)
+            
+            # Check if backup file was created
+            if not os.path.exists(backup_file):
+                raise FileNotFoundError(f"Backup file was not created: {backup_file}")
+            
+            print(f"Table backup successful, file size: {os.path.getsize(backup_file)} bytes")
+            
+            # Restore to target
+            print("Restoring table to target database...")
+            await restore_table(backup_file, target_db_config, table_name)
+            print("Table restore successful")
+        else:
+            # For the entire database
+            print("Copying entire database")
+            
+            # Backup the source database
+            print("Backing up source database...")
+            backup_file = os.path.join(copy_dir, f"FULL_{source_db_config['database']}_backup.sql")
+            
+            # Build the mysqldump command directly
+            command = (
+                f"mysqldump -h {source_db_config['host']} -P {source_db_config['port']} "
+                f"-u {source_db_config['user']} -p{source_db_config['password']} "
+                f"--skip-comments --skip-set-charset --set-gtid-purged=OFF "
+                f"--column-statistics=0 --no-tablespaces {source_db_config['database']} > {backup_file}"
+            )
+            
+            # Execute the command
+            print(f"Executing backup command to {backup_file}...")
+            await run_command(command)
+            
+            # Check if backup file was created
+            if not os.path.exists(backup_file):
+                raise FileNotFoundError(f"Backup file was not created: {backup_file}")
+                
+            print(f"Database backup successful, file size: {os.path.getsize(backup_file)} bytes")
+            
+            # Restore to target
+            print("Restoring database to target...")
+            
+            # Build the mysql command directly
+            restore_command = (
+                f"mysql -h {target_db_config['host']} -P {target_db_config['port']} "
+                f"-u {target_db_config['user']} -p{target_db_config['password']} "
+                f"--init-command='SET sql_log_bin=0;' --force "
+                f"{target_db_config['database']} < {backup_file}"
+            )
+            
+            # Execute the restore command
+            print("Executing restore command...")
+            await run_command(restore_command)
+            print("Database restore successful")
         
         print(f"Data successfully copied from {source_env} to {target_env}")
+        print(f"Backup file preserved at: {backup_file}")
 
     except Exception as e:
         print(f"Error during copy operation: {str(e)}")
