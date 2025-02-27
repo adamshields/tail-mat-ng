@@ -200,48 +200,103 @@ async def restore_table(backup_file, db_config, table_name):
 async def copy_data_between_databases(source_env, target_env, table_name=None):
     """ Copy data from the source database to the target database safely """
     try:
+        print(f"Starting copy operation from {source_env} to {target_env}...")
+        
+        # Validate environments exist in config
+        if source_env not in config:
+            raise ValueError(f"Source environment '{source_env}' not found in configuration")
+        if target_env not in config:
+            raise ValueError(f"Target environment '{target_env}' not found in configuration")
+            
         source_db_config = config[source_env]
         target_db_config = config[target_env]
+        
+        print(f"Source database: {source_db_config['database']} on {source_db_config['host']}:{source_db_config['port']}")
+        print(f"Target database: {target_db_config['database']} on {target_db_config['host']}:{target_db_config['port']}")
 
         # Create a dedicated temporary directory for this process
         temp_dir = tempfile.mkdtemp()
-        
-        logging.info(f"Using temporary directory: {temp_dir}")
+        print(f"Created temporary directory: {temp_dir}")
 
-        if table_name:
-            # For a single table
-            temp_backup_file = os.path.join(temp_dir, f"{source_db_config['database']}_{table_name}_backup.sql")
-            await backup_table(table_name, temp_backup_file, source_db_config)
-            await restore_table(temp_backup_file, target_db_config, table_name)
-            
-            # Cleanup
-            if os.path.exists(temp_backup_file):
-                os.remove(temp_backup_file)
-                logging.info(f"Temporary backup file removed: {temp_backup_file}")
-        else:
-            # For the entire database
-            # The backup_database function creates a file called "FULL_{database}_backup.sql"
-            backup_file = await backup_database(temp_dir, source_db_config)
-            await restore_database(backup_file, target_db_config)
-            
-            # Cleanup
-            if os.path.exists(backup_file):
-                os.remove(backup_file)
-                logging.info(f"Temporary backup file removed: {backup_file}")
-        
-        # Make sure to clean up the temp directory
         try:
-            os.rmdir(temp_dir)
-            logging.info(f"Temporary directory removed: {temp_dir}")
-        except:
-            logging.warning(f"Could not remove temporary directory: {temp_dir}")
+            if table_name:
+                # For a single table
+                print(f"Copying single table: {table_name}")
+                temp_backup_file = os.path.join(temp_dir, f"{source_db_config['database']}_{table_name}_backup.sql")
+                print(f"Will save to temporary file: {temp_backup_file}")
+                
+                # First check if table exists
+                try:
+                    connection = mysql.connector.connect(
+                        host=source_db_config['host'],
+                        port=source_db_config['port'],
+                        user=source_db_config['user'],
+                        password=source_db_config['password'],
+                        database=source_db_config['database']
+                    )
+                    cursor = connection.cursor()
+                    cursor.execute(f"SHOW TABLES LIKE '{table_name}'")
+                    if not cursor.fetchone():
+                        raise ValueError(f"Table '{table_name}' not found in source database")
+                    cursor.close()
+                    connection.close()
+                except Error as e:
+                    raise Exception(f"Error checking source table: {e}")
+                
+                # Backup the table
+                print("Backing up table...")
+                await backup_table(table_name, temp_backup_file, source_db_config)
+                
+                # Check if backup file was created
+                if not os.path.exists(temp_backup_file):
+                    raise FileNotFoundError(f"Backup file was not created: {temp_backup_file}")
+                
+                print(f"Table backup successful, file size: {os.path.getsize(temp_backup_file)} bytes")
+                
+                # Restore to target
+                print("Restoring table to target database...")
+                await restore_table(temp_backup_file, target_db_config, table_name)
+                print("Table restore successful")
+                
+                # Cleanup table backup
+                if os.path.exists(temp_backup_file):
+                    os.remove(temp_backup_file)
+                    print(f"Removed temporary file: {temp_backup_file}")
+            else:
+                # For the entire database
+                print("Copying entire database")
+                
+                # Backup the source database
+                print("Backing up source database...")
+                backup_file = await backup_database(temp_dir, source_db_config)
+                
+                # Check if backup file was created
+                if not os.path.exists(backup_file):
+                    raise FileNotFoundError(f"Backup file was not created: {backup_file}")
+                    
+                print(f"Database backup successful, file size: {os.path.getsize(backup_file)} bytes")
+                
+                # Restore to target
+                print("Restoring database to target...")
+                await restore_database(backup_file, target_db_config)
+                print("Database restore successful")
+                
+                # Cleanup database backup
+                if os.path.exists(backup_file):
+                    os.remove(backup_file)
+                    print(f"Removed temporary file: {backup_file}")
+        finally:
+            # Make sure to clean up the temp directory
+            try:
+                os.rmdir(temp_dir)
+                print(f"Removed temporary directory: {temp_dir}")
+            except:
+                print(f"Could not remove temporary directory: {temp_dir}")
         
-        logging.info(f"Data successfully copied from {source_env} to {target_env}")
+        print(f"Data successfully copied from {source_env} to {target_env}")
 
-    except FileNotFoundError as fe:
-        logging.error(f"File Not Found Error: {fe}")
-        raise
     except Exception as e:
+        print(f"Error during copy operation: {str(e)}")
         logging.error(f"An error occurred while copying data: {e}")
         raise
 
@@ -252,38 +307,51 @@ async def main(version, restore_file, restore_table_name, copy_data, source_env,
     setup_logging(log_dir)
     
     try:
-        if version and source_env:
-            # Get configuration for the source environment
-            if source_env not in config:
-                raise ValueError(f"Environment '{source_env}' not found in configuration")
-            
-            db_config = config[source_env]
-            
+        # First verify source environment is valid
+        if source_env not in config:
+            raise ValueError(f"Environment '{source_env}' not found in configuration")
+        
+        # Check target environment if applicable
+        if target_env and target_env not in config:
+            raise ValueError(f"Environment '{target_env}' not found in configuration")
+        
+        db_config = config[source_env]
+        
+        # Handle copy operation first (doesn't require version)
+        if copy_data and target_env:
+            # Copy operation
+            logging.info(f"Starting copy operation from {source_env} to {target_env}")
+            await copy_data_between_databases(source_env, target_env, table_name)
+        
+        # Handle restore operation (may or may not require version)
+        elif restore_file:
+            # Restore operation
+            logging.info(f"Starting restore operation from {restore_file}")
+            if restore_table_name:
+                await restore_table(restore_file, db_config, restore_table_name)
+            else:
+                await restore_database(restore_file, db_config)
+        
+        # Handle backup operation (requires version)
+        elif version:
             # Create backup directory for this version and environment
             backup_dir = os.path.join(BACKUP_DIR, version, source_env)
             os.makedirs(backup_dir, exist_ok=True)
             
-            if restore_file:
-                # Restore operation
-                if restore_table_name:
-                    await restore_table(restore_file, db_config, restore_table_name)
-                else:
-                    await restore_database(restore_file, db_config)
-            elif copy_data and target_env:
-                # Copy operation
-                await copy_data_between_databases(source_env, target_env, table_name)
+            # Backup operation
+            logging.info(f"Starting backup operation for version {version}, environment {source_env}")
+            if table_name:
+                table_backup_dir = os.path.join(backup_dir, 'tables')
+                os.makedirs(table_backup_dir, exist_ok=True)
+                backup_file = os.path.join(table_backup_dir, f"{db_config['database']}_{table_name}_backup.sql")
+                await backup_table(table_name, backup_file, db_config)
             else:
-                # Backup operation
-                if table_name:
-                    table_backup_dir = os.path.join(backup_dir, 'tables')
-                    os.makedirs(table_backup_dir, exist_ok=True)
-                    backup_file = os.path.join(table_backup_dir, f"{db_config['database']}_{table_name}_backup.sql")
-                    await backup_table(table_name, backup_file, db_config)
-                else:
-                    await backup_database(backup_dir, db_config)
-                    await backup_tables(backup_dir, db_config)
+                await backup_database(backup_dir, db_config)
+                await backup_tables(backup_dir, db_config)
+        else:
+            raise ValueError("No valid operation specified. Use --copy-data, --restore-file, or provide --version for backup.")
                     
-            logging.info("Operation completed successfully")
+        logging.info("Operation completed successfully")
                 
     except Exception as e:
         logging.error(f"Operation failed: {str(e)}")
@@ -301,6 +369,11 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
+    # Debug: Print out the parsed arguments
+    print("Parsed arguments:")
+    for arg in vars(args):
+        print(f"  {arg}: {getattr(args, arg)}")
+    
     # Check required arguments based on operation
     if args.copy_data and (not args.source_env or not args.target_env):
         parser.error("--copy-data requires both --source-env and --target-env")
@@ -309,5 +382,10 @@ if __name__ == "__main__":
     elif not args.copy_data and not args.restore_file and (not args.version or not args.source_env):
         parser.error("Backup operation requires both --version and --source-env")
     
-    asyncio.run(main(args.version, args.restore_file, args.restore_table_name, 
-                    args.copy_data, args.source_env, args.target_env, args.table_name))
+    try:
+        asyncio.run(main(args.version, args.restore_file, args.restore_table_name, 
+                        args.copy_data, args.source_env, args.target_env, args.table_name))
+        print("Operation completed successfully!")
+    except Exception as e:
+        print(f"ERROR: {str(e)}")
+        sys.exit(1)
