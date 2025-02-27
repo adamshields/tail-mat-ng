@@ -86,9 +86,8 @@ async def run_command(command):
 
 async def backup_database(backup_dir, db_config):
     """ Backup the entire database while avoiding problematic statements """
-    # Add timestamp to backup filename
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    backup_file = os.path.join(backup_dir, f"FULL_{db_config['database']}_{timestamp}.sql")
+    # Use simple filename without timestamp (since folder has timestamp)
+    backup_file = os.path.join(backup_dir, f"FULL_{db_config['database']}_backup.sql")
     
     command = (
         f"mysqldump -h {db_config['host']} -P {db_config['port']} -u {db_config['user']} "
@@ -101,15 +100,7 @@ async def backup_database(backup_dir, db_config):
 
 async def backup_table(table_name, backup_file, db_config):
     """ Backup a single table """
-    # If backup_file doesn't include a timestamp, add one
-    if '_20' not in os.path.basename(backup_file):
-        dir_name = os.path.dirname(backup_file)
-        base_name = os.path.basename(backup_file)
-        name_parts = os.path.splitext(base_name)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        new_name = f"{name_parts[0]}_{timestamp}{name_parts[1]}"
-        backup_file = os.path.join(dir_name, new_name)
-    
+    # Simple filename (no timestamp, since it's in the folder)
     command = (
         f"mysqldump -h {db_config['host']} -P {db_config['port']} -u {db_config['user']} "
         f"-p{db_config['password']} --skip-comments --skip-set-charset --set-gtid-purged=OFF "
@@ -221,16 +212,16 @@ async def copy_data_between_databases(source_env, target_env, table_name=None):
         source_db_config = config[source_env]
         target_db_config = config[target_env]
         
-        # Create a directory for the backup with timestamp
+        # For copy operations, include timestamp in the filename (not folder)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        copy_dir = os.path.join(BACKUP_DIR, f"{source_env}_to_{target_env}_{timestamp}")
+        copy_dir = os.path.join(BACKUP_DIR, f"{source_env}_to_{target_env}")
         os.makedirs(copy_dir, exist_ok=True)
         print(f"Created backup directory: {copy_dir}")
         
         if table_name:
             # Copy a single table
             print(f"Copying table: {table_name}")
-            backup_file = os.path.join(copy_dir, f"{table_name}_backup.sql")
+            backup_file = os.path.join(copy_dir, f"{table_name}_{timestamp}.sql")
             
             # Create a direct dump command for the table
             dump_cmd = (
@@ -263,7 +254,7 @@ async def copy_data_between_databases(source_env, target_env, table_name=None):
         else:
             # Copy the entire database
             print("Copying entire database")
-            backup_file = os.path.join(copy_dir, f"full_database_backup.sql")
+            backup_file = os.path.join(copy_dir, f"full_database_{timestamp}.sql")
             
             # Create a direct dump command for the database
             dump_cmd = (
