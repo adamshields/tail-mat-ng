@@ -213,7 +213,7 @@ async def copy_data_between_databases(source_env, target_env, table_name=None):
         target_db_config = config[target_env]
         
         # For copy operations, include timestamp in the filename (not folder)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        timestamp = datetime.now().strftime("%m_%d_%Y_%I-%M-%p")
         copy_dir = os.path.join(BACKUP_DIR, f"{source_env}_to_{target_env}")
         os.makedirs(copy_dir, exist_ok=True)
         print(f"Created backup directory: {copy_dir}")
@@ -327,7 +327,7 @@ async def main(version, restore_file, restore_table_name, copy_data, source_env,
         # Handle backup operation (requires version)
         elif version:
             # Create backup directory for this version and environment with timestamp
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            timestamp = datetime.now().strftime("%m_%d_%Y_%I-%M-%p")
             backup_dir = os.path.join(BACKUP_DIR, version, source_env, timestamp)
             os.makedirs(backup_dir, exist_ok=True)
             
