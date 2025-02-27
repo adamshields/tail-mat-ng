@@ -146,13 +146,17 @@ async def restore_database(backup_file, db_config):
     if not os.path.exists(backup_file):
         raise FileNotFoundError(f"Backup file does not exist: {backup_file}")
 
+    print(f"Restoring database from backup file: {backup_file}")
+    print(f"File size: {os.path.getsize(backup_file)} bytes")
+    
+    # Direct command approach
     command = (
         f"mysql -h {db_config['host']} -P {db_config['port']} -u {db_config['user']} "
-        f"-p{db_config['password']} --init-command='SET sql_log_bin=0;' --force "
-        f"{db_config['database']} < {backup_file}"
+        f"-p{db_config['password']} {db_config['database']} < {backup_file}"
     )
 
     await run_command(command)
+    print(f"Database restored successfully from: {backup_file}")
     logging.info(f"Database restored from backup: {backup_file}")
 
 async def restore_table(backup_file, db_config, table_name):
@@ -200,112 +204,89 @@ async def restore_table(backup_file, db_config, table_name):
 async def copy_data_between_databases(source_env, target_env, table_name=None):
     """ Copy data from the source database to the target database safely """
     try:
-        print(f"Starting copy operation from {source_env} to {target_env}...")
+        print(f"Starting copy operation from {source_env} to {target_env}")
         
-        # Validate environments exist in config
-        if source_env not in config:
-            raise ValueError(f"Source environment '{source_env}' not found in configuration")
-        if target_env not in config:
-            raise ValueError(f"Target environment '{target_env}' not found in configuration")
-            
         source_db_config = config[source_env]
         target_db_config = config[target_env]
         
-        print(f"Source database: {source_db_config['database']} on {source_db_config['host']}:{source_db_config['port']}")
-        print(f"Target database: {target_db_config['database']} on {target_db_config['host']}:{target_db_config['port']}")
-
-        # Create a dedicated directory for this copy operation in the backup dir
+        # Create a directory for the backup
         copy_dir = os.path.join(BACKUP_DIR, f"{source_env}_to_{target_env}")
         os.makedirs(copy_dir, exist_ok=True)
-        print(f"Created copy directory: {copy_dir}")
-
+        print(f"Created backup directory: {copy_dir}")
+        
         if table_name:
-            # For a single table
-            print(f"Copying single table: {table_name}")
-            backup_file = os.path.join(copy_dir, f"{source_db_config['database']}_{table_name}_backup.sql")
-            print(f"Will save to file: {backup_file}")
+            # Copy a single table
+            print(f"Copying table: {table_name}")
+            backup_file = os.path.join(copy_dir, f"{table_name}_backup.sql")
             
-            # First check if table exists
-            try:
-                connection = mysql.connector.connect(
-                    host=source_db_config['host'],
-                    port=source_db_config['port'],
-                    user=source_db_config['user'],
-                    password=source_db_config['password'],
-                    database=source_db_config['database']
-                )
-                cursor = connection.cursor()
-                cursor.execute(f"SHOW TABLES LIKE '{table_name}'")
-                if not cursor.fetchone():
-                    raise ValueError(f"Table '{table_name}' not found in source database")
-                cursor.close()
-                connection.close()
-            except Error as e:
-                raise Exception(f"Error checking source table: {e}")
+            # Create a direct dump command for the table
+            dump_cmd = (
+                f"mysqldump -h {source_db_config['host']} -P {source_db_config['port']} "
+                f"-u {source_db_config['user']} -p{source_db_config['password']} "
+                f"--skip-comments --skip-set-charset --set-gtid-purged=OFF "
+                f"--column-statistics=0 --no-tablespaces {source_db_config['database']} "
+                f"{table_name} > {backup_file}"
+            )
             
-            # Backup the table
-            print("Backing up table...")
-            await backup_table(table_name, backup_file, source_db_config)
+            print(f"Backing up table to: {backup_file}")
+            await run_command(dump_cmd)
             
-            # Check if backup file was created
             if not os.path.exists(backup_file):
                 raise FileNotFoundError(f"Backup file was not created: {backup_file}")
+                
+            print(f"Table backed up successfully: {os.path.getsize(backup_file)} bytes")
             
-            print(f"Table backup successful, file size: {os.path.getsize(backup_file)} bytes")
+            # Create a direct restore command for the table
+            restore_cmd = (
+                f"mysql -h {target_db_config['host']} -P {target_db_config['port']} "
+                f"-u {target_db_config['user']} -p{target_db_config['password']} "
+                f"{target_db_config['database']} < {backup_file}"
+            )
             
-            # Restore to target
-            print("Restoring table to target database...")
-            await restore_table(backup_file, target_db_config, table_name)
-            print("Table restore successful")
+            print(f"Restoring table to target database")
+            await run_command(restore_cmd)
+            print(f"Table {table_name} restored successfully")
+            
         else:
-            # For the entire database
+            # Copy the entire database
             print("Copying entire database")
+            backup_file = os.path.join(copy_dir, f"full_database_backup.sql")
             
-            # Backup the source database
-            print("Backing up source database...")
-            backup_file = os.path.join(copy_dir, f"FULL_{source_db_config['database']}_backup.sql")
-            
-            # Build the mysqldump command directly
-            command = (
+            # Create a direct dump command for the database
+            dump_cmd = (
                 f"mysqldump -h {source_db_config['host']} -P {source_db_config['port']} "
                 f"-u {source_db_config['user']} -p{source_db_config['password']} "
                 f"--skip-comments --skip-set-charset --set-gtid-purged=OFF "
                 f"--column-statistics=0 --no-tablespaces {source_db_config['database']} > {backup_file}"
             )
             
-            # Execute the command
-            print(f"Executing backup command to {backup_file}...")
-            await run_command(command)
+            print(f"Backing up database to: {backup_file}")
+            await run_command(dump_cmd)
             
-            # Check if backup file was created
             if not os.path.exists(backup_file):
                 raise FileNotFoundError(f"Backup file was not created: {backup_file}")
                 
-            print(f"Database backup successful, file size: {os.path.getsize(backup_file)} bytes")
+            print(f"Database backed up successfully: {os.path.getsize(backup_file)} bytes")
             
-            # Restore to target
-            print("Restoring database to target...")
-            
-            # Build the mysql command directly
-            restore_command = (
+            # Create a direct restore command for the database
+            restore_cmd = (
                 f"mysql -h {target_db_config['host']} -P {target_db_config['port']} "
                 f"-u {target_db_config['user']} -p{target_db_config['password']} "
-                f"--init-command='SET sql_log_bin=0;' --force "
                 f"{target_db_config['database']} < {backup_file}"
             )
             
-            # Execute the restore command
-            print("Executing restore command...")
-            await run_command(restore_command)
-            print("Database restore successful")
+            print(f"Restoring database to target")
+            await run_command(restore_cmd)
+            print("Database restored successfully")
         
-        print(f"Data successfully copied from {source_env} to {target_env}")
-        print(f"Backup file preserved at: {backup_file}")
-
+        print(f"Copy operation completed successfully")
+        print(f"Backup file saved at: {backup_file}")
+        return True
+        
     except Exception as e:
-        print(f"Error during copy operation: {str(e)}")
-        logging.error(f"An error occurred while copying data: {e}")
-        raise
+        print(f"Error in copy operation: {str(e)}")
+        logging.error(f"Error copying data: {e}")
+        return False
 
 async def main(version, restore_file, restore_table_name, copy_data, source_env, target_env, table_name):
     """ Main function to handle command line arguments and perform operations """
